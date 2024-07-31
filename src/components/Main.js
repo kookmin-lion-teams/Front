@@ -4,7 +4,7 @@ import InfiniteScroll from "./InfiniteScroll";
 import OptimizedKakaoMap from "./OptimizedKakaoMap";
 
 import PtCard from "./PtCard";
-
+import Footer from "./Footer";
 function Main() {
   return (
     <>

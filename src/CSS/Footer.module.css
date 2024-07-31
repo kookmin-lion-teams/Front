@@ -1,0 +1,32 @@
+body {
+  font-family: Arial, sans-serif;
+  color: #6b7280; /* text-gray-500 */
+}
+footer {
+  margin-top: 40px; /* mt-10 */
+  padding: 40px 0; /* py-10 */
+  border-top: 1px solid #e5e7eb; /* border-t */
+  display: flex;
+  justify-content: space-around;
+  --tw-bg-opacity: 1;
+  background-color: rgba(229, 231, 235, var(--tw-bg-opacity));
+}
+.column {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+.logo {
+  font-size: 3rem; /* text-5xl */
+}
+a {
+  color: inherit;
+  text-decoration: none;
+  margin-top: 8px;
+}
+a:hover {
+  text-decoration: underline;
+}
+.textXl {
+  font-size: 1.25rem; /* text-xl */
+}

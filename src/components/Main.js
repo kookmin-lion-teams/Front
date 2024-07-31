@@ -1,13 +1,10 @@
-
 import Nav_ from "./Nav_";
 import styles from "../CSS/main.module.css";
 import InfiniteScroll from "./InfiniteScroll";
-import OptimizedKakaoMap from './OptimizedKakaoMap';
+import OptimizedKakaoMap from "./OptimizedKakaoMap";
 
-
-import PtCard from './PtCard'
-
-
+import PtCard from "./PtCard";
+import Footer from "./Footer";
 function Main() {
   return (
     <>
@@ -20,11 +17,11 @@ function Main() {
           <InfiniteScroll />
         </div>
         {/* 지도가 있는 오른쪽 구역 */}
-        <div className={styles.rightFrame}>    
+        <div className={styles.rightFrame}>
           <OptimizedKakaoMap />
         </div>
       </div>
-      <div className="footer"></div>
+      <Footer />
     </>
   );
 }

@@ -1,0 +1,13 @@
+.mainFrame {
+  display: flex;
+}
+.leftFrame {
+  background-color: antiquewhite;
+  width: 50vw;
+  height: 90vh;
+}
+.rightFrame {
+  background-color: aqua;
+  width: 50vw;
+  height: 90vh;
+}

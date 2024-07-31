@@ -1,11 +1,17 @@
+
 import Nav_ from "./Nav_";
 import styles from "../CSS/main.module.css";
 import InfiniteScroll from "./InfiniteScroll";
+
 import KakaoMap1 from "./KakaoMap1";
+import PtCard from './PtCard'
+
+
 function Main() {
   return (
     <>
       <Nav_></Nav_>
+
       {/* main 전체 프레임 */}
       <div className={styles.mainFrame}>
         {/* 무한스크롤이 있는 왼쪽 구역 */}

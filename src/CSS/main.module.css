@@ -1,9 +1,40 @@
-
-.mainFrame {
+.filterContainer {
   display: flex;
-  flex-direction: row;
+
+  height: 80px;
 
   align-items: center;
-  justify-content: center;
+  padding: 20px 70px 20px 50px;
+  margin-top: 20px;
 }
 
+.filter {
+  height: 50px;
+  width: 110px;
+  padding: 0.5rem 1rem 0.5rem 1rem;
+  border-radius: 0.5rem;
+  align-items: center;
+  justify-content: center;
+  display: flex;
+
+  border-width: 0;
+  border-style: solid;
+  border-color: #e5e7eb;
+}
+
+.sort {
+  height: 55px;
+  width: 115px;
+  padding: 0 0 0 3rem;
+  border-radius: 0.5rem;
+  align-items: center;
+  justify-content: center;
+  display: flex;
+
+  font-size: 1rem;
+  border: 0;
+}
+
+.sort:focus{
+  outline: none;
+}

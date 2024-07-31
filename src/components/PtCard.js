@@ -9,12 +9,15 @@ function PtCard() {
 
             <div className={styles.cardContent}>
 
-                <h4>Name</h4>
-                <div></div>
-                <p><span>경력 : </span>
-        Lorem ipsum dolor
-                </p>
-                <p>자기소개란</p>
+                <h4 className={styles.cardName}>Name</h4>
+
+                <div className={styles.cardCareer}>
+                    <span>경력 : </span><span >10년</span>
+                </div>
+
+                <div className={styles.cardContent}>              
+                    Lorem ipsum dolor sit amet consectetur adipisicing elit. Rem, dolore quidem pariatur fugiat nisi rerum quisquam molestiae? Culpa rem excepturi, inventore quam neque porro nihil perferendis exercitationem accusamus animi laudantium!
+                </div>
 
             </div>
 

@@ -1,14 +1,9 @@
 
 .mainFrame {
   display: flex;
+  flex-direction: row;
+
+  align-items: center;
+  justify-content: center;
 }
-.leftFrame {
-  /* background-color: antiquewhite; */
-  width: 50vw;
-  height: 90vh;
-}
-.rightFrame {
-  /* background-color: aqua; */
-  width: 50vw;
-  height: 90vh;
-}
+

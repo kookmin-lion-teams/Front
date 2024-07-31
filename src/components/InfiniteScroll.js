@@ -10,11 +10,18 @@ function InfiniteScroll() {
   const [fragment, setFragment] = useState([]);
   const [key, setKey] = useState(0);
 
-  const[partner, setPartner] = useState([
-    {name : 'Kim', career : '20', content : '안녕하세요' },
-    {name : 'Lee', career : '25', content : '반갑습니다.' },
-    {name : 'Yun', career : '30', content : '그만하세요.' },
-    {name : 'Choi', career : '35', content : '화이팅입니다.'},
+  const [partner, setPartner] = useState([
+    { name: 'Kim', career: '20', content: '안녕하세요' },
+    { name: 'Lee', career: '25', content: '반갑습니다.' },
+    { name: 'Yun', career: '30', content: '그만하세요.' },
+    { name: 'Choi', career: '35', content: '화이팅입니다.' },
+    { name: 'Kim', career: '20', content: '안녕하세요' },
+    { name: 'Kim', career: '20', content: '안녕하세요' },
+    { name: 'Kim', career: '20', content: '안녕하세요' },
+    { name: 'Kim', career: '20', content: '안녕하세요' },
+    { name: 'Kim', career: '20', content: '안녕하세요' },
+
+
 
   ])
 
@@ -30,10 +37,12 @@ function InfiniteScroll() {
   }, [inView, fragment]);
 
   return (
-    <div className={styles.InfiniteScrollFrame}>
-      {fragment}
-      <div ref={ref}></div>
-    </div>
+
+      <div className={styles.InfiniteScrollFrame}>
+        {fragment}
+        <div ref={ref}></div>
+      </div>
+
   );
 
 }

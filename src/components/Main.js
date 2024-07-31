@@ -1,16 +1,18 @@
 import Nav_ from './Nav_'
-import '../CSS/main.css'
+import PtCard from './PtCard'
+
+import '../CSS/main.module.css'
 
 function Main() {
   return (
     <>
       <Nav_></Nav_>
-    
-      <div className="container">
-    
-        <div className="header">
 
-          
+      <div className="">
+
+        <div className="header">
+          <PtCard></PtCard>
+
         </div>
 
         <div className='main'>

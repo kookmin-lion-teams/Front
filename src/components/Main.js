@@ -1,10 +1,14 @@
+
 import Nav_ from "./Nav_";
 import styles from "../CSS/main.module.css";
 import InfiniteScroll from "./InfiniteScroll";
+import PtCard from './PtCard'
+
 function Main() {
   return (
     <>
       <Nav_></Nav_>
+
       {/* main 전체 프레임 */}
       <div className={styles.mainFrame}>
         {/* 무한스크롤이 있는 왼쪽 구역 */}

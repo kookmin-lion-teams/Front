@@ -1,11 +1,7 @@
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import Main from "./components/Main";
 import "./App.css";
-import 'bootstrap/dist/css/bootstrap.min.css';
-
-
-
-
+import "bootstrap/dist/css/bootstrap.min.css";
 
 function App() {
   return (
@@ -16,6 +12,5 @@ function App() {
     </BrowserRouter>
   );
 }
-
 
 export default App;

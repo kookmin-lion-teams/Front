@@ -3,8 +3,6 @@ import styles from "../CSS/main.module.css";
 import InfiniteScroll from "./InfiniteScroll";
 import OptimizedKakaoMap from "./OptimizedKakaoMap";
 
-import PtCard from "./PtCard";
-import Footer from "./Footer";
 function Main() {
   return (
     <>
@@ -21,7 +19,6 @@ function Main() {
           <OptimizedKakaoMap />
         </div>
       </div>
-      <Footer />
     </>
   );
 }

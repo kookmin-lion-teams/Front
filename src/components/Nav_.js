@@ -25,7 +25,10 @@ export default function Nav_() {
           </Nav>
           <Nav className="ms-auto">
             {loginId === "" ? (
-              <Nav.Link href="/login">login</Nav.Link>
+              <>
+                <Nav.Link href="/signin">로그인</Nav.Link>
+                <Nav.Link href="/signup">회원가입</Nav.Link>
+              </>
             ) : (
               <span>환영합니다. {loginId}님!</span>
             )}

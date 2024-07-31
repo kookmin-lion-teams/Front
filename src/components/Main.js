@@ -1,8 +1,10 @@
 import Nav_ from "./Nav_";
 import styles from "../CSS/main.module.css";
 import InfiniteScroll from "./InfiniteScroll";
-import KakaoMap1 from "./KakaoMap1";
-import Footer from "./Footer";
+import OptimizedKakaoMap from "./OptimizedKakaoMap";
+
+import PtCard from "./PtCard";
+
 function Main() {
   return (
     <>
@@ -16,7 +18,7 @@ function Main() {
         </div>
         {/* 지도가 있는 오른쪽 구역 */}
         <div className={styles.rightFrame}>
-          <KakaoMap1 />
+          <OptimizedKakaoMap />
         </div>
       </div>
       <Footer />

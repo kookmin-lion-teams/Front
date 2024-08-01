@@ -1,3 +1,15 @@
+.scrollFrame1 {
+  width: 100%;
+  height: calc(82vh - 120px);
+}
+.scrollFrame2 {
+  width: 50%;
+  height: 82vh;
+}
+.mapFrame {
+  width: 50%;
+}
+
 .filterContainer {
   display: flex;
 

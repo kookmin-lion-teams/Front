@@ -3,7 +3,6 @@ import { useFindState, useActions } from "../store/Statefind";
 import styles from "../CSS/Nav_.module.css";
 import SearchBar from "./SearchBar";
 import { useNavigate } from "react-router-dom";
-import { useEffect } from "react";
 export default function Nav_() {
   const navigate = useNavigate();
   // 전역상태 : 로그인
@@ -16,6 +15,7 @@ export default function Nav_() {
     navigate(`/${where}`);
   };
   // 클릭시 find 전역 상태 변경
+
   const clickHandler = (find) => {
     changeState(find);
   };
@@ -57,7 +57,7 @@ export default function Nav_() {
           className={`${findState === "매칭 내역" ? styles.matchActive : ""}`}
           onClick={() => clickHandler("매칭 내역")}
         >
-          매칭내역
+          매칭 내역
         </div>
       </div>
     </nav>

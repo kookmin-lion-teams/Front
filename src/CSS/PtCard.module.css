@@ -58,11 +58,13 @@
 .discount {
     color: #6b7280;
     text-decoration-line: line-through;
-    font-size: 15px;
+    font-size: 13px;
     margin-left: 3px;
 }
 
 .nowprice{
+    display: inline-block;
+    margin-left: 25px;
     font-size: 1em;
     text-align: right;
 }

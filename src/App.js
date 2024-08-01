@@ -4,7 +4,8 @@ import "./App.css";
 import "bootstrap/dist/css/bootstrap.min.css";
 import SignIn from "./components/Signin";
 import Signup from "./components/Signup";
-import Partner from "./components/Partner";
+import Detail from "./components/Detail";
+
 function App() {
   return (
     <BrowserRouter>
@@ -12,7 +13,7 @@ function App() {
         <Route path="/" element={<Main />} />
         <Route path="/signin" element={<SignIn />} />
         <Route path="/signup" element={<Signup />} />
-        <Route path="/partner/:pid" element={<Partner />} />
+        <Route path="/detail" element={<Detail />} />
       </Routes>
     </BrowserRouter>
   );

@@ -4,6 +4,7 @@ import styles from "../CSS/Nav_.module.css";
 import SearchBar from "./SearchBar";
 import { useNavigate } from "react-router-dom";
 import { useEffect } from "react";
+
 export default function Nav_() {
   const navigate = useNavigate();
   // 전역상태 : 로그인

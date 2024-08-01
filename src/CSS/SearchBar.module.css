@@ -1,0 +1,82 @@
+.customForm {
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  top: -30%;
+}
+
+.customLabel {
+  margin-bottom: 0.5rem; /* mb-2에 해당 */
+  font-size: 0.875rem; /* text-sm에 해당 */
+  font-weight: 500; /* font-medium에 해당 */
+  color: #111827; /* text-gray-900에 해당 */
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  border: 0;
+}
+
+.customRelative {
+  position: relative;
+}
+.customIconContainer {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  display: flex;
+  align-items: center;
+  padding-left: 0.75rem; /* ps-3에 해당 */
+  pointer-events: none;
+}
+
+.customIcon {
+  width: 1rem; /* w-4에 해당 */
+  height: 1rem; /* h-4에 해당 */
+  color: #6b7280; /* text-gray-500에 해당 */
+}
+
+.customInput {
+  display: block;
+  width: 100%; /* w-full에 해당 */
+  padding: 0.75rem; /* p-4에 해당 */
+  padding-left: 3.5rem; /* ps-10에 해당 */
+  font-size: 0.875rem; /* text-sm에 해당 */
+  color: #111827; /* text-gray-900에 해당 */
+  border: 1px solid #d1d5db; /* border-gray-300에 해당 */
+  border-radius: 0.5rem; /* rounded-lg에 해당 */
+  background-color: #f9fafb; /* bg-gray-50에 해당 */
+  outline: none;
+}
+
+.customInput:focus {
+  border-color: #3b82f6; /* focus:border-blue-500에 해당 */
+  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.5); /* focus:ring-blue-500에 해당 */
+}
+
+.customButton {
+  position: absolute;
+  right: 0.625rem; /* end-2.5에 해당 */
+  bottom: 0.625rem; /* bottom-2.5에 해당 */
+  padding: 0.5rem 1rem; /* px-4 py-2에 해당 */
+  font-size: 0.875rem; /* text-sm에 해당 */
+  font-weight: 500; /* font-medium에 해당 */
+  color: #fff; /* text-white에 해당 */
+  background-color: #1d4ed8; /* bg-blue-700에 해당 */
+  border: none;
+  border-radius: 0.5rem; /* rounded-lg에 해당 */
+  cursor: pointer;
+}
+
+.customButton:hover {
+  background-color: #1e40af; /* hover:bg-blue-800에 해당 */
+}
+
+.customButton:focus {
+  outline: none;
+  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.5); /* focus:ring-4 focus:ring-blue-300에 해당 */
+}

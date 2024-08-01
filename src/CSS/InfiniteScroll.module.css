@@ -1,11 +1,14 @@
+
 .InfiniteScrollFrame {
   width: 100%;
   height: 100%;
   overflow-y: auto;
+
+  display: flex;
+  align-items: center;
+  
+  flex-wrap: wrap;
+
+  margin-left : 30px;
 }
-.box {
-  width: 100px;
-  aspect-ratio: 1;
-  background-color: black;
-  margin: 50px;
-}
+

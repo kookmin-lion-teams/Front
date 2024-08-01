@@ -1,63 +1,68 @@
-.card {
+.container {
+    padding-right: 20px;
     display: flex;
 
-    height: 200px;
-    width: 500px;
 
-    border: 2px solid grey;
+    width: 650px;
 
-    border-radius: 30px;
+    border: 0.5px solid grey;
+
+    border-radius: 10px;
 
     align-items: center;
-    margin-left: 30px;
 
-    box-shadow: 8px 8px 15px;
+    margin-left: 20px;
+    margin-top: 20px;
+
 }
 
 .cardimg {
-    width: 160px;
-    height: 160px;
-    margin-left: 30px;
-    border: 1px black;
-    border-radius: 10%;
+    width: 200px;
+    height: 200px;
+
+
+    border-radius: 10px 0 0 10px;
 
     background-image: url('../IMG/partner.webp');
     background-size: cover;
 }
 
-.cardContent {
+.CardContainer {
     flex-grow: 1;
-    height: 200px;
-
-    display: flex;
-    flex-direction: column;
-
-
-    justify-content: start;
-    align-items: center;
-
+    padding-left: 20px;
 
 }
 
-.cardName {
-    margin-top: 25px;
-    height: 40px;
-    font-size: 25px;
+
+.textRight {
+    text-align: right;
 }
 
-.cardCareer {
-    width: 200px;
-    text-align: left;
-    margin-top: 12px;
+.tag {
+    border-radius: 9999px;
+    padding-left: 0.5rem;
+    padding-right: 0.5rem;
+    font-size: 0.875rem;
+    line-height: 1.25rem;
+    padding-top: 0.25rem;
+    padding-bottom: 0.25rem;
+    background-color: rgb(229, 231, 235);
+    margin: 5px;
 }
 
-.cardContent {
-    flex-grow: 1;
-    margin-top: 10px;
-    margin-bottom: 25px;
-    width: 200px;
-    overflow: hidden;
+.line {
+    color: rgb(107, 114, 128);
+    margin: 5px;
+}
 
+.discount {
+    color: #6b7280;
+    text-decoration-line: line-through;
+    font-size: 15px;
+    margin-left: 3px;
+}
 
-
+.nowprice{
+    font-size: 1em;
+    text-align: right;
 }

@@ -1,0 +1,23 @@
+.container{
+    width: 1200px;
+    height: 1000px;
+
+    margin-left: auto;
+    margin-right: auto;
+    margin-top : 80px;
+    border : 10px solid #eee;
+
+    border-radius: 30px;
+}
+
+.imgWrap{
+
+
+    border  : 1px solid black;
+
+
+    display: flex;
+    flex-wrap: wrap;
+
+    margin : 50px;
+}

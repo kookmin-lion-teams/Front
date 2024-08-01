@@ -1,0 +1,66 @@
+.navFrame {
+  --navLevel1-height: 11.75vh;
+  --navLevel2-height: 6.25vh;
+  --navLevel1-content-height: 4vh;
+  width: 100vw;
+  height: 18vh;
+  background-color: white;
+}
+.navLevel1 {
+  width: 100%;
+  height: var(--navLevel1-height);
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+}
+.logoBox {
+  width: 203.17px;
+  height: var(--navLevel1-content-height);
+  background-color: rgba(243, 244, 246, 1);
+  text-align: center;
+  line-height: 89.75px;
+  font-weight: bolder;
+  font-style: normal;
+  font-size: 3.25rem;
+}
+.searchBox {
+  width: 810px;
+  height: var(--navLevel1-content-height);
+  border-radius: 5px;
+  position: relative;
+}
+.registerBox {
+  width: 203.17px;
+  height: 89.75px;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+}
+.registerBox * {
+  text-decoration-line: none;
+  color: black;
+}
+.registerBox *:hover {
+  text-decoration-line: underline;
+  cursor: pointer;
+}
+
+.navLevel2 {
+  width: 100%;
+  height: var(--navLevel2-height);
+  /* background-color: aquamarine; */
+  display: flex;
+  align-items: center;
+  text-align: center;
+}
+.navLevel2 div {
+  height: 100%;
+  line-height: var(--navLevel2-height);
+  padding-left: 3.25rem;
+  padding-right: 3.25rem;
+  font-weight: bolder;
+}
+.navLevel2 div:hover {
+  background-color: rgba(243, 244, 246, 1);
+  cursor: pointer;
+}

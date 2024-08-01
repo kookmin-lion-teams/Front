@@ -2,40 +2,43 @@
     display: flex;
     justify-content: center;
     align-items: center;
-
-
-
-    margin: 0;
 }
 
-
 .ModalForm {
-    display: block;
     background-color: white;
     padding: 1.5rem;
-    border-radius: 0.5rem;
-    max-width: 50rem;
+    border-radius: 1rem;
+    width: 50rem;
 
-    width: 100%;
+    height: 80vh;
+    border: 2px solid #cbbebe;
 
+    overflow-y: scroll;
 
-    border: 1px solid black;
-    position: relative;
+    margin-top: 10vh;
+
+}
+
+.ModalForm::-webkit-scrollbar {
+    display: none; /* Chrome, Safari, Opera*/
 }
 
 .ModalHeader {
-
     margin-bottom: 1rem;
+    position: sticky;
+}
+
+.Modalfooter {
+    margin-top: 1rem;
 }
 
 .ModalHeader>button {
     font-size: 2rem;
-    line-height: 2rem;
+    line-height: 1rem;
     color: rgb(107, 114, 128);
     background-color: transparent;
-    background-image: none;
-    border: 0;
 
+    border: 0;
     position: absolute;
     float: left;
 
@@ -48,14 +51,68 @@
     text-align: center;
 }
 
-.ModalMain {}
+
 
 .ModalMain h3 {
 
     font-weight: 700;
     margin-bottom: 0.5rem;
     font-size: inherit;
-    
+
     margin-top: 50px;
-    padding-left: 30px;
+    padding-left: 15px;
+}
+
+.Regionfilter,
+.Genderfilter,
+.Pricefilter {
+    display: grid;
+    grid-template-columns: repeat(6, 1fr);
+    gap: 10px;
+    padding: 10px 10px 0 10px;
+}
+
+.Formlabel {
+    text-align: center;
+}
+
+.Formlabel>input {
+    display: none;
+}
+
+
+.Formbutton,
+.Formlabel {
+    padding: 10px;
+    cursor: pointer;
+    border: 2px solid #eee;
+    background-color: white;
+    border-radius: 10px;
+}
+
+.Formlabel:checked {
+    background-color: orange;
+}
+
+.Modalfooter{
+    display: flex;
+}
+
+.Reset{
+    font-size: 0.8rem;
+    line-height: 1rem;
+    color: rgb(107, 114, 128);
+    background-color: transparent;
+    border: 0;
+    padding-left: 15px;
+
+}
+
+.Applyfilter{
+    background-color: black;
+    color : white;
+    width: 10rem;
+    margin-right: 15px;
+    border-radius: 10px;
+    height: 3rem;
 }

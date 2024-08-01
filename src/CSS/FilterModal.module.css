@@ -1,0 +1,61 @@
+.ModalContainer {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+
+
+    margin: 0;
+}
+
+
+.ModalForm {
+    display: block;
+    background-color: white;
+    padding: 1.5rem;
+    border-radius: 0.5rem;
+    max-width: 50rem;
+
+    width: 100%;
+
+
+    border: 1px solid black;
+    position: relative;
+}
+
+.ModalHeader {
+
+    margin-bottom: 1rem;
+}
+
+.ModalHeader>button {
+    font-size: 2rem;
+    line-height: 2rem;
+    color: rgb(107, 114, 128);
+    background-color: transparent;
+    background-image: none;
+    border: 0;
+
+    position: absolute;
+    float: left;
+
+}
+
+.ModalHeader>div {
+    font-weight: 700;
+    font-size: 1.25rem;
+    line-height: 1.75rem;
+    text-align: center;
+}
+
+.ModalMain {}
+
+.ModalMain h3 {
+
+    font-weight: 700;
+    margin-bottom: 0.5rem;
+    font-size: inherit;
+    
+    margin-top: 50px;
+    padding-left: 30px;
+}

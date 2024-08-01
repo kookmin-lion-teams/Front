@@ -1,12 +1,12 @@
 import styles from "../CSS/SearchBar.module.css";
 export default function SearchBar() {
   return (
-    <form class={styles.customForm}>
-      <label for="custom-search" class={styles.customLabel}>
+    <form className={styles.customForm}>
+      <label htmlFor="custom-search" className={styles.customLabel}>
         Search
       </label>
-      <div class={styles.customRelative}>
-        <div class={styles.customIconContainer}>
+      <div className={styles.customRelative}>
+        <div className={styles.customIconContainer}>
           <svg
             width="22"
             height="24"
@@ -23,7 +23,7 @@ export default function SearchBar() {
         <input
           type="search"
           id="custom-search"
-          class={styles.customInput}
+          className={styles.customInput}
           placeholder="자~ 검색해 보세요~"
           required
         />

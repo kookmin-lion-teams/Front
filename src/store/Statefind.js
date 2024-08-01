@@ -1,20 +1,20 @@
 import { create } from "zustand";
 
-const useStore = create((set, get) => ({
-  findState: "",
+const useFindStore = create((set, get) => ({
+  findState: "파트너 찾기",
   actions: {
     changeState: (v) => {
       set(() => {
-        return { loginState: v };
+        return { findState: v };
       });
     },
     getState: () => {
-      return get().loginState;
+      return get().findState;
     },
   },
 }));
 
 // loginState를 구독하는 훅
-export const useFindState = () => useStore((state) => state.findState);
+export const useFindState = () => useFindStore((state) => state.findState);
 // actions를 구독하는 훅
-export const useActions = () => useStore((state) => state.actions);
+export const useActions = () => useFindStore((state) => state.actions);

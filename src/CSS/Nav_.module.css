@@ -71,3 +71,6 @@
   background-color: rgba(243, 244, 246, 1);
   cursor: pointer;
 }
+.matchActive {
+  background-color: rgba(243, 244, 246, 1);
+}

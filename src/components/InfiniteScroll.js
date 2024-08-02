@@ -15,8 +15,8 @@ function InfiniteScroll() {
       try {
         const response = await axios.post("back/api/user/home", { uid });
 
-        console.log(response)
-        
+        console.log(response.data)
+
         setData(response.data)
 
         partner = data;

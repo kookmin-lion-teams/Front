@@ -54,11 +54,12 @@
 
 .gymCheck {
   position: relative;
-  width: 85%;
+  width: 90%;
   height: 9vh;
   display: flex;
   justify-content: space-between;
   align-items: center;
+  margin-left: 20px;
   padding-top: 2vh;
   padding-bottom: 2vh;
   /* border-bottom: 2px solid #e5e5e5; */
@@ -70,7 +71,7 @@
   position: absolute;
   bottom: 0;
   width: 100%;
-  border-bottom: 2px solid #d9d9d9;
+  border-bottom: 1px solid #d9d9d9;
 }
 
 .gymCheck::before {

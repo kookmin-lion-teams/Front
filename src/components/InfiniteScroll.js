@@ -53,7 +53,7 @@ function InfiniteScroll() {
   const [key, setKey] = useState(0);
 
   useEffect(() => {
-    console.log(inView,partner.length);
+    console.log(inView,partner.length,key);
     if (inView && key < partner.length) {
 
       console.log('key' , key , 'partner' , partner, 'partner[key]' , partner[key])

@@ -20,11 +20,12 @@ function InfiniteScroll() {
         let CopyData = [...data]
 
         CopyData = response.data
+
         setData(CopyData)
 
         partner = data;
 
-        console.log('scroll2' , partner, 'data' , data);
+        console.log('ptner' , partner, 'data' , data);
         
       } catch (err) {
         console.log(err.message);

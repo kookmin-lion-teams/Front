@@ -19,30 +19,30 @@ function PtCard({ key, partner }) {
                 <div className={styles.CardContainer}>
 
                     <h2>{partner.name} 트레이너</h2>
-                    <p>회원님의 건강한 몸을 위해 최선을 다하겠습니다</p>
+                    <p>{partner.INTRO}</p>
 
-                    <span className={styles.tag}>Tag</span>
-                    <span className={styles.tag}>Tag</span>
+                    <span className={styles.tag}>{partner.TAG}</span>
+
                     <span className={styles.line}>|</span>
                     <span className={styles.itemsContainer}>
-                        ABC헬스짐
+                        {partner.IG}
                     </span>
 
                     <span className={styles.line}>|</span>
 
-                    <span className={styles.itemsContainer}>
-                        ⭐️ 4.8
+                    <span className={styles.itemsCosntainer}>
+                        ⭐️ {partner.AVG_RATE}
                     </span>
 
                 </div>
 
                 <div style={{ marginLeft: '5px' }}>
 
-                    <div >
-                        <span>50</span>%
-                        <span className={styles.discount}>30,000원</span>
+                    <div>
+                        <span>{(partner.EPRICE/partner.PRICE)}</span>%
+                        <span className={styles.discount}>{partner.PRICE}원</span>
                     </div>
-                    <div class={styles.nowprice}>{partner.price}</div>원
+                    <div class={styles.nowprice}>{partner.EPRICE}</div>원
 
                 </div>
             </div>

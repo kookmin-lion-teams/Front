@@ -19,7 +19,7 @@
 
 .ModalForm::-webkit-scrollbar {
     display: none; /* Chrome, Safari, Opera*/
-}
+}   
 
 .ModalHeader {
     margin-bottom: 1rem;

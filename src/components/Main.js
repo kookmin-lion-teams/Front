@@ -6,8 +6,10 @@ import { useEffect, useState } from "react";
 import { useFindState, useActions } from "../store/Statefind";
 import FilterModal from "./Modal";
 import Modal from "react-modal";
-
+import ReservUser from "./ReservUser";
+import axios from "axios";
 function Main() {
+  const [data, setData] = useState(null);
   // 전역상태 : find
   const findState = useFindState();
   console.log("findState:", findState);
@@ -17,8 +19,7 @@ function Main() {
   useEffect(() => {
     if (findState === "파트너 찾기") {
       setScrollClassName(styles.scrollFrame1);
-    } 
-    else if (findState === "헬스장으로 찾기") {
+    } else if (findState === "헬스장으로 찾기") {
       setScrollClassName(styles.scrollFrame2);
     }
   }, [findState]);
@@ -30,6 +31,19 @@ function Main() {
   const closeModal = () => {
     setModalIsOpen(false);
   };
+
+  useEffect(() => {
+    const fetchData = async () => {
+      const uid = sessionStorage.getItem("uid");
+      try {
+        const response = await axios.post("back/api/", { uid });
+        setData(response.data);
+      } catch (err) {
+        console.log(err.message);
+      }
+    };
+    fetchData();
+  }, []);
 
   return (
     <>
@@ -98,6 +112,7 @@ function Main() {
           )}
         </div>
       )}
+      {findState === "매칭 내역" && <ReservUser />}
     </>
   );
 }

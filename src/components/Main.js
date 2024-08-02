@@ -7,11 +7,10 @@ import { useFindState, useActions } from "../store/Statefind";
 import MainModal from "./MainModal";
 import Modal from "react-modal";
 
-import { useFindState } from "../store/Statefind";
-import FilterModal from "./Modal";
 import ReservUser from "./ReservUser";
 import axios from "axios";
 import Checkout from "./Checkout";
+
 function Main() {
   // 전역상태 : find
   const findState = useFindState();

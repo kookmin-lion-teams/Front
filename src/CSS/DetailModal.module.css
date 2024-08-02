@@ -24,4 +24,30 @@
 }
 
 
+.Header {
+    margin-bottom: 1rem;
+    position: sticky;
+
+
+}
+
+.Header>button {
+    font-size: 2rem;
+    line-height: 1.5rem;
+    color: rgb(107, 114, 128);
+    background-color: transparent;
+
+    border: 0;
+    position: absolute;
+    float: left;
+
+}
+
+.Header>div {
+    font-weight: 700;
+    font-size: 1.25rem;
+    line-height: 1.75rem;
+    text-align: center;
+}
+
 

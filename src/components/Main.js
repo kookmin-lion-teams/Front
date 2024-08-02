@@ -1,10 +1,17 @@
 import Nav_ from "./Nav_";
+import Filter from "./Filter";
+import Checkout from "./Checkout";
+import ReservUser from "./ReservUser";
 import styles from "../CSS/main.module.css";
 import InfiniteScroll from "./InfiniteScroll";
-import OptimizedKakaoMap from "./OptimizedKakaoMap";
+
+import Map from "./Map";
 import { useEffect, useState } from "react";
 import { useFindState, useActions } from "../store/Statefind";
 import MainModal from "./MainModal";
+
+import Modal from "react-modal";
+
 import Modal from "react-modal";
 
 import ReservUser from "./ReservUser";
@@ -24,14 +31,6 @@ function Main() {
       setScrollClassName(styles.scrollFrame2);
     }
   }, [findState]);
-  //Modal
-  const [modalIsOpen, setModalIsOpen] = useState(false);
-  const openModal = () => {
-    setModalIsOpen(true);
-  };
-  const closeModal = () => {
-    setModalIsOpen(false);
-  };
 
   return (
     <>
@@ -40,15 +39,7 @@ function Main() {
       {/* 필터 */}
       {findState === "파트너 찾기" ? (
         <div className={styles.filterContainer}>
-          {/* 필터버튼 */}
-          <button className={styles.filter} onClick={openModal}>
-            <span style={{ width: "1.5rem" }}>►</span>
-            <span>필터</span>
-          </button>
-
-          {/* MainModal */}
-          <MainModal isOpen={modalIsOpen} onRequestClose={closeModal} />
-          <div style={{ flexGrow: "1" }}></div>
+          <Filter />
 
           {/* 정렬버튼 */}
           <select className={styles.sort}>
@@ -88,7 +79,7 @@ function Main() {
                   </svg>
                   <span>abc헬스짐</span>
                 </div>
-                <div>filter</div>
+                <Filter />
               </div>
             )}
 
@@ -96,7 +87,7 @@ function Main() {
           </div>
           {findState === "헬스장으로 찾기" && (
             <div className={styles.mapFrame}>
-              <OptimizedKakaoMap />
+              <Map/>
             </div>
           )}
         </div>

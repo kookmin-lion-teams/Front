@@ -7,7 +7,7 @@ import axios from "axios";
 function InfiniteScroll() {
   const [data, setData] = useState([]);
 
-  let partner = [];
+  let partner;
 
 
   useEffect(() => {

@@ -7,6 +7,8 @@ import axios from "axios";
 function InfiniteScroll() {
   const [data, setData] = useState([]);
 
+  let partner;
+
   useEffect(() => {
     const fetchData = async () => {
       const uid = sessionStorage.getItem("uid");
@@ -14,8 +16,10 @@ function InfiniteScroll() {
         const response = await axios.post("back/api/user/home", { uid });
         setData(response.data)
 
+        partner = data;
 
-        console.log('scroll2' , partner)
+        console.log('scroll2' , partner, data);
+
       } catch (err) {
         console.log(err.message);
       }
@@ -25,7 +29,7 @@ function InfiniteScroll() {
 
   const loaction = useLocation();
 
-  const partner = data;
+
 
 
   console.log('scroll3' , partner)

@@ -3,13 +3,12 @@ import styles from "../CSS/main.module.css";
 import InfiniteScroll from "./InfiniteScroll";
 import OptimizedKakaoMap from "./OptimizedKakaoMap";
 import { useEffect, useState } from "react";
-import { useFindState, useActions } from "../store/Statefind";
+import { useFindState } from "../store/Statefind";
 import FilterModal from "./Modal";
-import Modal from "react-modal";
 import ReservUser from "./ReservUser";
 import axios from "axios";
+import Checkout from "./Checkout";
 function Main() {
-  const [data, setData] = useState(null);
   // 전역상태 : find
   const findState = useFindState();
   console.log("findState:", findState);
@@ -31,19 +30,6 @@ function Main() {
   const closeModal = () => {
     setModalIsOpen(false);
   };
-
-  useEffect(() => {
-    const fetchData = async () => {
-      const uid = sessionStorage.getItem("uid");
-      try {
-        const response = await axios.post("back/api/", { uid });
-        setData(response.data);
-      } catch (err) {
-        console.log(err.message);
-      }
-    };
-    fetchData();
-  }, []);
 
   return (
     <>
@@ -113,6 +99,8 @@ function Main() {
         </div>
       )}
       {findState === "매칭 내역" && <ReservUser />}
+
+      <Checkout></Checkout>
     </>
   );
 }

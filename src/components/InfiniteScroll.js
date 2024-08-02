@@ -7,7 +7,7 @@ import axios from "axios";
 function InfiniteScroll() {
   const [data, setData] = useState([]);
 
-  const [partner, setPartner] = useState([]); 
+  const [partner, setPartner] = useState([]);
 
 
   useEffect(() => {
@@ -26,7 +26,7 @@ function InfiniteScroll() {
 
         setPartner(CopyData);
 
-        console.log('ptner', partner, 'data', data, 'copy' , CopyData);
+        console.log('ptner', partner, 'data', data, 'copy', CopyData);
 
       } catch (err) {
         console.log(err.message);
@@ -40,9 +40,6 @@ function InfiniteScroll() {
 
 
 
-
-  console.log('scroll3', partner)
-
   const { ref, inView } = useInView({
     threshold: 0,
   });
@@ -53,10 +50,9 @@ function InfiniteScroll() {
   const [key, setKey] = useState(0);
 
   useEffect(() => {
-
+    console.log(inView, partner.length, key);
     if (inView && key < partner.length) {
 
-      console.log('key' , key , 'partner' , partner, 'partner[key]' , partner[key])
       const newF = <PtCard key={key} partner={partner[key]}></PtCard>;
       setKey((prev) => prev + 1);
       setFragment((prev) => [...prev, newF]);

@@ -1,16 +1,25 @@
 import Nav_ from './Nav_'
 import styles from "../CSS/Detail.module.css";
-import { useState } from "react";
+import Modal from 'react-modal';
+import { useEffect, useState } from "react";
 import { Navigate, useNavigate, useLocation } from 'react-router-dom';
+import  DetailModal  from '../components/DetailModal'
 
 function Detail() {
     const loaction = useLocation();
     const { partner } = loaction.state;
 
+    const [modalIsOpen, setModalIsOpen] = useState(false);
+    const openModal = () => {
+        setModalIsOpen(true);
+    };
+    const closeModal = () => {
+        setModalIsOpen(false);
+    };
+
+
 
     let [imgurl, setImg] = useState()
-
-
 
     return (
         <>
@@ -45,7 +54,10 @@ function Detail() {
                                         <span className={styles.Pricefont}>원</span>
                                     </div>
                                 </div>
-                                <button>1회 체험 예약하기</button>
+                                <button onClick={openModal}>1회 체험 예약하기</button>
+
+                                {/* DetailModal */}
+                                <DetailModal isOpen={modalIsOpen} onRequestClose={closeModal} />
                             </div>
 
                         </div>
@@ -188,4 +200,4 @@ function Detail() {
 }
 
 
-export default Detail
+export default Detail;

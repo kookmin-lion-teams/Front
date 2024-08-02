@@ -1,0 +1,27 @@
+.ModalContainer {
+    width: 60vw;
+    height:60vh;
+
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 10vh;
+
+    background-color: antiquewhite  ;
+
+}
+
+.ModalForm {
+    background-color: white;
+    padding: 1.5rem;
+    border-radius: 1rem;
+    height: 80vh;
+    border: 2px solid #cbbebe;
+    overflow-y: scroll;
+}
+
+.ModalForm::-webkit-scrollbar {
+    display: none; /* Chrome, Safari, Opera*/
+}
+
+
+

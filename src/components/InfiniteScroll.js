@@ -3,8 +3,23 @@ import { useInView } from "react-intersection-observer";
 import styles from "../CSS/InfiniteScroll.module.css";
 import PtCard from "./PtCard";
 import { useLocation } from "react-router-dom";
-
+import axios from "axios";
 function InfiniteScroll() {
+  const [data, setData] = useState([]);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      const uid = sessionStorage.getItem("uid");
+      try {
+        const response = await axios.post("back/api/user/home", { uid });
+        setData(response.data);
+      } catch (err) {
+        console.log(err.message);
+      }
+    };
+    fetchData();
+  }, []);
+
   const loaction = useLocation();
 
   const { ref, inView } = useInView({
@@ -27,24 +42,17 @@ function InfiniteScroll() {
     { name: "Kim", career: "20", content: "안녕하세요", price: 10000 },
     { name: "Kim", career: "20", content: "안녕하세요", price: 10000 },
     { name: "Kim", career: "20", content: "안녕하세요", price: 10000 },
-    
   ]);
 
   useEffect(() => {
     if (inView && key < partner.length) {
       console.log(key, partner.length);
 
-
       const newF = <PtCard key={key} partner={partner[key]}></PtCard>;
       setKey((prev) => prev + 1);
       setFragment((prev) => [...prev, newF]);
     }
   }, [inView, fragment]);
-
-
-
-
-
 
   return (
     <div className={styles.InfiniteScrollFrame}>

@@ -3,10 +3,11 @@ import styles from "../CSS/main.module.css";
 import InfiniteScroll from "./InfiniteScroll";
 import OptimizedKakaoMap from "./OptimizedKakaoMap";
 import { useEffect, useState } from "react";
-import { useFindState, useActions } from "../store/Statefind";
+import { useFindState } from "../store/Statefind";
 import FilterModal from "./Modal";
-import Modal from "react-modal";
-
+import ReservUser from "./ReservUser";
+import axios from "axios";
+import Checkout from "./Checkout";
 function Main() {
   // 전역상태 : find
   const findState = useFindState();
@@ -17,8 +18,7 @@ function Main() {
   useEffect(() => {
     if (findState === "파트너 찾기") {
       setScrollClassName(styles.scrollFrame1);
-    } 
-    else if (findState === "헬스장으로 찾기") {
+    } else if (findState === "헬스장으로 찾기") {
       setScrollClassName(styles.scrollFrame2);
     }
   }, [findState]);
@@ -98,6 +98,9 @@ function Main() {
           )}
         </div>
       )}
+      {findState === "매칭 내역" && <ReservUser />}
+
+      <Checkout></Checkout>
     </>
   );
 }

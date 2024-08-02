@@ -33,6 +33,13 @@ function SignIn() {
       console.log("로그인 성공:", response.data);
       // localStorage.setItem("id", isUser ? formData.uid : formData.pid);
       setLoginState(isUser ? formData.uid : formData.pid);
+      sessionStorage.setItem(
+        isUser ? "uid" : "pid",
+        isUser ? formData.uid : formData.pid
+      );
+      sessionStorage.setItem("name", response.data.NAME);
+      sessionStorage.setItem("gu", response.data.GU);
+      sessionStorage.setItem("dong", response.data.DONG);
       navigate(`/`);
     } catch (error) {
       console.error("로그인 실패:", error.response?.data || error.message);

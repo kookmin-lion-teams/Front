@@ -17,7 +17,8 @@ function Main() {
   useEffect(() => {
     if (findState === "파트너 찾기") {
       setScrollClassName(styles.scrollFrame1);
-    } else if (findState === "헬스장으로 찾기") {
+    } 
+    else if (findState === "헬스장으로 찾기") {
       setScrollClassName(styles.scrollFrame2);
     }
   }, [findState]);

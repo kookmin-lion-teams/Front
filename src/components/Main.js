@@ -7,16 +7,7 @@ import InfiniteScroll from "./InfiniteScroll";
 
 import Map from "./Map";
 import { useEffect, useState } from "react";
-import { useFindState, useActions } from "../store/Statefind";
-import MainModal from "./MainModal";
-
-import Modal from "react-modal";
-
-import Modal from "react-modal";
-
-import ReservUser from "./ReservUser";
-import axios from "axios";
-import Checkout from "./Checkout";
+import { useFindState } from "../store/Statefind";
 
 function Main() {
   // 전역상태 : find
@@ -79,7 +70,9 @@ function Main() {
                   </svg>
                   <span>abc헬스짐</span>
                 </div>
-                <Filter />
+                <div>
+                  <Filter />
+                </div>
               </div>
             )}
 
@@ -87,7 +80,7 @@ function Main() {
           </div>
           {findState === "헬스장으로 찾기" && (
             <div className={styles.mapFrame}>
-              <Map/>
+              <Map />
             </div>
           )}
         </div>

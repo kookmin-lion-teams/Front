@@ -16,8 +16,7 @@
   align-items: center;
 }
 
-.btn:hover {
+.filter:hover {
   background-color: #f3f4f6; /* hover:bg-gray-100 */
-  color: #3b82f6; /* hover:text-blue-700 */
   border-color: #e5e7eb; /* border stays the same */
 }

@@ -61,7 +61,7 @@ function InfiniteScroll() {
       setKey((prev) => prev + 1);
       setFragment((prev) => [...prev, newF]);
     }
-  }, [inView, fragment]);
+  }, [inView, fragment, partner]);
 
   return (
     <div className={styles.InfiniteScrollFrame}>

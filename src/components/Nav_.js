@@ -1,13 +1,14 @@
-import { useLoginState } from "../store/StateLogin";
 import { useFindState, useActions } from "../store/Statefind";
 import styles from "../CSS/Nav_.module.css";
 import SearchBar from "./SearchBar";
 import { useNavigate } from "react-router-dom";
+import { useEffect, useState } from "react";
 export default function Nav_() {
   const navigate = useNavigate();
-  // 전역상태 : 로그인
-  const loginId = useLoginState();
-  console.log("loginId:", loginId);
+  const [name] = useState(sessionStorage.getItem("name"));
+  useEffect(() => {
+    console.log(name);
+  }, [name]);
   // 전역상태 : find
   const { changeState } = useActions();
   const findState = useFindState();
@@ -28,13 +29,13 @@ export default function Nav_() {
           <SearchBar />
         </div>
         <div className={styles.registerBox}>
-          {loginId === "" ? (
+          {name ? (
+            <p>반갑습니다! {name}님!</p>
+          ) : (
             <>
               <div onClick={() => handleClicktoNav("signin")}>로그인</div>
               <div onClick={() => handleClicktoNav("signup")}>회원가입</div>
             </>
-          ) : (
-            <p>반갑습니다! {loginId}님!</p>
           )}
         </div>
       </div>

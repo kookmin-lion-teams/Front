@@ -59,7 +59,10 @@ function Signup() {
 
       console.log("회원가입 성공:", response.data);
       setLoginState(data.name);
-
+      sessionStorage.setItem(
+        isUser ? "uid" : "pid",
+        isUser ? data.uid : data.pid
+      );
       navigate(`/`);
     } catch (error) {
       console.error("회원가입 실패:", error.response?.data || error.message);

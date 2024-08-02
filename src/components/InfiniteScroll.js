@@ -46,6 +46,9 @@ function InfiniteScroll() {
   const { ref, inView } = useInView({
     threshold: 0,
   });
+
+  console.log(ret, inView);
+  
   const [fragment, setFragment] = useState([]);
   const [key, setKey] = useState(0);
 

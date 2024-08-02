@@ -1,10 +1,16 @@
 import styles from "../CSS/Signin.module.css";
-import React from "react";
+import React, { useState } from "react";
 import { useForm } from "react-hook-form";
-import { Link } from "react-router-dom";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import Toggle from "./Toggle";
+import { useActions } from "../store/StateLogin";
+
 function Signup() {
+  const { setLoginState } = useActions();
+
+  const [isUser, setIsUser] = useState(true);
+
   const navigate = useNavigate();
   const {
     register,
@@ -12,52 +18,97 @@ function Signup() {
     watch,
     formState: { errors, isSubmitting, isSubmitted },
   } = useForm();
-  const onSubmit = async (formData) => {
-    // 비밀번호 확인을 위한 필드는 formData에서 제거
-    const { confirmpw, ...dataToSubmit } = formData;
-    console.log(dataToSubmit); // 데이터 확인용 로그
+
+  const onSubmit = async (data) => {
     try {
-      // 회원가입 요청을 보내는 부분
-      const response = await axios.post("back/api/register", dataToSubmit);
+      const endpoint = isUser
+        ? "/back/api/user/register"
+        : "/back/api/partner/register";
+
+      // FormData 객체 생성
+      const formDataToSend = new FormData();
+
+      // 모든 필드를 FormData에 추가
+      for (const key in data) {
+        if (data.hasOwnProperty(key)) {
+          // 파일의 경우
+          if (key === "img" && data[key].length > 0) {
+            formDataToSend.append(key, data[key][0]);
+          } else {
+            formDataToSend.append(key, data[key]);
+          }
+        }
+      }
+
+      // uid를 pid로 변경
+      if (!isUser) {
+        formDataToSend.set("pid", formDataToSend.get("uid"));
+        formDataToSend.delete("uid");
+      }
+
+      // FormData 객체를 콘솔에 찍기
+      for (let pair of formDataToSend.entries()) {
+        console.log(pair[0] + ": " + pair[1]);
+      }
+
+      const response = await axios.post(endpoint, formDataToSend, {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+      });
+
       console.log("회원가입 성공:", response.data);
-      navigate("/");
+      setLoginState(data.name);
+
+      navigate(`/`);
     } catch (error) {
       console.error("회원가입 실패:", error.response?.data || error.message);
     }
   };
+
+  const handleToggle = (isUser) => {
+    setIsUser(isUser);
+  };
+
   // 비밀번호 확인용 watch
   const pw = watch("pw");
 
   return (
     <div className="frameBox">
       <div className="contentBox">
-        {" "}
         <div className={styles.loginContainer}>
+          <Toggle
+            left="유저 회원가입"
+            right="파트너 회원가입"
+            onToggle={handleToggle}
+          />
           <div className={styles.loginForm}>
             <h2>회원가입하세요</h2>
             <form className={styles.formform} onSubmit={handleSubmit(onSubmit)}>
+              {/* 아이디 */}
               <div className={styles.formGroup}>
-                <label className={styles.formLabel} htmlFor="id">
+                <label className={styles.formLabel} htmlFor="uid">
                   아이디
                 </label>
                 <input
                   className={styles.formInput}
-                  id="id"
+                  id="uid"
                   type="text"
                   placeholder="아이디 입력"
-                  {...register("id", {
+                  {...register("uid", {
                     required: "아이디는 필수 입니다.",
                   })}
                   aria-invalid={
-                    isSubmitted ? (errors.id ? "true" : "false") : undefined
+                    isSubmitted ? (errors.uid ? "true" : "false") : undefined
                   }
                 />
-                {errors.id && (
+                {errors.uid && (
                   <small className={styles.errorMessage}>
-                    {errors.id.message}
+                    {errors.uid.message}
                   </small>
                 )}
               </div>
+              {/* 비밀번호 */}
               <div className={styles.formGroup}>
                 <label className={styles.formLabel} htmlFor="pw">
                   비밀번호
@@ -82,6 +133,7 @@ function Signup() {
                   </small>
                 )}
               </div>
+              {/* 비밀번호 확인 */}
               <div className={styles.formGroup}>
                 <label className={styles.formLabel} htmlFor="confirmpw">
                   비밀번호 확인
@@ -104,92 +156,157 @@ function Signup() {
                   </small>
                 )}
               </div>
-              <div className={styles.formGroupRow}>
-                <div className={styles.formGroupHalf}>
-                  <label className={styles.formLabel} htmlFor="age">
-                    나이
-                  </label>
-                  <select
-                    className={styles.formInput}
-                    id="age"
-                    {...register("age", {
-                      required: "나이는 필수 입니다.",
-                    })}
-                    aria-invalid={errors.age ? "true" : "false"}
-                  >
-                    <option value="">나이 선택</option>
-                    {[...Array(101).keys()].map((age) => (
-                      <option key={age} value={age}>
-                        {age}
-                      </option>
-                    ))}
-                  </select>
-                  {errors.age && (
-                    <small className={styles.errorMessage}>
-                      {errors.age.message}
-                    </small>
-                  )}
-                </div>
-                <div className={styles.formGroupHalf}>
-                  <label className={styles.formLabel} htmlFor="gender">
-                    성별
-                  </label>
-                  <select
-                    className={styles.formInput}
-                    id="gender"
-                    {...register("gender", {
-                      required: "성별은 필수 입니다.",
-                    })}
-                    aria-invalid={errors.gender ? "true" : "false"}
-                  >
-                    <option value="">성별 선택</option>
-                    <option value="1">남</option>
-                    <option value="0">여</option>
-                  </select>
-                  {errors.gender && (
-                    <small className={styles.errorMessage}>
-                      {errors.gender.message}
-                    </small>
-                  )}
-                </div>
-              </div>
+              {/* 이름 */}
               <div className={styles.formGroup}>
-                <label className={styles.formLabel} htmlFor="height">
-                  키
+                <label className={styles.formLabel} htmlFor="name">
+                  이름
                 </label>
                 <input
                   className={styles.formInput}
-                  id="height"
-                  type="number"
-                  placeholder="키 입력"
-                  {...register("height", {
-                    required: "키는 필수 입니다.",
+                  id="name"
+                  type="text"
+                  placeholder="이름 입력"
+                  {...register("name", {
+                    required: "이름은 필수 입니다.",
                   })}
-                  aria-invalid={errors.height ? "true" : "false"}
+                  aria-invalid={errors.name ? "true" : "false"}
                 />
-                {errors.height && (
+                {errors.name && (
                   <small className={styles.errorMessage}>
-                    {errors.height.message}
+                    {errors.name.message}
                   </small>
                 )}
               </div>
+              {/* 나이 */}
               <div className={styles.formGroup}>
-                <label className={styles.formLabel} htmlFor="bodyweight">
-                  몸무게
+                <label className={styles.formLabel} htmlFor="age">
+                  나이
                 </label>
                 <input
                   className={styles.formInput}
-                  id="bodyweight"
+                  id="age"
                   type="number"
-                  placeholder="몸무게 입력"
-                  {...register("bodyweight", {
-                    required: "몸무게는 필수 입니다.",
+                  placeholder="나이 입력"
+                  {...register("age", {
+                    required: "나이는 필수 입니다.",
                   })}
-                  aria-invalid={errors.bodyweight ? "true" : "false"}
+                  aria-invalid={errors.age ? "true" : "false"}
                 />
-                {errors.bodyweight && (
+                {errors.age && (
                   <small className={styles.errorMessage}>
-                    {errors.bodyweight.message}
+                    {errors.age.message}
+                  </small>
+                )}
+              </div>
+              {/* 전화번호 */}
+              <div className={styles.formGroup}>
+                <label className={styles.formLabel} htmlFor="tel">
+                  전화번호
+                </label>
+                <input
+                  className={styles.formInput}
+                  id="tel"
+                  type="tel"
+                  placeholder="전화번호 입력"
+                  {...register("tel", {
+                    required: "전화번호는 필수 입니다.",
+                    pattern: {
+                      value: /^[0-9]{10,11}$/,
+                      message: "유효한 전화번호를 입력하세요.",
+                    },
+                  })}
+                  aria-invalid={errors.tel ? "true" : "false"}
+                />
+                {errors.tel && (
+                  <small className={styles.errorMessage}>
+                    {errors.tel.message}
+                  </small>
+                )}
+              </div>
+              {/* 구 */}
+              <div className={styles.formGroup}>
+                <label className={styles.formLabel} htmlFor="gu">
+                  구
+                </label>
+                <input
+                  className={styles.formInput}
+                  id="gu"
+                  type="text"
+                  placeholder="구 입력"
+                  {...register("gu", {
+                    required: "구는 필수 입니다.",
+                  })}
+                  aria-invalid={errors.gu ? "true" : "false"}
+                />
+                {errors.gu && (
+                  <small className={styles.errorMessage}>
+                    {errors.gu.message}
+                  </small>
+                )}
+              </div>
+              {/* 동 */}
+              <div className={styles.formGroup}>
+                <label className={styles.formLabel} htmlFor="dong">
+                  동
+                </label>
+                <input
+                  className={styles.formInput}
+                  id="dong"
+                  type="text"
+                  placeholder="동 입력"
+                  {...register("dong", {
+                    required: "동은 필수 입니다.",
+                  })}
+                  aria-invalid={errors.dong ? "true" : "false"}
+                />
+                {errors.dong && (
+                  <small className={styles.errorMessage}>
+                    {errors.dong.message}
+                  </small>
+                )}
+              </div>
+              {/* 한줄소개 */}
+              {isUser && (
+                <div className={styles.formGroup}>
+                  <label className={styles.formLabel} htmlFor="intro">
+                    한 줄 소개
+                  </label>
+                  <input
+                    className={styles.formInput}
+                    id="intro"
+                    type="text"
+                    placeholder="저는 몸을 키우고 싶습니다."
+                    {...register("intro", {
+                      required: "한 줄 소개는 필수 입니다.",
+                    })}
+                    aria-invalid={errors.intro ? "true" : "false"}
+                  />
+                  {errors.intro && (
+                    <small className={styles.errorMessage}>
+                      {errors.intro.message}
+                    </small>
+                  )}
+                </div>
+              )}
+
+              {/* 사진 */}
+              <div className={styles.formGroup}>
+                <label className={styles.formLabel} htmlFor="img">
+                  사진
+                </label>
+                <input
+                  className={styles.formInput}
+                  id="img"
+                  type="file"
+                  accept="image/*"
+                  {...register("img", {
+                    required: "사진은 필수 입니다.",
+                  })}
+                  aria-invalid={errors.img ? "true" : "false"}
+                />
+                {errors.img && (
+                  <small className={styles.errorMessage}>
+                    {errors.img.message}
                   </small>
                 )}
               </div>

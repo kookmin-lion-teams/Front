@@ -1,10 +1,15 @@
 import styles from "../CSS/Signin.module.css";
-import React from "react";
+import React, { useState } from "react";
 import { useForm } from "react-hook-form";
 import { Link } from "react-router-dom";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import Toggle from "./Toggle";
+import { useActions } from "../store/StateLogin";
+
 function SignIn() {
+  const { setLoginState } = useActions();
+  const [isUser, setIsUser] = useState(true);
   const navigate = useNavigate();
   const {
     register,
@@ -14,47 +19,65 @@ function SignIn() {
 
   const onSubmit = async (formData) => {
     try {
-      // 로그인 요청을 보내는 부분
-      const response = await axios.post("back/api/login", formData);
+      const endpoint = isUser
+        ? "/back/api/user/login"
+        : "/back/api/partner/login";
+
+      // uid를 pid로 변경
+      if (!isUser) {
+        formData.pid = formData.uid;
+        delete formData.uid;
+      }
+
+      const response = await axios.post(endpoint, formData);
       console.log("로그인 성공:", response.data);
-      localStorage.setItem("id", formData.id);
+      // localStorage.setItem("id", isUser ? formData.uid : formData.pid);
+      setLoginState(isUser ? formData.uid : formData.pid);
       navigate(`/`);
     } catch (error) {
       console.error("로그인 실패:", error.response?.data || error.message);
     }
   };
 
+  const handleToggle = (isUser) => {
+    setIsUser(isUser);
+  };
+
   return (
     <>
-      {" "}
       <div className={styles.frameBox}>
         <div className={styles.contentBox}>
           <div className={styles.loginContainer}>
+            <Toggle
+              left="유저 로그인"
+              right="파트너 로그인"
+              onToggle={handleToggle}
+            />
+
             <div className={styles.loginForm}>
               <h2>로그인 하세요</h2>
+
               <form
                 className={styles.formform}
                 onSubmit={handleSubmit(onSubmit)}
               >
                 <div className={styles.formGroup}>
-                  <label className={styles.formLabel} htmlFor="email">
+                  <label className={styles.formLabel} htmlFor="uid">
                     아이디
                   </label>
                   <input
                     className={styles.formInput}
-                    id="email"
+                    id="uid"
                     type="text"
-                    autoComplete="email"
                     placeholder="아이디 입력"
-                    {...register("id", {
+                    {...register("uid", {
                       required: "아이디는 필수 입니다.",
-                      validate: (value) => value !== "admi" || "Nice try!",
                     })}
                     aria-invalid={
-                      isSubmitted ? (errors.id ? "true" : "false") : undefined
+                      isSubmitted ? (errors.uid ? "true" : "false") : undefined
                     }
                   />
-                  {errors.id && <p>{errors.id.message}</p>}
+                  {errors.uid && <p>{errors.uid.message}</p>}{" "}
                 </div>
                 <div className={styles.formGroup}>
                   <label className={styles.formLabel} htmlFor="password">
@@ -67,18 +90,22 @@ function SignIn() {
                     autoComplete="current-password"
                     required
                     placeholder="비밀번호 입력"
-                    {...register("password", {
+                    {...register("pw", {
                       required: "비밀번호는 필수 입니다.",
                       minLength: {
                         value: 1,
-                        message: "비밀번호는 2자 이상입니다.",
+                        message: "비밀번호는 1자 이상입니다.",
                       },
                     })}
-                    aria-invalid={errors.password ? "true" : "false"}
+                    aria-invalid={errors.pw ? "true" : "false"}
                   />
-                  {errors.password && <p>{errors.password.message}</p>}
+                  {errors.pw && <p>{errors.pw.message}</p>}
                 </div>
-                <button className={styles.submitButton} type="submit">
+                <button
+                  className={styles.submitButton}
+                  type="submit"
+                  disabled={isSubmitting}
+                >
                   로그인
                 </button>
               </form>

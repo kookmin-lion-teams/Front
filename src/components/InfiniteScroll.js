@@ -53,6 +53,7 @@ function InfiniteScroll() {
   const [key, setKey] = useState(0);
 
   useEffect(() => {
+    console.log(inView,partner.length);
     if (inView && key < partner.length) {
 
       console.log('key' , key , 'partner' , partner, 'partner[key]' , partner[key])
@@ -65,7 +66,7 @@ function InfiniteScroll() {
   return (
     <div className={styles.InfiniteScrollFrame}>
       {fragment}
-      <div ref={ref}>jjjj</div>
+      <div ref={ref}></div>
     </div>
   );
 }

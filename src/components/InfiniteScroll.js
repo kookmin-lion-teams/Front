@@ -17,7 +17,10 @@ function InfiniteScroll() {
 
         console.log(response.data)
 
-        setData(response.data)
+        let CopyData = [...data]
+
+        CopyData = response.data
+        setData(CopyData)
 
         partner = data;
 

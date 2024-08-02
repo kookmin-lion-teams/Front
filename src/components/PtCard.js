@@ -9,8 +9,6 @@ function PtCard({ key, partner }) {
     console.log('card : ' , partner)
     return (
         <>
-            
-            
             <div className={styles.container} onClick={() => {
                 navigate(`/detail/${key}`, { state: { partner } })
             }}>

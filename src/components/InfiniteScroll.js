@@ -26,8 +26,6 @@ function InfiniteScroll() {
 
         setPartner(CopyData);
 
-        partner = CopyData;
-
         console.log('ptner', partner, 'data', data, 'copy' , CopyData);
 
       } catch (err) {
@@ -51,24 +49,10 @@ function InfiniteScroll() {
   const [fragment, setFragment] = useState([]);
   const [key, setKey] = useState(0);
 
-  // const [partner, setPartner] = useState([
-  //   { name: "Kim", career: "20", content: "안녕하세요", price: 10000 },
-  //   { name: "Lee", career: "25", content: "반갑습니다.", price: 10000 },
-  //   { name: "Yun", career: "30", content: "그만하세요.", price: 10000 },
-  //   { name: "Choi", career: "35", content: "화이팅입니다.", price: 10000 },
-  //   { name: "Kim", career: "20", content: "안녕하세요", price: 10000 },
-  //   { name: "Kim", career: "20", content: "안녕하세요", price: 10000 },
-  //   { name: "Kim", career: "20", content: "안녕하세요", price: 10000 },
-  //   { name: "Kim", career: "20", content: "안녕하세요", price: 10000 },
-  //   { name: "Kim", career: "20", content: "안녕하세요", price: 10000 },
-  //   { name: "Kim", career: "20", content: "안녕하세요", price: 10000 },
-  //   { name: "Kim", career: "20", content: "안녕하세요", price: 10000 },
-  //   { name: "Kim", career: "20", content: "안녕하세요", price: 10000 },
-  //   { name: "Kim", career: "20", content: "안녕하세요", price: 10000 },
-  // ]);
-
   useEffect(() => {
     if (inView && key < partner.length) {
+
+      console.log('key' , key , 'partner' , partner, 'partner[key]' , partner[key])
       const newF = <PtCard key={key} partner={partner[key]}></PtCard>;
       setKey((prev) => prev + 1);
       setFragment((prev) => [...prev, newF]);

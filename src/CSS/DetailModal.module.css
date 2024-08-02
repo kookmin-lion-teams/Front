@@ -17,18 +17,18 @@
     height: 80vh;
     border: 2px solid #cbbebe;
     overflow-y: scroll;
+
 }
 
 .ModalForm::-webkit-scrollbar {
-    display: none; /* Chrome, Safari, Opera*/
+    display: none; 
+
 }
 
 
 .Header {
     margin-bottom: 1rem;
-    position: sticky;
-
-
+    position: fixed;
 }
 
 .Header>button {

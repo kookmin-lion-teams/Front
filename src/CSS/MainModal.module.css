@@ -23,7 +23,9 @@
 
 .ModalHeader {
     margin-bottom: 1rem;
-    position: sticky;
+    position: static;
+    top : 1px;
+
 }
 
 .Modalfooter {
@@ -37,8 +39,9 @@
     background-color: transparent;
 
     border: 0;
-    position: absolute;
+    position: sticky;
     float: left;
+
 
 }
 
@@ -47,6 +50,7 @@
     font-size: 1.25rem;
     line-height: 1.75rem;
     text-align: center;
+
 }
 
 

@@ -12,11 +12,9 @@ import MainModal from "./MainModal";
 
 import Modal from "react-modal";
 
-import Modal from "react-modal";
 
-import ReservUser from "./ReservUser";
-import axios from "axios";
-import Checkout from "./Checkout";
+
+
 
 function Main() {
   // 전역상태 : find

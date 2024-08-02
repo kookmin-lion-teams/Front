@@ -1,6 +1,6 @@
 import styles from "../CSS/Filter.module.css";
 import { useState } from "react";
-import FilterModal from "./Modal";
+import FilterModal from "./MainModal";
 
 const Filter = () => {
   //Modal

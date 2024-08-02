@@ -13,6 +13,9 @@ function InfiniteScroll() {
       try {
         const response = await axios.post("back/api/user/home", { uid });
         setData(response.data)
+
+
+        console.log('scroll2' , partner)
       } catch (err) {
         console.log(err.message);
       }
@@ -22,10 +25,11 @@ function InfiniteScroll() {
 
   const loaction = useLocation();
 
-  const partner = data
+  const partner = data;
 
 
-  console.log('scroll' , partner)
+  console.log('scroll3' , partner)
+
   const { ref, inView } = useInView({
     threshold: 0,
   });

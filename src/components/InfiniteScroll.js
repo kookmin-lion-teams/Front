@@ -9,24 +9,25 @@ function InfiniteScroll() {
 
   let partner;
 
+
   useEffect(() => {
     const fetchData = async () => {
       const uid = sessionStorage.getItem("uid");
       try {
         const response = await axios.post("back/api/user/home", { uid });
 
-        console.log(response.data)
+        console.log(response.data);
 
-        let CopyData = [...data]
+        let CopyData = [...data];
 
-        CopyData = response.data
+        CopyData = response.data;
 
-        setData(CopyData)
+        setData(CopyData);
 
         partner = data;
 
-        console.log('ptner' , partner, 'data' , data);
-        
+        console.log('ptner', partner, 'data', data);
+
       } catch (err) {
         console.log(err.message);
 
@@ -40,7 +41,7 @@ function InfiniteScroll() {
 
 
 
-  console.log('scroll3' , partner)
+  console.log('scroll3', partner)
 
   const { ref, inView } = useInView({
     threshold: 0,

@@ -14,7 +14,7 @@ function InfiniteScroll() {
         const response = await axios.post("back/api/user/home", { uid });
         setData(response.data);
 
-        console.log(data);
+        console.log(response.data);
 
         
       } catch (err) {
@@ -52,8 +52,6 @@ function InfiniteScroll() {
 
   useEffect(() => {
     if (inView && key < partner.length) {
-      console.log(key, partner.length);
-
       const newF = <PtCard key={key} partner={partner[key]}></PtCard>;
       setKey((prev) => prev + 1);
       setFragment((prev) => [...prev, newF]);

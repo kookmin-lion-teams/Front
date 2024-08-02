@@ -20,13 +20,14 @@ hr{
 .Item {
     display: flex;
     align-items: center;
-    padding-top: 1.5rem;
+    justify-content: space-around;
+    padding: 1.5rem;
 }
 
 
 .Itemimg {
-    width: 12rem;
-    height: 12rem;
+    width: 15rem;
+    height: 15rem;
     border-radius: 0.5rem;
     background-color: #eee;
 }

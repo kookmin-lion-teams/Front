@@ -3,6 +3,10 @@ import styles from "../CSS/main.module.css";
 import InfiniteScroll from "./InfiniteScroll";
 import OptimizedKakaoMap from "./OptimizedKakaoMap";
 import { useEffect, useState } from "react";
+import { useFindState, useActions } from "../store/Statefind";
+import MainModal from "./MainModal";
+import Modal from "react-modal";
+
 import { useFindState } from "../store/Statefind";
 import FilterModal from "./Modal";
 import ReservUser from "./ReservUser";
@@ -44,9 +48,10 @@ function Main() {
             <span>필터</span>
           </button>
 
-          {/* Filter Modal */}
-          <FilterModal isOpen={modalIsOpen} onRequestClose={closeModal} />
+          {/* MainModal */}
+          <MainModal isOpen={modalIsOpen} onRequestClose={closeModal} />
           <div style={{ flexGrow: "1" }}></div>
+
           {/* 정렬버튼 */}
           <select className={styles.sort}>
             <option value={"기본순"}>기본순</option>

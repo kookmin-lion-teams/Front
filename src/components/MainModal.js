@@ -1,9 +1,9 @@
 // ModalComponent.js
 import React, { useState } from 'react';
 import Modal from 'react-modal';
-import styles from '../CSS/FilterModal.module.css';
+import styles from '../CSS/MainModal.module.css';
 
-const FilterModal = ({ isOpen, onRequestClose }) => {
+const MainModal = ({ isOpen, onRequestClose }) => {
 
     const [selectedDistrict, setSelectedDistrict] = useState('seongbuk');
 
@@ -107,5 +107,5 @@ const FilterModal = ({ isOpen, onRequestClose }) => {
     );
 };
 
-export default FilterModal;
+export default MainModal;
 

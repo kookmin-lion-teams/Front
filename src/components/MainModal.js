@@ -1,9 +1,9 @@
 // ModalComponent.js
 import React, { useState } from 'react';
 import Modal from 'react-modal';
-import styles from '../CSS/FilterModal.module.css';
+import styles from '../CSS/MainModal.module.css';
 
-const FilterModal = ({ isOpen, onRequestClose }) => {
+const MainModal = ({ isOpen, onRequestClose }) => {
 
     const [selectedDistrict, setSelectedDistrict] = useState('seongbuk');
 
@@ -36,11 +36,12 @@ const FilterModal = ({ isOpen, onRequestClose }) => {
                     <h3>지역</h3>
                     <div className={styles.Regionfilter}>
                         <label className={styles.Formlabel}>
-                            <input type="radio" name="district" value="seongbuk" onChange={() => handleDistrictChange('seongbuk')} />
+                            <input type="radio" name="district" value="seongbuk"  onChange={() => handleDistrictChange('seongbuk')} />
                             성북구
+                            <span></span>
                         </label>
                         <label className={styles.Formlabel}>
-                            <input type="radio" name="district" value="gwanak" onChange={() => handleDistrictChange('gwanak')} />
+                            <input type="radio" name="district" value="gwanak" defaultChecked onChange={() => handleDistrictChange('gwanak')} />
                             관악구
                         </label>
                     </div>
@@ -90,7 +91,7 @@ const FilterModal = ({ isOpen, onRequestClose }) => {
                     </div>
                 </div>
 
-                <hr></hr>
+                <hr style={{marginTop : '50px'}}></hr>
 
                 <div className={styles.Modalfooter}>
                     <button className={styles.Reset}>전체 초기화</button>
@@ -106,5 +107,5 @@ const FilterModal = ({ isOpen, onRequestClose }) => {
     );
 };
 
-export default FilterModal;
+export default MainModal;
 

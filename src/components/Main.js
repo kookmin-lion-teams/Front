@@ -7,6 +7,10 @@ import InfiniteScroll from "./InfiniteScroll";
 import OptimizedKakaoMap from "./OptimizedKakaoMap";
 
 import { useEffect, useState } from "react";
+import { useFindState, useActions } from "../store/Statefind";
+import MainModal from "./MainModal";
+import Modal from "react-modal";
+
 import { useFindState } from "../store/Statefind";
 
 function Main() {
@@ -32,6 +36,7 @@ function Main() {
       {findState === "파트너 찾기" ? (
         <div className={styles.filterContainer}>
           <Filter />
+
           {/* 정렬버튼 */}
           <select className={styles.sort}>
             <option value={"기본순"}>기본순</option>

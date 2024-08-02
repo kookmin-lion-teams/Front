@@ -47,7 +47,7 @@ function InfiniteScroll() {
     threshold: 0,
   });
 
-  console.log(ref, inView);
+
 
   const [fragment, setFragment] = useState([]);
   const [key, setKey] = useState(0);
@@ -65,7 +65,7 @@ function InfiniteScroll() {
   return (
     <div className={styles.InfiniteScrollFrame}>
       {fragment}
-      <div ref={ref}></div>
+      <div ref={ref}>jjjj</div>
     </div>
   );
 }

@@ -1,14 +1,12 @@
 import Nav_ from "./Nav_";
 import styles from "../CSS/main.module.css";
 import InfiniteScroll from "./InfiniteScroll";
-import OptimizedKakaoMap from "./OptimizedKakaoMap";
+import Map from "./Map";
 import { useEffect, useState } from "react";
 import { useFindState, useActions } from "../store/Statefind";
 import MainModal from "./MainModal";
-import Modal from "react-modal";
-
-import { useFindState } from "../store/Statefind";
-import FilterModal from "./Modal";
+// import Modal from "react-modal";
+// import FilterModal from "./Modal";
 import ReservUser from "./ReservUser";
 import axios from "axios";
 import Checkout from "./Checkout";
@@ -98,7 +96,7 @@ function Main() {
           </div>
           {findState === "헬스장으로 찾기" && (
             <div className={styles.mapFrame}>
-              <OptimizedKakaoMap />
+              <Map/>
             </div>
           )}
         </div>

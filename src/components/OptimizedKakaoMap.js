@@ -8,11 +8,12 @@ const OptimizedKakaoMap = () => {
       style={{ width: "100%", height: "100%" }}
       level={3}
     >
-      <MapMarker position={{ lat: 33.450701, lng: 126.570667 }}>
-        <div style={{ color: "#000" }}>Hello, Kakao Map!</div>
+      <MapMarker position={{ lat: 37.5665, lng: 126.9780 }}>
+        <div style={{ color: "#000" }}>Hello, Seoul!</div>
       </MapMarker>
     </Map>
   );
 };
 
 export default OptimizedKakaoMap;
+

@@ -18,10 +18,11 @@ function InfiniteScroll() {
 
         partner = data;
 
-        console.log('scroll2' , partner, data);
-
+        console.log('scroll2' , partner, 'data' , data);
+        
       } catch (err) {
         console.log(err.message);
+
       }
     };
     fetchData();
@@ -57,10 +58,10 @@ function InfiniteScroll() {
   // ]);
 
   useEffect(() => {
-    if (inView && key < partner.length) {
-      const newF = <PtCard key={key} partner={partner[key]}></PtCard>;
-      setKey((prev) => prev + 1);
-      setFragment((prev) => [...prev, newF]);
+    if (inView && key < 10) {
+      // const newF = <PtCard key={key} partner={partner[key]}></PtCard>;
+      // setKey((prev) => prev + 1);
+      // setFragment((prev) => [...prev, newF]);
     }
   }, [inView, fragment]);
 

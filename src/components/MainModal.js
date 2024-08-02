@@ -27,9 +27,10 @@ const MainModal = ({ isOpen, onRequestClose }) => {
                 <div className={styles.ModalHeader}>
                     <button onClick={onRequestClose}>ⅹ</button>
                     <div>필터</div>
+                    <hr></hr>
                 </div>
 
-                <hr></hr>
+                
 
                 <div className={styles.ModalMain}>
 

@@ -14,7 +14,7 @@ function InfiniteScroll() {
         const response = await axios.post("back/api/user/home", { uid });
         setData(response.data);
 
-        console.log(eeeeee);
+        console.log(data);
 
         
       } catch (err) {

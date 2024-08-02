@@ -9,8 +9,11 @@ import Map from "./Map";
 import { useEffect, useState } from "react";
 import { useFindState, useActions } from "../store/Statefind";
 import MainModal from "./MainModal";
-// import Modal from "react-modal";
-// import FilterModal from "./Modal";
+
+import Modal from "react-modal";
+
+import Modal from "react-modal";
+
 import ReservUser from "./ReservUser";
 import axios from "axios";
 import Checkout from "./Checkout";
@@ -18,7 +21,6 @@ import Checkout from "./Checkout";
 function Main() {
   // 전역상태 : find
   const findState = useFindState();
-  console.log("findState:", findState);
   //find 전역상태로 css 결정
   const [scrollClassName, setScrollClassName] = useState(styles.scrollFrame1);
   //find 전역상태 변경시 View 의 css가 바뀝니다.

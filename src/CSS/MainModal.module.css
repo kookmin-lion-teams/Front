@@ -19,11 +19,13 @@
 
 .ModalForm::-webkit-scrollbar {
     display: none; /* Chrome, Safari, Opera*/
-}
+}   
 
 .ModalHeader {
     margin-bottom: 1rem;
-    position: sticky;
+    position: static;
+    top : 1px;
+
 }
 
 .Modalfooter {
@@ -32,13 +34,14 @@
 
 .ModalHeader>button {
     font-size: 2rem;
-    line-height: 1rem;
+    line-height: 1.5rem;
     color: rgb(107, 114, 128);
     background-color: transparent;
 
     border: 0;
-    position: absolute;
+    position: sticky;
     float: left;
+
 
 }
 
@@ -47,6 +50,7 @@
     font-size: 1.25rem;
     line-height: 1.75rem;
     text-align: center;
+
 }
 
 

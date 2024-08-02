@@ -7,14 +7,30 @@ import axios from "axios";
 function InfiniteScroll() {
   const [data, setData] = useState([]);
 
+  const [partner, setPartner] = useState([]);
+
+
   useEffect(() => {
     const fetchData = async () => {
       const uid = sessionStorage.getItem("uid");
       try {
         const response = await axios.post("back/api/user/home", { uid });
-        setData(response.data);
+
+        console.log(response.data);
+
+        let CopyData = [...data];
+
+        CopyData = response.data;
+
+        setData(CopyData);
+
+        setPartner(CopyData);
+
+        console.log('ptner', partner, 'data', data, 'copy', CopyData);
+
       } catch (err) {
         console.log(err.message);
+
       }
     };
     fetchData();
@@ -22,37 +38,26 @@ function InfiniteScroll() {
 
   const loaction = useLocation();
 
+
+
   const { ref, inView } = useInView({
     threshold: 0,
   });
+
+
+
   const [fragment, setFragment] = useState([]);
   const [key, setKey] = useState(0);
 
-  const [partner, setPartner] = useState([
-    { name: "Kim", career: "20", content: "안녕하세요", price: 10000 },
-    { name: "Lee", career: "25", content: "반갑습니다.", price: 10000 },
-    { name: "Yun", career: "30", content: "그만하세요.", price: 10000 },
-    { name: "Choi", career: "35", content: "화이팅입니다.", price: 10000 },
-    { name: "Kim", career: "20", content: "안녕하세요", price: 10000 },
-    { name: "Kim", career: "20", content: "안녕하세요", price: 10000 },
-    { name: "Kim", career: "20", content: "안녕하세요", price: 10000 },
-    { name: "Kim", career: "20", content: "안녕하세요", price: 10000 },
-    { name: "Kim", career: "20", content: "안녕하세요", price: 10000 },
-    { name: "Kim", career: "20", content: "안녕하세요", price: 10000 },
-    { name: "Kim", career: "20", content: "안녕하세요", price: 10000 },
-    { name: "Kim", career: "20", content: "안녕하세요", price: 10000 },
-    { name: "Kim", career: "20", content: "안녕하세요", price: 10000 },
-  ]);
-
   useEffect(() => {
+    console.log(inView, partner.length, key);
     if (inView && key < partner.length) {
-      console.log(key, partner.length);
 
       const newF = <PtCard key={key} partner={partner[key]}></PtCard>;
       setKey((prev) => prev + 1);
       setFragment((prev) => [...prev, newF]);
     }
-  }, [inView, fragment]);
+  }, [inView, fragment, partner]);
 
   return (
     <div className={styles.InfiniteScrollFrame}>

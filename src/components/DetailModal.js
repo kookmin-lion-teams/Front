@@ -13,9 +13,28 @@ const DetailModal = ({ isOpen, onRequestClose }) => {
         >
 
             <div className={styles.ModalForm}>
-                <div className={styles.Header}></div>
-                <div className={styles.main}></div>
+                <div className={styles.Header}>
+                    <button>x</button>
+                    <div>1회 체험 예약</div>
+                </div>
+
+                <hr></hr>
+
+                <div className={styles.main}>
+
+                    <div className={styles.GoalContainer}></div>
+
+
+                </div>
+
+
                 <div className={styles.footer}></div>
+
+
+
+
+
+
             </div>
 
 

@@ -69,9 +69,9 @@ function InfiniteScroll() {
 
   useEffect(() => {
     if (inView && key < 10) {
-      const newF = <PtCard key={key} partner={partner[key]}></PtCard>;
-      setKey((prev) => prev + 1);
-      setFragment((prev) => [...prev, newF]);
+      // const newF = <PtCard key={key} partner={partner[key]}></PtCard>;
+      // setKey((prev) => prev + 1);
+      // setFragment((prev) => [...prev, newF]);
     }
   }, [inView, fragment]);
 

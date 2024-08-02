@@ -3,12 +3,12 @@ import { create } from "zustand";
 const useStore = create((set, get) => ({
   loginState: "",
   actions: {
-    changeState: (v) => {
+    setLoginState: (v) => {
       set(() => {
         return { loginState: v };
       });
     },
-    getState: () => {
+    getLoginState: () => {
       return get().loginState;
     },
   },

@@ -5,11 +5,13 @@
 .scrollFrame2 {
   width: 50%;
   height: 82vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 .mapFrame {
   width: 50%;
 }
-
 .filterContainer {
   display: flex;
 
@@ -28,7 +30,6 @@
   align-items: center;
   justify-content: center;
   display: flex;
-
   border-width: 0;
   border-style: solid;
   border-color: #e5e7eb;
@@ -49,4 +50,33 @@
 
 .sort:focus {
   outline: none;
+}
+
+.gymCheck {
+  position: relative;
+  width: 85%;
+  height: 9vh;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-top: 2vh;
+  padding-bottom: 2vh;
+  /* border-bottom: 2px solid #e5e5e5; */
+}
+
+.gymCheck::before,
+.gymCheck::after {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  border-bottom: 2px solid #d9d9d9;
+}
+
+.gymCheck::before {
+  left: -50px;
+}
+
+.gymCheck::after {
+  right: -50px;
 }

@@ -7,6 +7,7 @@ export default function Nav_() {
   const navigate = useNavigate();
   // 전역상태 : 로그인
   const loginId = useLoginState();
+  console.log("loginId:", loginId);
   // 전역상태 : find
   const { changeState } = useActions();
   const findState = useFindState();

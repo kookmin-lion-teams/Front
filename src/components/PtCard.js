@@ -5,7 +5,7 @@ import styles from "../CSS/PtCard.module.css";
 function PtCard({ key, partner }) {
 
     let navigate = useNavigate();
-    console.log(key)
+
 
     return (
         <>

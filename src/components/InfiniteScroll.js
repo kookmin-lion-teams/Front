@@ -24,7 +24,7 @@ function InfiniteScroll() {
 
         setData(CopyData);
 
-        partner = data;
+        partner = CopyData;
 
         console.log('ptner', partner, 'data', data, 'copy' , CopyData);
 

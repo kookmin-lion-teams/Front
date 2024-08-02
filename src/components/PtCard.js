@@ -6,7 +6,7 @@ function PtCard({ key, partner }) {
 
     let navigate = useNavigate();
 
-
+    console.log('card : ' , partner)
     return (
         <>
             

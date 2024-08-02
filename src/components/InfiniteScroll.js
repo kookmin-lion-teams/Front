@@ -25,6 +25,7 @@ function InfiniteScroll() {
   const partner = data
 
 
+  console.log('scroll' , partner)
   const { ref, inView } = useInView({
     threshold: 0,
   });

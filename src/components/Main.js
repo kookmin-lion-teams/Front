@@ -14,7 +14,6 @@ import Checkout from "./Checkout";
 function Main() {
   // 전역상태 : find
   const findState = useFindState();
-  console.log("findState:", findState);
   //find 전역상태로 css 결정
   const [scrollClassName, setScrollClassName] = useState(styles.scrollFrame1);
   //find 전역상태 변경시 View 의 css가 바뀝니다.

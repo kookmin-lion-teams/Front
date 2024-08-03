@@ -47,7 +47,7 @@ const Filter = () => {
           <span style={{ paddingBottom: "3px" }}>필터</span>
         </div>
       </button>
-      {/* Filter Modal */}
+
       <MainModal isOpen={modalIsOpen} onRequestClose={closeModal} />
       <div style={{ flexGrow: "1" }}></div>
     </>

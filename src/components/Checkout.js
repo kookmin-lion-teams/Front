@@ -6,8 +6,8 @@ const PaymentButton = () => {
   const originUrl = process.env.REACT_APP_ORIGIN_URL;
 
   // 클라이언트 키와 URL을 로그로 확인합니다.
-  console.log("Client Key:", clientKey);
-  console.log("Origin URL:", originUrl);
+  // console.log("Client Key:", clientKey);
+  // console.log("Origin URL:", originUrl);
 
   const payment = () => {
     // TossPayments 로드

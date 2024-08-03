@@ -40,6 +40,7 @@ function SignIn() {
       sessionStorage.setItem("name", response.data.NAME);
       sessionStorage.setItem("gu", response.data.GU);
       sessionStorage.setItem("dong", response.data.DONG);
+      sessionStorage.setItem("role", response.data.ROLE);
       navigate(`/`);
     } catch (error) {
       console.error("로그인 실패:", error.response?.data || error.message);

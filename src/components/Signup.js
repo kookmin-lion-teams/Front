@@ -63,6 +63,10 @@ function Signup() {
         isUser ? "uid" : "pid",
         isUser ? data.uid : data.pid
       );
+      sessionStorage.setItem("name", data.name);
+      sessionStorage.setItem("gu", data.gu);
+      sessionStorage.setItem("dong", data.dong);
+      sessionStorage.setItem("role", isUser ? 1 : 0);
       navigate(`/`);
     } catch (error) {
       console.error("회원가입 실패:", error.response?.data || error.message);

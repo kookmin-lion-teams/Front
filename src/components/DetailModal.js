@@ -1,61 +1,74 @@
-import React, { useState } from 'react';
-import Modal from 'react-modal';
-import styles from '../CSS/DetailModal.module.css';
+import React, { useEffect, useState } from "react";
+import Modal from "react-modal";
+import styles from "../CSS/DetailModal.module.css";
+import Calendar from "react-calendar";
+import "react-calendar/dist/Calendar.css";
 
 const DetailModal = ({ isOpen, onRequestClose }) => {
-    const [selectedGoal, setSelectedGoal] = useState('');
+  const [selectedYear, setSelectedYear] = useState(null);
+  const [selectedMonth, setSelectedMonth] = useState(null);
+  const [selectedDay, setSelectedDay] = useState(null);
+  const [selectedWeekday, setSelectedWeekday] = useState("");
 
-    const handleSelection = (e) => {
-        setSelectedGoal(e.target.value);
-    };
-    return (
+  useEffect(() => {
+    console.log(selectedDay, selectedMonth, selectedYear, selectedWeekday);
+  }, [selectedDay, selectedMonth, selectedYear, selectedWeekday]);
 
-        <Modal
-            isOpen={isOpen}
-            onRequestClose={onRequestClose}
-            className={styles.ModalContainer}
-            shouldCloseOnOverlayClick={true}
-        >
+  const handleDateChange = (date) => {
+    setSelectedYear(date.getFullYear());
+    setSelectedMonth(date.getMonth() + 1);
+    setSelectedDay(date.getDate());
+    setSelectedWeekday(
+      date.toLocaleDateString("ko-KR", { weekday: "short" }).charAt(0)
+    );
+  };
 
-            <div className={styles.ModalForm}>
+  const tileDisabled = ({ date, view }) => {
+    const today = new Date();
+    today.setHours(0, 0, 0, 0);
+    return view === "month" && date < today;
+  };
 
-                <div className={styles.Header}>
-                <button onClick={onRequestClose}>ⅹ</button>
-                    <div>1회 체험 예약</div>
-                </div>
+  const calendarMinDate = new Date();
 
-                <hr></hr>
+  return (
+    <Modal
+      isOpen={isOpen}
+      onRequestClose={onRequestClose}
+      className={styles.ModalContainer}
+      shouldCloseOnOverlayClick={true}
+    >
+      <div className={styles.ModalForm}>
+        <div className={styles.Header}>
+          <button onClick={onRequestClose}>ⅹ</button>
+          <div>1회 체험 예약</div>
+        </div>
 
-                <div className={styles.main}>
+        <hr />
 
-                    <div className={styles.GoalContainer}>
-                        <p className={styles.GoalTitle}>
-                            1회 체험을 희망하는 날짜를 선택해주세요
-                        </p>
+        <div className={styles.main}>
+          <div className={styles.GoalContainer}>
+            <p className={styles.GoalTitle}>
+              1회 체험을 희망하는 날짜를 선택해주세요
+            </p>
 
-                        <div className={styles.Calendar}>
-                        </div>
-
-
-                    </div>
-
-                </div>
-
-
-
-                <div className={styles.footer}>
-
-                    <button>다음</button>
-                </div>
-
+            <div className={styles.CalendarContainer}>
+              <Calendar
+                className={styles.Calendar}
+                onChange={handleDateChange}
+                tileDisabled={tileDisabled}
+                minDate={calendarMinDate}
+              />
             </div>
+          </div>
+        </div>
 
-        </Modal >
-    )
+        <div className={styles.footer}>
+          <button>다음</button>
+        </div>
+      </div>
+    </Modal>
+  );
+};
 
-
-}
-
-
-
-export default DetailModal
+export default DetailModal;

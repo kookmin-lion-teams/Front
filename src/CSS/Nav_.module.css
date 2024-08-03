@@ -6,13 +6,15 @@
 
   /* width: 100vw; */
   height: 18vh;
-  background-color: white;
+  background-color: #eee;
+  opacity: 2;
   box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1),
     0 2px 4px -1px rgba(0, 0, 0, 0.06); /* 밑부분에만 그림자 */
   position: sticky;
   top: 0;
   max-width: 100vw;
   z-index: 0;
+
 }
 .navLevel1 {
   width: 100%;

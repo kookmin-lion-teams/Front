@@ -3,12 +3,12 @@ import styles from "../CSS/Detail.module.css";
 import Modal from 'react-modal';
 import { useEffect, useState } from "react";
 import { Navigate, useNavigate, useLocation } from 'react-router-dom';
-import  DetailModal  from '../components/DetailModal'
+import DetailModal from '../components/DetailModal'
+import axios from "axios";
 
 function Detail() {
-    const loaction = useLocation();
-    const { partner } = loaction.state;
 
+    let [partner, setPartner] = useState([] )
     const [modalIsOpen, setModalIsOpen] = useState(false);
     const openModal = () => {
         setModalIsOpen(true);
@@ -19,10 +19,34 @@ function Detail() {
 
 
 
-    let [imgurl, setImg] = useState()
+
+
+    useEffect(() => {
+        const fetchData = async () => {
+            const uid = sessionStorage.getItem("uid");
+            try {
+                const response = await axios.post("../back/api/partner/detail", { uid });
+
+
+                let CopyData = [...partner];
+
+                CopyData = response.data;
+                setPartner('copy',CopyData);
+
+
+
+            } catch (err) {
+
+                console.log('ddd')
+                console.log(err.message);
+            }
+        };
+        fetchData();
+    },[]);
 
     return (
         <>
+
             <Nav_></Nav_>
             <div className={styles.container}>
 
@@ -33,7 +57,7 @@ function Detail() {
 
                         <div className={styles.Partnercontainer}>
                             <div className={styles.PartnerInfo}>
-                                <p style={{ fontSize: '1.5rem' }}>{partner.name} 트레이너</p>
+                                <p style={{ fontSize: '1.5rem' }}>{partner.NAME} 트레이너</p>
                                 <p>남성 <span className={styles.line}>|</span> 30세</p>
                                 <p>성북구 정릉동 <span className={styles.line}>|</span> 웰니스</p>
                                 <p>⭐️⭐️⭐️⭐️⭐️ <span>4.8 (28)</span></p>
@@ -82,7 +106,7 @@ function Detail() {
                             <hr></hr>
                             <ul>
                                 <li>다이어트</li>
-                                <li>근력강화</li>
+
                                 <li>재활</li>
                             </ul>
                         </div>

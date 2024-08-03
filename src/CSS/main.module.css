@@ -21,6 +21,7 @@
   align-items: center;
   padding: 20px 70px 20px 3.125rem;
   margin-top: 20px;
+  z-index: 1005;
 }
 
 .filter {

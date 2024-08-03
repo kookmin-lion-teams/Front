@@ -61,6 +61,7 @@ export default function Nav_() {
               <NavTab content="파트너 찾기" />
               <NavTab content="헬스장으로 찾기" />
               <NavTab content="예약 내역" />
+              <NavTab content="구독 내역" />
             </div>
           )}
         </>

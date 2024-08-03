@@ -1,12 +1,13 @@
 import { useActions } from "../store/Statefind";
 import styles from "../CSS/Nav_.module.css";
 import SearchBar from "./SearchBar";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 import { useEffect, useState } from "react";
 import NavTab from "./NavTab";
+
 export default function Nav_() {
   const navigate = useNavigate();
-
+  const location = useLocation();
   // 세션스토리지 값 사용하기
   const [name] = useState(sessionStorage.getItem("name"));
   const [role] = useState(sessionStorage.getItem("role"));
@@ -14,10 +15,10 @@ export default function Nav_() {
   // 전역상태 : find
   const { changeState } = useActions();
 
-  //role이 결정되면 기본 find값이 바뀝니다.
+  // role이 결정되면 기본 find값이 바뀝니다.
   useEffect(() => {
     changeState(role === "1" ? "공고 관리" : "파트너 찾기");
-  }, [role]);
+  }, [role, changeState]);
 
   // 클릭시 이동 :signup, signin
   const handleClicktoNav = (where) => {
@@ -27,7 +28,12 @@ export default function Nav_() {
   return (
     <nav className={styles.navFrame}>
       <div className={styles.navLevel1}>
-        <div className={styles.logoBox}></div>
+        <div
+          className={styles.logoBox}
+          onClick={() => {
+            navigate("/");
+          }}
+        ></div>
         <div className={styles.searchBox}>
           <SearchBar />
         </div>
@@ -42,24 +48,21 @@ export default function Nav_() {
           )}
         </div>
       </div>
-
-      {/* find 탭 관리 - role이 Parter일때와 User일때 보이는 메뉴가 다릅니다. */}
-      {role === "1" ? (
+      {location.pathname === "/" && (
         <>
-          {/* 공고 관리 , 내 고객 관리*/}
-          <div className={styles.navLevel2}>
-            <NavTab content="공고 관리" />
-            <NavTab content="내 고객 관리" />
-          </div>
-        </>
-      ) : (
-        <>
-          {/* 파트너 찾기 , 헬스장으로 찾기 , 매칭 내역 */}
-          <div className={styles.navLevel2}>
-            <NavTab content="파트너 찾기" />
-            <NavTab content="헬스장으로 찾기" />
-            <NavTab content="매칭 내역" />
-          </div>
+          {/* find 탭 관리 - role이 Partner일 때와 User일 때 보이는 메뉴가 다릅니다. */}
+          {role === "1" ? (
+            <div className={styles.navLevel2}>
+              <NavTab content="공고 관리" />
+              <NavTab content="내 고객 관리" />
+            </div>
+          ) : (
+            <div className={styles.navLevel2}>
+              <NavTab content="파트너 찾기" />
+              <NavTab content="헬스장으로 찾기" />
+              <NavTab content="매칭 내역" />
+            </div>
+          )}
         </>
       )}
     </nav>

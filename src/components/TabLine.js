@@ -3,10 +3,11 @@ const TabLine = ({ content }) => {
     <div
       style={{
         marginTop: "4vh",
-        padding: "1rem",
+        padding: "0.75rem 1rem",
         borderBottom: "1px solid #d9d9d9",
         width: "100%",
         fontWeight: "bold",
+        marginBottom: "0.75rem",
       }}
     >
       {content}

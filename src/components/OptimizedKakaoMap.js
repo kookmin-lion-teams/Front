@@ -1,8 +1,31 @@
-import React, { useState, useEffect } from 'react';
-import { Map, MapMarker } from 'react-kakao-maps-sdk';
-
+import React, { useState, useEffect } from "react";
+import { Map, MapMarker } from "react-kakao-maps-sdk";
+import axios from "axios";
 const OptimizedKakaoMap = ({ addresses }) => {
   const [positions, setPositions] = useState([]);
+  const [name, setName] = useState("");
+  const [gu, setGu] = useState(sessionStorage.getItem("gu"));
+  const [dong, setDong] = useState(sessionStorage.getItem("dong"));
+  const [gyms, setGyms] = useState([]);
+
+  useEffect(() => {
+    const searchGym = async () => {
+      try {
+        const response = await axios.get("back/api/gym/search", {
+          params: {
+            name: name,
+            gu: gu,
+            dong: dong,
+          },
+        });
+        console.log(response.data);
+        setGyms(response.data);
+      } catch (e) {
+        console.log(e);
+      }
+    };
+    searchGym();
+  }, []);
 
   useEffect(() => {
     const geocoder = new window.kakao.maps.services.Geocoder();
@@ -15,9 +38,9 @@ const OptimizedKakaoMap = ({ addresses }) => {
             lng: parseFloat(result[0].x),
             address,
           };
-          setPositions(prevPositions => [...prevPositions, newPosition]); // 상태를 즉시 업데이트
+          setPositions((prevPositions) => [...prevPositions, newPosition]); // 상태를 즉시 업데이트
         } else {
-          console.error('주소를 변환할 수 없습니다:', address);
+          console.error("주소를 변환할 수 없습니다:", address);
         }
       });
     });
@@ -29,7 +52,6 @@ const OptimizedKakaoMap = ({ addresses }) => {
       style={{ width: "100%", height: "500px" }}
       level={7} // 줌 레벨을 넓게 설정
     >
-
       {positions.map((position, index) => (
         <MapMarker
           key={index}
@@ -38,10 +60,8 @@ const OptimizedKakaoMap = ({ addresses }) => {
           <div style={{ color: "#000" }}>{position.address}</div>
         </MapMarker>
       ))}
-
     </Map>
   );
 };
 
 export default OptimizedKakaoMap;
-

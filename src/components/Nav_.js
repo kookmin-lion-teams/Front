@@ -1,26 +1,29 @@
-import { useFindState, useActions } from "../store/Statefind";
+import { useActions } from "../store/Statefind";
 import styles from "../CSS/Nav_.module.css";
 import SearchBar from "./SearchBar";
 import { useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
+import NavTab from "./NavTab";
 export default function Nav_() {
   const navigate = useNavigate();
+
+  // 세션스토리지 값 사용하기
   const [name] = useState(sessionStorage.getItem("name"));
-  useEffect(() => {
-    console.log(name);
-  }, [name]);
+  const [role] = useState(sessionStorage.getItem("role"));
+
   // 전역상태 : find
   const { changeState } = useActions();
-  const findState = useFindState();
+
+  //role이 결정되면 기본 find값이 바뀝니다.
+  useEffect(() => {
+    changeState(role === "1" ? "공고 관리" : "파트너 찾기");
+  }, [role]);
+
   // 클릭시 이동 :signup, signin
   const handleClicktoNav = (where) => {
     navigate(`/${where}`);
   };
-  // 클릭시 find 전역 상태 변경
 
-  const clickHandler = (find) => {
-    changeState(find);
-  };
   return (
     <nav className={styles.navFrame}>
       <div className={styles.navLevel1}>
@@ -39,29 +42,26 @@ export default function Nav_() {
           )}
         </div>
       </div>
-      {/* 파트너 찾기 , 헬스장으로 찾기 , 매칭 내역 */}
-      <div className={styles.navLevel2}>
-        <div
-          className={`${findState === "파트너 찾기" ? styles.matchActive : ""}`}
-          onClick={() => clickHandler("파트너 찾기")}
-        >
-          파트너 찾기
-        </div>
-        <div
-          className={`${
-            findState === "헬스장으로 찾기" ? styles.matchActive : ""
-          }`}
-          onClick={() => clickHandler("헬스장으로 찾기")}
-        >
-          헬스장으로 찾기
-        </div>
-        <div
-          className={`${findState === "매칭 내역" ? styles.matchActive : ""}`}
-          onClick={() => clickHandler("매칭 내역")}
-        >
-          매칭 내역
-        </div>
-      </div>
+
+      {/* find 탭 관리 - role이 Parter일때와 User일때 보이는 메뉴가 다릅니다. */}
+      {role === "1" ? (
+        <>
+          {/* 공고 관리 , 내 고객 관리*/}
+          <div className={styles.navLevel2}>
+            <NavTab content="공고 관리" />
+            <NavTab content="내 고객 관리" />
+          </div>
+        </>
+      ) : (
+        <>
+          {/* 파트너 찾기 , 헬스장으로 찾기 , 매칭 내역 */}
+          <div className={styles.navLevel2}>
+            <NavTab content="파트너 찾기" />
+            <NavTab content="헬스장으로 찾기" />
+            <NavTab content="매칭 내역" />
+          </div>
+        </>
+      )}
     </nav>
   );
 }

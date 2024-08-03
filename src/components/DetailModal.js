@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import Modal from "react-modal";
 import styles from "../CSS/DetailModal.module.css";
 import Calendar from "react-calendar";
+import PaymentButton from './Checkout'
 import "react-calendar/dist/Calendar.css";
 
 const DetailModal = ({ isOpen, onRequestClose }) => {
@@ -252,29 +253,21 @@ const DetailModal = ({ isOpen, onRequestClose }) => {
                     {
                         level < 5
                             ? <button onClick={() => {
-                                if (level < 5) { setLevel(level + 1) }
+                                setLevel(level + 1) 
                             }}>다음</button>
 
                             : null
                     }
                     {
                         level == 5
-                            ? <button onClick={() => {
-
-                            }}>결제 단계로</button>
-
+                            ? <PaymentButton></PaymentButton>
                             : null
                     }
                 </div>
-
-
-
-
             </div>
         </Modal >
     );
 
-   
 };
 
 export default DetailModal;

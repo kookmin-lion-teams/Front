@@ -60,7 +60,7 @@ export default function Nav_() {
             <div className={styles.navLevel2}>
               <NavTab content="파트너 찾기" />
               <NavTab content="헬스장으로 찾기" />
-              <NavTab content="매칭 내역" />
+              <NavTab content="예약 내역" />
             </div>
           )}
         </>

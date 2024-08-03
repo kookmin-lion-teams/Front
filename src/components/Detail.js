@@ -2,7 +2,7 @@ import Nav_ from './Nav_'
 import styles from "../CSS/Detail.module.css";
 import Modal from 'react-modal';
 import { useEffect, useState } from "react";
-import { Navigate, useNavigate, useLocation } from 'react-router-dom';
+import { Navigate, useNavigate, useLocation,location } from 'react-router-dom';
 import DetailModal from '../components/DetailModal'
 import axios from "axios";
 
@@ -17,23 +17,23 @@ function Detail() {
         setModalIsOpen(false);
     };
 
+    const location =useLocation()
+    const ptner = location.partner;
 
 
-
+    console.log('ddd',ptner)
 
     useEffect(() => {
         const fetchData = async () => {
             const uid = sessionStorage.getItem("uid");
             try {
-                const response = await axios.post("../back/api/partner/detail", { uid });
+                const response = await axios.post("/back/api/partner/detail", { uid });
 
 
                 let CopyData = [...partner];
 
                 CopyData = response.data;
                 setPartner('copy',CopyData);
-
-
 
             } catch (err) {
 

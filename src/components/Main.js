@@ -98,9 +98,9 @@ function Main() {
           )}
         </div>
       )}
-      {findState === "매칭 내역" && <ReservUser />}
-      {findState === "공고 관리" && <ManagePaper />}
-      {findState === "내 고객 관리" && <ManageUser />}
+      {findState === "예약 내역" && <ReservUser/>}
+      {findState === "공고 관리" && <ManagePaper/>}
+      {findState === "내 고객 관리" && <ManageUser/>}
       {/* <Checkout></Checkout> */}
     </>
   );

@@ -1,12 +1,38 @@
 import React, { useState, useEffect } from "react";
 import { Map, MapMarker } from "react-kakao-maps-sdk";
 import axios from "axios";
-const OptimizedKakaoMap = ({ addresses }) => {
+
+
+const OptimizedKakaoMap = () => {
   const [positions, setPositions] = useState([]);
   const [name, setName] = useState("");
   const [gu, setGu] = useState(sessionStorage.getItem("gu"));
   const [dong, setDong] = useState(sessionStorage.getItem("dong"));
   const [gyms, setGyms] = useState([]);
+  const [gymAddresses, setGymAddresses] = useState([]); // 주소를 저장할 state
+
+  /* useEffect(() => {
+    const searchGym = async () => {
+      try {
+        const response = await axios.get("back/api/gym/search", {
+          params: {
+            name: name,
+            gu: gu,
+            dong: dong,
+          },
+        });
+
+        setGyms(response.data);
+        console.log(response.data);
+        
+
+      } catch (e) {
+        console.log(e);
+      }
+    };
+    searchGym();
+  }, []);
+  */
 
   useEffect(() => {
     const searchGym = async () => {
@@ -18,8 +44,13 @@ const OptimizedKakaoMap = ({ addresses }) => {
             dong: dong,
           },
         });
-        console.log(response.data);
+        
         setGyms(response.data);
+        
+        // 주소만 추출하여 배열로 만들기
+        const addresses = response.data.map(gym => gym.ADDRESS);
+        console.log(addresses); // 주소 배열을 콘솔에 출력
+        setGymAddresses(addresses)
       } catch (e) {
         console.log(e);
       }
@@ -27,10 +58,12 @@ const OptimizedKakaoMap = ({ addresses }) => {
     searchGym();
   }, []);
 
+
+
   useEffect(() => {
     const geocoder = new window.kakao.maps.services.Geocoder();
 
-    addresses.forEach((address) => {
+    gymAddresses.forEach((address) => {
       geocoder.addressSearch(address, (result, status) => {
         if (status === window.kakao.maps.services.Status.OK) {
           const newPosition = {
@@ -44,7 +77,7 @@ const OptimizedKakaoMap = ({ addresses }) => {
         }
       });
     });
-  }, [addresses]);
+  }, [gymAddresses]);
 
   return (
     <Map

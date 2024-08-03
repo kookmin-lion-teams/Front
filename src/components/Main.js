@@ -1,11 +1,14 @@
+// import 컴포넌트
+import Map from "./Map";
 import Nav_ from "./Nav_";
 import Filter from "./Filter";
 import Checkout from "./Checkout";
 import ReservUser from "./ReservUser";
+import ManageUser from "./ManageUser";
+import ManagePaper from "./ManagePaper";
 import styles from "../CSS/main.module.css";
 import InfiniteScroll from "./InfiniteScroll";
-
-import Map from "./Map";
+// import 기능
 import { useEffect, useState } from "react";
 
 import { useFindState, useActions } from "../store/Statefind";
@@ -21,6 +24,7 @@ import Modal from "react-modal";
 function Main() {
   // 전역상태 : find
   const findState = useFindState();
+  console.log(findState);
   //find 전역상태로 css 결정
   const [scrollClassName, setScrollClassName] = useState(styles.scrollFrame1);
   //find 전역상태 변경시 View 의 css가 바뀝니다.
@@ -35,7 +39,7 @@ function Main() {
   return (
     <>
       <Nav_ />
-
+      {/* 아래 부터는 findState의 값에 따라 보여지는 컴포넌트들이 달라집니다. */}
       {/* 필터 */}
       {findState === "파트너 찾기" ? (
         <div className={styles.filterContainer}>
@@ -51,7 +55,7 @@ function Main() {
       ) : (
         <></>
       )}
-      {findState !== "매칭 내역" && (
+      {(findState === "헬스장으로 찾기" || findState === "파트너 찾기") && (
         <div style={{ display: "flex" }}>
           <div className={scrollClassName}>
             {findState === "헬스장으로 찾기" && (
@@ -95,8 +99,9 @@ function Main() {
         </div>
       )}
       {findState === "매칭 내역" && <ReservUser />}
-
-      <Checkout></Checkout>
+      {findState === "공고 관리" && <ManagePaper />}
+      {findState === "내 고객 관리" && <ManageUser />}
+      {/* <Checkout></Checkout> */}
     </>
   );
 }

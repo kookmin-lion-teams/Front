@@ -7,19 +7,21 @@ import axios from "axios";
 function InfiniteScroll() {
   const [partner, setPartner] = useState([]);
   useEffect(() => {
-    console.log("ptnr: ", partner);
+    console.log("partner: ", partner);
   }, [partner]);
+
   useEffect(() => {
     const fetchData = async () => {
       const uid = sessionStorage.getItem("uid");
       try {
-        const response = await axios.post("back/api/user/home", { uid });
+        const response = await axios.post("/back/api/user/home", { uid });
         console.log(response.data);
         const CopyData = response.data;
         setPartner(CopyData);
         console.log("ptner", partner, "copy", CopyData);
+
       } catch (err) {
-        console.log("222", err.message);
+        console.log("123", err.message);
       }
     };
     fetchData();

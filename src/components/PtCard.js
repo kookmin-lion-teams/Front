@@ -1,17 +1,17 @@
 import { useState } from "react";
-import { Navigate, useNavigate, uselocation } from 'react-router-dom';
+import { Navigate, useNavigate, uselocation,location, useLocation } from 'react-router-dom';
 import styles from "../CSS/PtCard.module.css";
 
 function PtCard({ Key, partner }) {
 
     let navigate = useNavigate();
     
-
+    let location = useLocation();
 
     return (
         <>
             <div className={styles.container} onClick={() => {
-                navigate(`/detail/${Key}`)
+                navigate(`/detail/${Key}`, {state : {partner : partner}})
             }}>
 
                 <div className={styles.cardimg}></div>

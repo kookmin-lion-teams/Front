@@ -15,10 +15,10 @@ function InfiniteScroll() {
       const uid = sessionStorage.getItem("uid");
       try {
         const response = await axios.post("/back/api/user/home", { uid });
-        console.log(response.data);
+
         const CopyData = response.data;
         setPartner(CopyData);
-        console.log("ptner", partner, "copy", CopyData);
+
 
       } catch (err) {
         console.log("123", err.message);

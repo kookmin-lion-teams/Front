@@ -4,31 +4,37 @@ import styles from "../CSS/PtCard.module.css";
 
 function PtCard({ Key, partner }) {
 
+
     let navigate = useNavigate();
     
     let location = useLocation();
 
+
+
+
     return (
         <>
             <div className={styles.container} onClick={() => {
-                navigate(`/detail/${Key}`, {state : {partner : partner}})
+
+                navigate(`/detail/${Key}`, {state : {ptner : partner}})
             }}>
 
                 <div className={styles.cardimg}></div>
                 <div className={styles.CardContainer}>
 
-                    <h2>{partner.NAME}트레이너</h2>
-                    <p>{partner.INTRO}</p>
+                    <h2>{partner.trainer_name}트레이너</h2>
+                    <p>{partner.trainer_intro}</p>
 
-                    <span className={styles.tag}>{partner.TAG}</span>
+                    <span className={styles.tag}>{partner.expert1}</span>
 
                     <span className={styles.line}>|</span>
+                    <span className={styles.tag}>{partner.expert1}</span>
                     <span className={styles.itemsContainer}>
                         {partner.IG}
                     </span>
 
                     <span className={styles.itemsCosntainer}>
-                        ⭐️ {partner.AVG_RATE}
+                        ⭐️ {partner.avg_rate}
                     </span>
 
                 </div>
@@ -36,10 +42,10 @@ function PtCard({ Key, partner }) {
                 <div style={{ marginLeft: '5px' }}>
 
                     <div>
-                        <span>{(partner.EPRICE/partner.PRICE)}</span>%
-                        <span className={styles.discount}>{partner.PRICE}원</span>
+                        <span>{(100-(partner.eprice/partner.price)*100).toFixed(1)}</span>%
+                        <span className={styles.discount}>{partner.price}원</span>
                     </div>
-                    <div class={styles.nowprice}>{partner.EPRICE}</div>원
+                    <div class={styles.nowprice}>{partner.eprice}</div>원
 
                 </div>
             </div>

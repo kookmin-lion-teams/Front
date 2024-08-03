@@ -6,6 +6,7 @@ import Checkout from "./Checkout";
 import ReservUser from "./ReservUser";
 import ManageUser from "./ManageUser";
 import ManagePaper from "./ManagePaper";
+import SubscribeUser from './SubscribeUser'
 import styles from "../CSS/main.module.css";
 import InfiniteScroll from "./InfiniteScroll";
 // import 기능
@@ -99,6 +100,7 @@ function Main() {
         </div>
       )}
       {findState === "예약 내역" && <ReservUser/>}
+      {findState === "구독 내역" && <SubscribeUser/>}
       {findState === "공고 관리" && <ManagePaper/>}
       {findState === "내 고객 관리" && <ManageUser/>}
       {/* <Checkout></Checkout> */}

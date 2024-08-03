@@ -6,11 +6,11 @@ import PaymentButton from './Checkout'
 import "react-calendar/dist/Calendar.css";
 
 const DetailModal = ({ isOpen, onRequestClose }) => {
-  const [selectedGoal, setSelectedGoal] = useState("");
+    const [selectedGoal, setSelectedGoal] = useState("");
 
-  const handleSelection = (e) => {
-    setSelectedGoal(e.target.value);
-  };
+    const handleSelection = (e) => {
+        setSelectedGoal(e.target.value);
+    };
 
 
     const [level, setLevel] = useState(0);
@@ -114,7 +114,7 @@ const DetailModal = ({ isOpen, onRequestClose }) => {
                                                         setSelectedTime(t)
                                                         setChecktimebutton(idx);
 
-                                                        console.log(checktimebutton)
+
                                                     }} style={{
 
                                                         border: checktimebutton == idx
@@ -247,20 +247,20 @@ const DetailModal = ({ isOpen, onRequestClose }) => {
                                 if (level >= 0) {
                                     setLevel(level - 1)
                                 }
-                            }} style={{background : 'white', color : 'black'}}>이전</button>
+                            }} style={{ background: 'white', color: 'black' }}>이전</button>
                             : null
                     }
                     {
                         level < 5
                             ? <button onClick={() => {
-                                setLevel(level + 1) 
+                                setLevel(level + 1)
                             }}>다음</button>
 
                             : null
                     }
                     {
                         level == 5
-                            ? <PaymentButton></PaymentButton>
+                            ? <PaymentButton price={'20000'}></PaymentButton>
                             : null
                     }
                 </div>

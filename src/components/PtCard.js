@@ -7,7 +7,7 @@ function PtCard({ Key, partner }) {
     let navigate = useNavigate();
     
 
-    console.log('key',Key)
+
     return (
         <>
             <div className={styles.container} onClick={() => {

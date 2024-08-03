@@ -29,7 +29,7 @@ function InfiniteScroll() {
         console.log('ptner', partner, 'data', data, 'copy', CopyData);
 
       } catch (err) {
-        console.log(err.message);
+        console.log('222',err.message);
 
       }
     };
@@ -53,7 +53,7 @@ function InfiniteScroll() {
     console.log(inView, partner.length, key);
     if (inView && key < partner.length) {
 
-      const newF = <PtCard key={key} partner={partner[key]}></PtCard>;
+      const newF = <PtCard Key={key} partner={partner[key]}></PtCard>;
       setKey((prev) => prev + 1);
       setFragment((prev) => [...prev, newF]);
     }

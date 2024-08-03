@@ -7,7 +7,16 @@ import InfiniteScroll from "./InfiniteScroll";
 
 import Map from "./Map";
 import { useEffect, useState } from "react";
-import { useFindState } from "../store/Statefind";
+
+import { useFindState, useActions } from "../store/Statefind";
+import MainModal from "./MainModal";
+
+import Modal from "react-modal";
+
+
+
+
+
 
 function Main() {
   // 전역상태 : find

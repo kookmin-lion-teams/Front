@@ -5,12 +5,11 @@ import Calendar from "react-calendar";
 import "react-calendar/dist/Calendar.css";
 
 const DetailModal = ({ isOpen, onRequestClose }) => {
+  const [selectedGoal, setSelectedGoal] = useState("");
 
-    const [selectedGoal, setSelectedGoal] = useState('');
-
-    const handleSelection = (e) => {
-        setSelectedGoal(e.target.value);
-    };
+  const handleSelection = (e) => {
+    setSelectedGoal(e.target.value);
+  };
 
 
     const [level, setLevel] = useState(0);
@@ -47,11 +46,13 @@ const DetailModal = ({ isOpen, onRequestClose }) => {
     const TimeList = ['10:00', '11:00', '12:00', '13:00', '14:00', '15:00', '16:00', '17:00', '18:00', '19:00', '20:00', '21:00'];
     const [checktimebutton, setChecktimebutton] = useState(0);
 
+
     const GoalList = ['다이어트', '기초 체력 증진', '근력 강화', '벌크업', '체형 교정', '재활'];
     const [checkgoalbutton, setCheckgoalbutton] = useState(0);
 
     const CareerList = ['입문자/초급자', '중급자', '체형 교정'];
     const [checkcareerbutton, setCheckcareerbutton] = useState(0);
+
 
     const Timeslot = ['오전(10시 ~ 12시)', '오후(12시 ~ 18시)', '저녁(18시 ~ 22시)']
     const [checkTimeslot, setCheckTimeslot] = useState(0);
@@ -272,6 +273,8 @@ const DetailModal = ({ isOpen, onRequestClose }) => {
             </div>
         </Modal >
     );
+
+   
 };
 
 export default DetailModal;

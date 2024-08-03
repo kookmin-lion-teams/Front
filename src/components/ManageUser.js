@@ -1,15 +1,40 @@
 import TabFrame from "./TabFrame";
+import styles from "../CSS/ManageUser.module.css";
+import React, { useState } from "react";
 import TabLine from "./TabLine";
 const ManageUser = () => {
+  const [manage, setManage] = useState();
+
   return (
-    <TabFrame>
-      <TabLine content="파트너 기본 정보" />
-      <TabLine content="파트너 소개글" />
-      <TabLine content="Expert" />
-      <TabLine content="레슨 가능 시간" />
-      <TabLine content="가격 정보" />
-      <TabLine content="사진" />
-    </TabFrame>
+    <div style={{ width: "100%" }}>
+      <div className={styles.manageTab}>
+        <div
+          className={`${manage === `구독` ? styles.matchActive : ""}`}
+          onClick={() => setManage("구독")}
+        >
+          구독 관리
+        </div>
+        <div
+          className={`${manage === `예약` ? styles.matchActive : ""}`}
+          onClick={() => setManage("예약")}
+        >
+          예약 관리
+        </div>
+      </div>
+      <TabFrame>
+        {manage === "구독" ? (
+          <>
+            <TabLine content="구독 중인 고객" />
+          </>
+        ) : (
+          <>
+            <TabLine content="확정된 예약" />
+            <TabLine content="대기 중인 예약" />
+            <TabLine content="이전 예약" />
+          </>
+        )}
+      </TabFrame>
+    </div>
   );
 };
 export default ManageUser;

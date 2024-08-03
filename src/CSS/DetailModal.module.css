@@ -48,9 +48,11 @@ hr {
 }
 
 
+
 .main {
   height: 70%;
 }
+
 
 
 
@@ -59,9 +61,7 @@ hr {
   height: 60vh;
 }
 
-
 /* 0 */
-
 
 .GoalTitle {
   font-size: 1.5rem;
@@ -79,9 +79,8 @@ hr {
   background-color: #eee; */
 }
 
-
-
 /* 1 */
+
 
 .TimeGrid {
   display: grid;
@@ -89,8 +88,10 @@ hr {
 
   gap: 2rem;
 
+
   padding-top: 2rem;
 }
+
 
 .TimeGrid>div {
   display: flex;
@@ -148,6 +149,7 @@ hr {
 }
 
 /* 5 */
+
 
 .GoalTitle > p{
   padding-top: 1rem;

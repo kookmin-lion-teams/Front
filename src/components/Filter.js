@@ -1,6 +1,6 @@
 import styles from "../CSS/Filter.module.css";
 import { useState } from "react";
-import FilterModal from "./MainModal";
+import MainModal from "./MainModal";
 
 const Filter = () => {
   //Modal
@@ -48,7 +48,7 @@ const Filter = () => {
         </div>
       </button>
       {/* Filter Modal */}
-      <FilterModal isOpen={modalIsOpen} onRequestClose={closeModal} />
+      <MainModal isOpen={modalIsOpen} onRequestClose={closeModal} />
       <div style={{ flexGrow: "1" }}></div>
     </>
   );

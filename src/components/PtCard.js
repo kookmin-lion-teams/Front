@@ -2,13 +2,16 @@ import { useState } from "react";
 import { Navigate, useNavigate, uselocation } from 'react-router-dom';
 import styles from "../CSS/PtCard.module.css";
 
-function PtCard({ key, partner }) {
+function PtCard({ Key, partner }) {
 
     let navigate = useNavigate();
+    
+
+    console.log('key',Key)
     return (
         <>
             <div className={styles.container} onClick={() => {
-                navigate(`/detail/${key}`, { state: { partner } })
+                navigate(`/detail/${Key}`)
             }}>
 
                 <div className={styles.cardimg}></div>

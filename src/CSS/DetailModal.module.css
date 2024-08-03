@@ -47,17 +47,20 @@ hr {
   text-align: center;
 }
 
-.main {
-}
+
+.main {height: 70%;}
+
+
 
 .GoalContainer {
   padding: 1rem;
   height: 60vh;
 }
 
-.GoalContainer > p {
-  margin-bottom: 2rem;
-}
+
+/* 0 */
+
+
 .GoalTitle {
   font-size: 1.5rem;
   font-weight: 500;
@@ -74,13 +77,33 @@ hr {
   background-color: #eee; */
 }
 
-.footer {
-  height: 5%;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  padding: 1rem;
+
+
+/* 1 */
+
+.Grid{
+    display: grid;
+    grid-template-columns: repeat(4,1fr);
+
+    gap : 1rem;
+
+    padding-top: 2rem;
 }
+
+.Grid > div{
+    text-align: center;
+    border: 1px solid black;
+    height: 3rem;
+}
+/*  */
+.footer {
+    height: 5%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding : 1rem;
+    gap : 1.5rem;
+
 
 .footer > button {
   width: 21rem;

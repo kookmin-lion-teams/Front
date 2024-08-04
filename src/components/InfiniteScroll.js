@@ -19,6 +19,7 @@ function InfiniteScroll() {
         const CopyData = response.data;
         setPartner(CopyData);
 
+        console.log(partner)
 
       } catch (err) {
         console.log("123", err.message);

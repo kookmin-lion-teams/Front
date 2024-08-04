@@ -23,12 +23,12 @@ function PtCard({ Key, partner }) {
                 <div className={styles.CardContainer}>
 
                     <h2>{partner.trainer_name} <span>Partner</span></h2>
-                    <p>{partner.trainer_intro}</p>
+                    <p></p>
 
                     <span className={styles.tag}>{partner.expert1}</span>
 
                     <span className={styles.line}>|</span>
-                    <span className={styles.tag}>{partner.expert1}</span>
+                    <span className={styles.tag}>{partner.expert2}</span>
                     <span className={styles.itemsContainer}>
                         {partner.IG}
                     </span>
@@ -42,6 +42,7 @@ function PtCard({ Key, partner }) {
                 <div style={{ marginLeft: '5px' }}>
 
                     <div>
+                        <div className={styles.user}><div>1회 체험</div></div>
                         <span>{(100-(partner.eprice/partner.price)*100).toFixed(1)}</span>%
                         <span className={styles.discount}>{partner.price}원</span>
                     </div>

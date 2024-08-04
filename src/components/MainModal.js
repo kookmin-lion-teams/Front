@@ -24,7 +24,7 @@ const MainModal = ({ isOpen, onRequestClose }) => {
     'taglist': ['다이어트', '체력증진', '근력성장', '벌크업', '체형교정', '재활'],
   }
   const gender = 'Gender';
-  console.log(`select${gender}`)
+
   return (
     <Modal
       isOpen={isOpen}

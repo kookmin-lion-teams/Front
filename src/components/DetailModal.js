@@ -81,7 +81,7 @@ const DetailModal = ({ isOpen, onRequestClose }) => {
                     {
                         {
                             0:
-                                <div className={styles.GoalContainer} >
+                                <div className={styles.GoalContainer}>
                                     <p className={styles.GoalTitle}>
                                         1회 체험을 희망하는 날짜를 선택해주세요
                                     </p>
@@ -110,7 +110,7 @@ const DetailModal = ({ isOpen, onRequestClose }) => {
                                         {
                                             TimeList.map((t, idx) => {
                                                 return (
-                                                    <div key={idx} onClick={() => {
+                                                    <div onClick={() => {
                                                         setSelectedTime(t)
                                                         setChecktimebutton(idx);
 
@@ -136,7 +136,7 @@ const DetailModal = ({ isOpen, onRequestClose }) => {
                                         {
                                             GoalList.map((t, idx) => {
                                                 return (
-                                                    <div key={idx} onClick={() => {
+                                                    <div onClick={() => {
                                                         setSelectedGoal(t)
                                                         setCheckgoalbutton(idx);
                                                     }} style={{
@@ -160,7 +160,7 @@ const DetailModal = ({ isOpen, onRequestClose }) => {
                                         {
                                             CareerList.map((t, idx) => {
                                                 return (
-                                                    <div key={idx} onClick={() => {
+                                                    <div onClick={() => {
                                                         setSelectedCareer(t)
                                                         setCheckcareerbutton(idx);
                                                     }} style={{
@@ -183,7 +183,7 @@ const DetailModal = ({ isOpen, onRequestClose }) => {
                                         {
                                             Timeslot.map((t, idx) => {
                                                 return (
-                                                    <div key={idx} onClick={() => {
+                                                    <div onClick={() => {
                                                         setSelectedTimeslot(t)
                                                         setCheckTimeslot(idx);
                                                     }} style={{

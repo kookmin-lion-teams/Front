@@ -178,7 +178,19 @@ const ManagePaper = () => {
               className={styles.cInput}
               value={partnerInfo.gname}
               onChange={handleInputChange}
+              disabled
+              readOnly
             />
+            <button
+              style={{
+                marginLeft: "10px",
+                padding: "0.25rem 0.75rem",
+                border: "1px solid #979797",
+                borderRadius: "5px",
+              }}
+            >
+              선택
+            </button>
           </div>
           <div className={styles.rightBorder}>인스타그램</div>
           <div style={{ padding: "0px 1rem" }}>

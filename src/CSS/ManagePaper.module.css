@@ -49,3 +49,23 @@ input[type="checkbox"] {
 .fileInput::placeholder {
   color: #9ca3af; /* dark:placeholder-gray-400 */
 }
+/* input */
+.cInput {
+  background-color: #f3f4f6;
+  border: 1px solid #d1d5db;
+  color: #111827;
+  font-size: 0.875rem;
+  border-radius: 0.375rem;
+  padding: 0.625rem 1rem;
+  box-sizing: border-box; /* Ensure padding and border are included in the element's total width and height */
+}
+
+.cInput:focus {
+  outline: none;
+  border-color: #3b82f6; /* focus:border-blue-500 */
+  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.5); /* focus:ring-blue-500 */
+}
+
+.cbContainer {
+  display: flex;
+}

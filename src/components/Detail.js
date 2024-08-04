@@ -46,7 +46,8 @@ function Detail() {
         const fetchData = async () => {
             const partner_id = location.state.ptner.PID;
             try {
-                const response = await axios.get("/back/api/partner/detail", { partner_id });
+                const response = await axios.get("/back/api/partner/detail", { params
+                    :{ partner_id }});
 
 
 
@@ -57,7 +58,7 @@ function Detail() {
                 setPartner(CopyData);
 
 
-                console.log(CopyData)
+                console.log(CopyData , 'dddd')
 
             } catch (err) {
 

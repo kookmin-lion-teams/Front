@@ -19,12 +19,12 @@ import Modal from "react-modal";
 
 
 
-
-
-
 function Main() {
   // 전역상태 : find
   const findState = useFindState();
+
+  const {changeState} = useActions();
+
   console.log(findState);
   //find 전역상태로 css 결정
   const [scrollClassName, setScrollClassName] = useState(styles.scrollFrame1);
@@ -36,6 +36,31 @@ function Main() {
       setScrollClassName(styles.scrollFrame2);
     }
   }, [findState]);
+
+
+ // window.location.href를 사용하여 현재 페이지의 URL을 가져올 수 있습니다.
+const currentUrl = window.location.href;
+
+// 또는, window.location 객체에서 pathname, search, hash 등을 분리해서 사용할 수도 있습니다.
+const currentPathname = window.location.pathname;
+const currentSearchParams = window.location.search;
+const currentHash = window.location.hash;
+
+// 가져온 URL을 콘솔에 출력합니다.
+console.log('Current URL:', currentUrl);
+console.log('Pathname:', currentPathname);
+console.log('Search Parameters:', currentSearchParams);
+console.log('Hash:', currentHash);
+
+
+
+//결제 완료하면 예약 내역 페이지로 넘어감
+useEffect(()=>{
+  if(currentUrl[currentUrl.length-1] != '/'){
+    window.history.pushState({}, '', '/');
+    changeState('예약 내역')
+  }
+},[currentUrl])
 
   return (
     <>

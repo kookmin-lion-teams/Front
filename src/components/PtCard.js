@@ -22,7 +22,7 @@ function PtCard({ Key, partner }) {
                 <div className={styles.cardimg}></div>
                 <div className={styles.CardContainer}>
 
-                    <h2>{partner.trainer_name}트레이너</h2>
+                    <h2>{partner.trainer_name} <span>Partner</span></h2>
                     <p>{partner.trainer_intro}</p>
 
                     <span className={styles.tag}>{partner.expert1}</span>

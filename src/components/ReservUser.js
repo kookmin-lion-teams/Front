@@ -61,8 +61,6 @@ export default function ReservUser() {
 
 
 
-
-
         <div className={styles.Reserved}>
           <div className={styles.ReservedInfo}>
             <span>박석진 트레이너</span>

@@ -114,8 +114,29 @@ function ReservUserModal({ activeModal, closeModal, selectmodal }) {
                             '구독신청':
 
 
-                                <div>구독신청</div>
+                                <div className={styles.MainContainer}>
+                                    {
+                                        {
+                                            0:
+                                                <div className={styles.ApplyContent} >
+                                                    <div>한달동안 진행할 PT 횟수를 입력해주세요</div>
+                                                    <input placeholder='회'></input>
+                                                    <p>* 최대 30일까지만 입력 가능합니다.</p>
+                                                </div>,
 
+                                            1:
+                                                <div className={styles.ApplyContent} >
+                                                    <div>PT를 시작할 날짜를 선택해주세요</div>
+                                                    <div className={styles.calender}>캘린더</div>
+                                                </div>,
+                                            2:
+                                                <div className={styles.ApplyContent} >
+                                                    <div>구독 정보를 확인해주세요</div>
+                                                    
+                                                </div>,
+                                        }[cnt]
+                                    }
+                                </div>
 
 
                         }[selectmodal]

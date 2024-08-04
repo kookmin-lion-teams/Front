@@ -61,8 +61,7 @@ hr {
 
 
 /*상세보기*/
-.Content,
-.payment {
+.Content{
     margin-top: 2rem;
 }
 
@@ -116,6 +115,38 @@ hr {
     padding : 1.5rem;
 }
 
+/* 구독신청 */
+
+
+.ApplyContent{
+    padding: 2rem;
+}
+
+.ApplyContent > div{
+    font-size: 1.3rem;
+    font-weight: 500;
+    margin-bottom: 2rem;
+}
+
+.ApplyContent input{
+    text-align: right;
+    width: 15rem;
+    height: 4rem;
+    border-radius: 1rem;
+    border : 0.5px solid grey;
+    padding :1.5rem;
+    font-size: 1rem;
+
+    margin-bottom: 0.7rem;
+}
+
+    
+.calender{
+    width: 100%;
+    height: 35vh;
+    background-color: #eee;
+}
+
 /* footer */
 .footer {
     height: 5%;
@@ -127,7 +158,7 @@ hr {
 }
 
 .footer>button {
-    width: 18rem;
+    width: 15rem;
     height: 4rem;
     border-radius: 0.5rem;
     background-color: black;

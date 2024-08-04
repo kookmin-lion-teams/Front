@@ -1,8 +1,9 @@
 import styles from '../CSS/ReservUserModal.module.css';
 import { useEffect, useState } from "react";
 import Modal from 'react-modal';
+import Review from './Review';
 
-function ReservUserModal({ activeModal, closeModal, selectmodal }) {
+function ReservUserModal({ activeModal, closeModal, selectmodal, completeReview, completeSub }) {
 
     let [cnt, setCnt] = useState(0)
 
@@ -22,7 +23,6 @@ function ReservUserModal({ activeModal, closeModal, selectmodal }) {
                         {
                             '상세보기': <div>1회 체험 예약 정보</div>,
                             '예약확정': <div>1회 체험 예약 정보</div>,
-                            '리뷰작성': <div>리뷰작성</div>,
                             '구독신청': <div>구독신청</div>
                         }[selectmodal]
                     }
@@ -91,28 +91,7 @@ function ReservUserModal({ activeModal, closeModal, selectmodal }) {
                                 </div>,
 
 
-                            '리뷰작성':
-                                <div className={styles.MainContainer}>
-                                    <div className={styles.Content} >
-
-                                        <div className={styles.title}>
-                                            <div>
-                                                <span>파트너</span>
-                                                <span>박석진 트레이너</span>
-                                            </div>
-                                            <div>
-                                                <span>평점</span>
-                                                <span>⭐️⭐️⭐️⭐️⭐️</span>
-                                            </div>
-                                        </div>
-
-                                        <div className={styles.reviewcontent}><textarea placeholder='내용을 입력해주세요.'></textarea></div>
-                                    </div>
-                                </div>,
-
-
                             '구독신청':
-
 
                                 <div className={styles.MainContainer}>
                                     {
@@ -129,11 +108,65 @@ function ReservUserModal({ activeModal, closeModal, selectmodal }) {
                                                     <div>PT를 시작할 날짜를 선택해주세요</div>
                                                     <div className={styles.calender}>캘린더</div>
                                                 </div>,
+
                                             2:
                                                 <div className={styles.ApplyContent} >
                                                     <div>구독 정보를 확인해주세요</div>
-                                                    
+
+                                                    <div className={styles.info}>
+                                                        <p>파트너 정보</p>
+                                                        <span>이름</span>
+                                                        <span className={styles.line}>|</span>
+                                                        <span style={{ marginRight: '3rem' }} >홍길동</span>
+                                                        <span>휴대폰 번호</span>
+                                                        <span className={styles.line}>|</span>
+                                                        <span>010-1234-5678</span>
+                                                    </div>
+
+                                                    <div className={styles.info}>
+                                                        <p>PT 정보</p>
+                                                        <span>횟수</span>
+                                                        <span className={styles.line}>|</span>
+                                                        <span style={{ marginRight: '3rem' }} >10회</span>
+                                                        <span>회당 가격</span>
+                                                        <span className={styles.line}>|</span>
+                                                        <span>30000원</span>
+
+                                                        <div></div>
+
+                                                        <span>시작일</span>
+                                                        <span className={styles.line}>|</span>
+                                                        <span style={{ marginRight: '3rem' }} >2024.08.02(금)</span>
+                                                        <span>종료일</span>
+                                                        <span className={styles.line}>|</span>
+                                                        <span>2024.09.02(금)</span>
+                                                    </div>
+
+                                                    <div className={styles.infoprice}>
+                                                        <div>총 결제 금액</div>
+                                                        <div>300000원</div>
+                                                    </div>
                                                 </div>,
+
+                                            3:
+                                                <div className={styles.ApplyContent} >
+                                                    <div>결제를 완료해주세요</div>
+                                                    <p>결제수단 선택</p>
+
+                                                    <div className={styles.grid}>
+                                                        <div>신용카드</div>
+                                                        <div>카카오페이</div>
+                                                        <div>토스</div>
+
+                                                        <div>네이버페이</div>
+                                                        <div>휴대폰결제</div>
+
+                                                    </div>
+
+                                                </div>
+
+
+
                                         }[cnt]
                                     }
                                 </div>
@@ -159,12 +192,6 @@ function ReservUserModal({ activeModal, closeModal, selectmodal }) {
                                     }>예약 취소</button>
                                 </div>,
 
-                            '리뷰작성':
-                                <div className={styles.footer}>
-                                    <button>리뷰 등록하기</button>
-                                </div>,
-
-
                             '구독신청':
                                 <div className={styles.footer}>
                                     {
@@ -179,7 +206,10 @@ function ReservUserModal({ activeModal, closeModal, selectmodal }) {
                                         cnt == 2 || cnt == 3 ? <button onClick={() => { setCnt(cnt + 1) }}>결제하기</button> : null
                                     }
                                     {
-                                        cnt == 4 ? <button onClick={() => { closeModal() }}>확인</button> : null
+                                        cnt == 4 ? <button onClick={() => {
+                                            closeModal()
+                                            completeSub(0)
+                                        }}>확인</button> : null
                                     }
                                 </div>
 

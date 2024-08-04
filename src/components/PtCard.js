@@ -1,8 +1,15 @@
 import { useState } from "react";
-import { Navigate, useNavigate, uselocation,location, useLocation } from 'react-router-dom';
+import {
+  Navigate,
+  useNavigate,
+  uselocation,
+  location,
+  useLocation,
+} from "react-router-dom";
 import styles from "../CSS/PtCard.module.css";
 
 function PtCard({ Key, partner }) {
+
 
 
     let navigate = useNavigate();
@@ -52,6 +59,8 @@ function PtCard({ Key, partner }) {
             </div>
         </>
     );
+
+
 }
 
 export default PtCard;

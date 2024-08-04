@@ -6,20 +6,19 @@ import Checkout from "./Checkout";
 import ReservUser from "./ReservUser";
 import ManageUser from "./ManageUser";
 import ManagePaper from "./ManagePaper";
-import SubscribeUser from './SubscribeUser'
+import SubscribeUser from "./SubscribeUser";
 import styles from "../CSS/main.module.css";
 import InfiniteScroll from "./InfiniteScroll";
 // import 기능
 import { useEffect, useState } from "react";
-
+import { useGymState } from "../store/StateGym";
 import { useFindState, useActions } from "../store/Statefind";
 import MainModal from "./MainModal";
-
 import Modal from "react-modal";
 
 
-
 function Main() {
+  const gymName = useGymState();
   // 전역상태 : find
   const findState = useFindState();
 
@@ -36,6 +35,9 @@ function Main() {
       setScrollClassName(styles.scrollFrame2);
     }
   }, [findState]);
+  // map에서 받아올 파트너들 정보
+
+  const [F2Partners, setF2Partners] = useState([]);
 
 
  // window.location.href를 사용하여 현재 페이지의 URL을 가져올 수 있습니다.
@@ -76,12 +78,12 @@ useEffect(()=>{
                   style={{
                     width: "150px",
                     display: "flex",
-                    justifyContent: "space-between",
+                    gap: "10px",
                     alignItems: "center",
                   }}
                 >
                   <svg
-                    style={{ width: "20%", height: "auto" }}
+                    style={{ width: "15%", height: "auto" }}
                     width="36"
                     height="43"
                     viewBox="0 0 36 43"
@@ -93,7 +95,7 @@ useEffect(()=>{
                       fill="#B2B2B2"
                     />
                   </svg>
-                  <span>abc헬스짐</span>
+                  <span>{gymName ? gymName : "-"}</span>
                 </div>
                 <div>
                   <Filter />
@@ -101,19 +103,19 @@ useEffect(()=>{
               </div>
             )}
 
-            <InfiniteScroll />
+            <InfiniteScroll list={F2Partners} />
           </div>
           {findState === "헬스장으로 찾기" && (
             <div className={styles.mapFrame}>
-              <Map />
+              <Map partners={setF2Partners} />
             </div>
           )}
         </div>
       )}
-      {findState === "예약 내역" && <ReservUser/>}
-      {findState === "구독 내역" && <SubscribeUser/>}
-      {findState === "공고 관리" && <ManagePaper/>}
-      {findState === "내 고객 관리" && <ManageUser/>}
+      {findState === "예약 내역" && <ReservUser />}
+      {findState === "구독 내역" && <SubscribeUser />}
+      {findState === "공고 관리" && <ManagePaper />}
+      {findState === "내 고객 관리" && <ManageUser />}
       {/* <Checkout></Checkout> */}
     </>
   );

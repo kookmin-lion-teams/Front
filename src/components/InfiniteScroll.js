@@ -1,56 +1,52 @@
 import { useState, useEffect } from "react";
-import { useInView } from "react-intersection-observer";
 import styles from "../CSS/InfiniteScroll.module.css";
 import PtCard from "./PtCard";
-import { useLocation } from "react-router-dom";
 import axios from "axios";
-function InfiniteScroll() {
+import { useFindState } from "../store/Statefind";
+function InfiniteScroll({ list }) {
   const [partner, setPartner] = useState([]);
-  useEffect(() => {
-    console.log("partner: ", partner);
-  }, [partner]);
-
+  const [fragment, setFragment] = useState([]);
+  const findState = useFindState();
   useEffect(() => {
     const fetchData = async () => {
       const uid = sessionStorage.getItem("uid");
       try {
         const response = await axios.post("/back/api/user/home", { uid });
-
         const CopyData = response.data;
+
         setPartner(CopyData);
 
         console.log(partner)
 
+
       } catch (err) {
-        console.log("123", err.message);
+        console.log(err.message);
       }
     };
+
     fetchData();
-  }, []);
-
-  const loaction = useLocation();
-
-  const { ref, inView } = useInView({
-    threshold: 0,
-  });
-
-  const [fragment, setFragment] = useState([]);
-  const [key, setKey] = useState(0);
+  }, [findState]);
 
   useEffect(() => {
-    if (inView && key < partner.length) {
-      const newF = <PtCard Key={key} partner={partner[key]}></PtCard>;
-      setKey((prev) => prev + 1);
-      setFragment((prev) => [...prev, newF]);
+    if (findState === "파트너 찾기") {
+      const newF = partner.map((item, index) => (
+        <PtCard key={`${item.PID}-${index}`} partner={item} />
+      ));
+      setFragment(newF);
     }
-  }, [inView, fragment, partner]);
+  }, [partner]);
 
-  return (
-    <div className={styles.InfiniteScrollFrame}>
-      {fragment}
-      <div ref={ref}></div>
-    </div>
-  );
+  useEffect(() => {
+    console.log("list: ", list);
+    if (findState === "헬스장으로 찾기") {
+      const newF = list.map((item, index) => (
+        <PtCard key={`${item.PID}-${index}`} partner={item} />
+      ));
+      setFragment(newF);
+    }
+  }, [list]);
+
+  return <div className={styles.InfiniteScrollFrame}>{fragment}</div>;
 }
 
 export default InfiniteScroll;

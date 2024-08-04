@@ -80,7 +80,7 @@ function Main() {
                       fill="#B2B2B2"
                     />
                   </svg>
-                  <span>{gymName}</span>
+                  <span>{gymName ? gymName : "-"}</span>
                 </div>
                 <div>
                   <Filter />

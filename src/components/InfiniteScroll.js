@@ -4,22 +4,19 @@ import styles from "../CSS/InfiniteScroll.module.css";
 import PtCard from "./PtCard";
 import { useLocation } from "react-router-dom";
 import axios from "axios";
-function InfiniteScroll() {
+
+function InfiniteScroll({ list }) {
   const [partner, setPartner] = useState([]);
-  useEffect(() => {
-    console.log("partner: ", partner);
-  }, [partner]);
+  const [fragment, setFragment] = useState([]);
+  const [key, setKey] = useState(0);
 
   useEffect(() => {
     const fetchData = async () => {
       const uid = sessionStorage.getItem("uid");
       try {
         const response = await axios.post("/back/api/user/home", { uid });
-
         const CopyData = response.data;
         setPartner(CopyData);
-
-
       } catch (err) {
         console.log("123", err.message);
       }
@@ -27,22 +24,29 @@ function InfiniteScroll() {
     fetchData();
   }, []);
 
-  const loaction = useLocation();
+  const location = useLocation();
 
   const { ref, inView } = useInView({
     threshold: 0,
   });
 
-  const [fragment, setFragment] = useState([]);
-  const [key, setKey] = useState(0);
-
   useEffect(() => {
     if (inView && key < partner.length) {
-      const newF = <PtCard Key={key} partner={partner[key]}></PtCard>;
+      const newF = <PtCard key={key} partner={partner[key]} />;
       setKey((prev) => prev + 1);
       setFragment((prev) => [...prev, newF]);
     }
-  }, [inView, fragment, partner]);
+  }, [inView, partner, key]);
+
+  useEffect(() => {
+    console.log("list: ", list);
+    if (list.length > 0) {
+      const newFragments = list.map((item, index) => (
+        <PtCard key={index} partner={item} />
+      ));
+      setFragment(newFragments);
+    }
+  }, [list]);
 
   return (
     <div className={styles.InfiniteScrollFrame}>

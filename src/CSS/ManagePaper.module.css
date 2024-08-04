@@ -1,2 +1,71 @@
 .TabLineUnderContentContainer {
+  width: 100%;
+  display: flex;
+  justify-content: flex-start;
+  gap: 10px;
+}
+.rightBorder {
+  padding: 0px 1rem;
+  border-right: 1px solid #979797;
+}
+
+label {
+  display: flex;
+  align-items: center;
+}
+
+input[type="checkbox"] {
+  margin-right: 10px; /* 글씨와 체크박스 사이의 간격 설정 */
+}
+
+.fileInputContainer {
+  display: block;
+  margin-bottom: 1.25rem; /* mb-5 */
+}
+
+.fileInputLabel {
+  display: block;
+  margin-bottom: 0.5rem; /* mb-2 */
+  font-size: 0.875rem; /* text-sm */
+  font-weight: 500; /* font-medium */
+  color: #1f2937; /* text-gray-900 */
+}
+
+.fileInput {
+  width: 100%; /* w-full */
+  margin-bottom: 1.25rem; /* mb-5 */
+  font-size: 0.75rem; /* text-xs */
+  color: #1f2937; /* text-gray-900 */
+  border: 1px solid #d1d5db; /* border-gray-300 */
+  border-radius: 0.5rem; /* rounded-lg */
+  cursor: pointer;
+  background-color: #f9fafb; /* bg-gray-50 */
+}
+
+.fileInput:focus {
+  outline: none;
+}
+
+.fileInput::placeholder {
+  color: #9ca3af; /* dark:placeholder-gray-400 */
+}
+/* input */
+.cInput {
+  background-color: #f3f4f6;
+  border: 1px solid #d1d5db;
+  color: #111827;
+  font-size: 0.875rem;
+  border-radius: 0.375rem;
+  padding: 0.625rem 1rem;
+  box-sizing: border-box; /* Ensure padding and border are included in the element's total width and height */
+}
+
+.cInput:focus {
+  outline: none;
+  border-color: #3b82f6; /* focus:border-blue-500 */
+  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.5); /* focus:ring-blue-500 */
+}
+
+.cbContainer {
+  display: flex;
 }

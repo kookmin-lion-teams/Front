@@ -14,6 +14,7 @@ export default function ReservUser() {
   const [checkrsub, setChecksub] = useState([0, 0, 0]);
 
 
+
   // 모달 상태를 관리하는 state
   const [activeModal, setActiveModal] = useState(null);
 
@@ -130,7 +131,7 @@ export default function ReservUser() {
           </div>
         </div>
 
-        <ReservUserModal activeModal={activeModal} closeModal={closeModal} selectmodal={selectmodal}></ReservUserModal>
+        <ReservUserModal activeModal={activeModal} closeModal={closeModal} selectmodal={selectmodal} ></ReservUserModal>
 
       </TabFrame>
     </>

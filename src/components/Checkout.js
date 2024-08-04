@@ -24,7 +24,7 @@ const PaymentButton = ({price}) => {
             orderId: "order_123456",
             orderName: "상품 이름",
             customerName: "주문자 이름",
-            successUrl: `${originUrl}/success`,
+            successUrl: `${originUrl}/`,
             failUrl: `${originUrl}/fail`,
           })
           .catch((error) => {

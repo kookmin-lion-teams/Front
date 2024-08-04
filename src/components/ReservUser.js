@@ -4,11 +4,28 @@ import TabFrame from "./TabFrame";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faLocationDot } from "@fortawesome/free-solid-svg-icons";
 import { useState } from "react";
+import ReservUserModal from "./ReservUserModal";
+import Modal from 'react-modal';
 export default function ReservUser() {
 
-
-
+  Modal.setAppElement('#root');
+  const [selectmodal, setSelectmodal] = useState('')
   const [checkreview, setCheckReview] = useState([0, 0, 0]);
+  const [checkrsub, setChecksub] = useState([0, 0, 0]);
+
+
+  // 모달 상태를 관리하는 state
+  const [activeModal, setActiveModal] = useState(null);
+
+  // 모달을 열기 위한 함수
+  const openModal = (modalType) => {
+    setActiveModal(modalType);
+  };
+
+  // 모달을 닫기 위한 함수
+  const closeModal = () => {
+    setActiveModal(null);
+  };
 
   return (
     <>
@@ -26,10 +43,15 @@ export default function ReservUser() {
           <div style={{ flexGrow: '1' }}></div>
 
           <div className={styles.ReservingBtn}>
-            <button>상세보기</button>
-            <button>예약확정</button>
+            <span >예약확정</span>
+            <button onClick={() => {
+              openModal(true)
+              setSelectmodal('상세보기')
+            }}>상세보기</button>
+
           </div>
         </div>
+
 
 
         <TabLine content="예약 내역" />
@@ -47,16 +69,29 @@ export default function ReservUser() {
           <div className={styles.ReservedBtn}>
             <button onClick={() => {
               let cp = [...checkreview]
-
               cp[0] = 1;
               setCheckReview(cp);
-            }} style={checkreview[0] ? { backgroundColor: 'black', color: 'white' } : null}
+
+              openModal(true)
+              setSelectmodal('리뷰작성')
+            }} style={checkreview[0] ? { backgroundColor: 'white', color: 'black' } : null}
 
             >{checkreview[0] ? '리뷰 작성 완료' : '리뷰 작성'}</button>
-            <button style={{ backgroundColor: 'black', color: 'white' }}>구독 신청</button>
+
+
+            <button onClick={() => {
+              let cp = [...checkrsub]
+
+              cp[0] = 1;
+              setChecksub(cp);
+
+              openModal(true)
+              setSelectmodal('구독신청')
+            }} style={checkrsub[0] ? { backgroundColor: 'white', color: 'black' } : null}
+
+            >{checkrsub[0] ? '구독 신청 완료' : '구독 신청'}</button>
           </div>
         </div>
-
 
 
 
@@ -79,36 +114,23 @@ export default function ReservUser() {
 
               cp[1] = 1;
               setCheckReview(cp);
-            }} style={checkreview[1] ? { backgroundColor: 'black', color: 'white' } : null}
+            }} style={checkreview[1] ? { backgroundColor: 'white', color: 'black' } : null}
 
             >{checkreview[1] ? '리뷰 작성 완료' : '리뷰 작성'}</button>
-            <button style={{ backgroundColor: 'black', color: 'white' }}>구독 신청</button>
-          </div>
-        </div>
 
-        <div className={styles.Reserved}>
-          <div className={styles.ReservedInfo}>
-            <span>박석진 트레이너</span>
-            <span>|</span>
-            <span>2024.08.01(목) 18:00</span>
-            <span><FontAwesomeIcon icon={faLocationDot} style={{ gap: '2rem' }} /> ABC헬스장</span>
 
-          </div>
-          <div style={{ flexGrow: '1' }}></div>
-
-          <div className={styles.ReservedBtn}>
             <button onClick={() => {
-              let cp = [...checkreview]
+              let cp = [...checkrsub]
 
-              cp[2] = 1;
-              setCheckReview(cp);
-            }} style={checkreview[2] ? { backgroundColor: 'black', color: 'white' } : null}
+              cp[1] = 1;
+              setChecksub(cp);
+            }} style={checkrsub[1] ? { backgroundColor: 'white', color: 'black' } : null}
 
-            >{checkreview[2] ? '리뷰 작성 완료' : '리뷰 작성'}</button>
-            <button style={{ backgroundColor: 'black', color: 'white' }}>구독 신청</button>
+            >{checkrsub[1] ? '구독 신청 완료' : '구독 신청'}</button>
           </div>
         </div>
 
+        <ReservUserModal activeModal={activeModal} closeModal={closeModal} selectmodal={selectmodal}></ReservUserModal>
 
       </TabFrame>
     </>

@@ -16,10 +16,14 @@ import { useFindState, useActions } from "../store/Statefind";
 import MainModal from "./MainModal";
 import Modal from "react-modal";
 
+
 function Main() {
   const gymName = useGymState();
   // 전역상태 : find
   const findState = useFindState();
+
+  const {changeState} = useActions();
+
   console.log(findState);
   //find 전역상태로 css 결정
   const [scrollClassName, setScrollClassName] = useState(styles.scrollFrame1);
@@ -34,6 +38,17 @@ function Main() {
   // map에서 받아올 파트너들 정보
 
   const [F2Partners, setF2Partners] = useState([]);
+
+
+ // window.location.href를 사용하여 현재 페이지의 URL을 가져올 수 있습니다.
+const currentUrl = window.location.href;
+//결제 완료하면 예약 내역 페이지로 넘어감
+useEffect(()=>{
+  if(currentUrl[currentUrl.length-1] != '/'){
+    window.history.pushState({}, '', '/');
+    changeState('예약 내역')
+  }
+},[currentUrl])
 
   return (
     <>

@@ -13,7 +13,12 @@ function InfiniteScroll({ list }) {
       try {
         const response = await axios.post("/back/api/user/home", { uid });
         const CopyData = response.data;
-        setPartner((prev) => CopyData);
+
+        setPartner(CopyData);
+
+        console.log(partner)
+
+
       } catch (err) {
         console.log(err.message);
       }

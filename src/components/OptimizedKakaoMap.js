@@ -2,7 +2,6 @@ import React, { useState, useEffect } from "react";
 import { Map, MapMarker } from "react-kakao-maps-sdk";
 import axios from "axios";
 
-
 const OptimizedKakaoMap = () => {
   const [positions, setPositions] = useState([]);
   const [name, setName] = useState("");
@@ -44,21 +43,19 @@ const OptimizedKakaoMap = () => {
             dong: dong,
           },
         });
-        
+
         setGyms(response.data);
-        
+
         // 주소만 추출하여 배열로 만들기
-        const addresses = response.data.map(gym => gym.ADDRESS);
+        const addresses = response.data.map((gym) => gym.ADDRESS);
         console.log(addresses); // 주소 배열을 콘솔에 출력
-        setGymAddresses(addresses)
+        setGymAddresses(addresses);
       } catch (e) {
         console.log(e);
       }
     };
     searchGym();
   }, []);
-
-
 
   useEffect(() => {
     const geocoder = new window.kakao.maps.services.Geocoder();
@@ -82,7 +79,7 @@ const OptimizedKakaoMap = () => {
   return (
     <Map
       center={{ lat: 36.450701, lng: 128.570667 }} // 기본 지도 중심을 대한민국으로 설정
-      style={{ width: "100%", height: "500px" }}
+      style={{ width: "100%", height: "100%" }}
       level={7} // 줌 레벨을 넓게 설정
     >
       {positions.map((position, index) => (

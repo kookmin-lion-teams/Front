@@ -17,3 +17,35 @@ label {
 input[type="checkbox"] {
   margin-right: 10px; /* 글씨와 체크박스 사이의 간격 설정 */
 }
+
+.fileInputContainer {
+  display: block;
+  margin-bottom: 1.25rem; /* mb-5 */
+}
+
+.fileInputLabel {
+  display: block;
+  margin-bottom: 0.5rem; /* mb-2 */
+  font-size: 0.875rem; /* text-sm */
+  font-weight: 500; /* font-medium */
+  color: #1f2937; /* text-gray-900 */
+}
+
+.fileInput {
+  width: 100%; /* w-full */
+  margin-bottom: 1.25rem; /* mb-5 */
+  font-size: 0.75rem; /* text-xs */
+  color: #1f2937; /* text-gray-900 */
+  border: 1px solid #d1d5db; /* border-gray-300 */
+  border-radius: 0.5rem; /* rounded-lg */
+  cursor: pointer;
+  background-color: #f9fafb; /* bg-gray-50 */
+}
+
+.fileInput:focus {
+  outline: none;
+}
+
+.fileInput::placeholder {
+  color: #9ca3af; /* dark:placeholder-gray-400 */
+}

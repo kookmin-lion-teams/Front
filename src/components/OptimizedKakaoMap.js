@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { Map, MapInfoWindow } from "react-kakao-maps-sdk";
 import axios from "axios";
-import { useGymState, useGymActions } from "../store/StateGym";
+import { useGymActions } from "../store/StateGym";
 const OptimizedKakaoMap = ({ getGymsPartners }) => {
   const [positions, setPositions] = useState([]);
   const [name, setName] = useState("");
@@ -9,10 +9,12 @@ const OptimizedKakaoMap = ({ getGymsPartners }) => {
   const [dong] = useState(sessionStorage.getItem("dong") || "");
   const [gyms, setGyms] = useState([]);
   const { setGymState } = useGymActions();
+
+  // 전역 상태에 선택된 헬스장 이름 설정
   useEffect(() => {
-    console.log("name: ", name);
     setGymState(name);
   }, [name]);
+
   // 첫 렌더링시 유저 주소로 헬스장 불러오기
   useEffect(() => {
     const searchGym = async () => {
@@ -70,13 +72,17 @@ const OptimizedKakaoMap = ({ getGymsPartners }) => {
     searchGym();
   }, [gu, dong]);
 
+  // 헬스장 클릭시 행동
   useEffect(() => {
     const fetchGym = async () => {
       try {
         const response = await axios("back/api/gym/partners", {
           params: { name, gu, dong },
         });
-        console.log("파트너들~", response.data[0].partners);
+        console.log(
+          "Map: 헬스장 클릭시 파트너 정보 fetch",
+          response.data[0].partners
+        );
         getGymsPartners(response.data[0].partners);
       } catch (e) {
         console.log(`헬스장의 파트너 정보를 가져오는 도중 발생한 에러`, e);
@@ -91,7 +97,7 @@ const OptimizedKakaoMap = ({ getGymsPartners }) => {
       level={7} // 줌 레벨을 넓게 설정
     >
       {positions.map((position, index) => (
-        <>
+        <React.Fragment key={`${gyms[index]?.NAME}-${index}`}>
           {/* <MapMarker
             key={index}
             position={{ lat: position.lat, lng: position.lng }}
@@ -115,7 +121,7 @@ const OptimizedKakaoMap = ({ getGymsPartners }) => {
               {gyms[index]?.NAME}
             </div>
           </MapInfoWindow>
-        </>
+        </React.Fragment>
       ))}
     </Map>
   );

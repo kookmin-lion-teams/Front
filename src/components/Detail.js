@@ -2,13 +2,32 @@ import Nav_ from './Nav_'
 import styles from "../CSS/Detail.module.css";
 import Modal from 'react-modal';
 import { useEffect, useState } from "react";
-import { Navigate, useNavigate, useLocation,location } from 'react-router-dom';
+import { Navigate, useNavigate, useLocation, location } from 'react-router-dom';
 import DetailModal from '../components/DetailModal'
 import axios from "axios";
 
 function Detail() {
 
-    let [partner, setPartner] = useState([] )
+    const [partner, setPartner] = useState([{
+        EPRICE: null,
+        EXPERT1: null,
+        EXPERT2: null,
+        GNAME: null,
+        IG: null,
+        IMG: null,
+        INTRO: null,
+        PID: null,
+        PRICE: null,
+        closed_days: {},
+        partner_dong: null,
+        partner_gender: null,
+        partner_gu: null,
+        partner_name: null,
+        weekday_end_time: null,
+        weekday_start_time: null,
+        weekend_end_time: null,
+        weekend_start_time: null
+    }])
     const [modalIsOpen, setModalIsOpen] = useState(false);
     const openModal = () => {
         setModalIsOpen(true);
@@ -17,32 +36,41 @@ function Detail() {
         setModalIsOpen(false);
     };
 
-    const location =useLocation()
-    const ptner = location.partner;
+    const location = useLocation()
+
+    const ptner = location.state.ptner
 
 
-    console.log('ddd',ptner)
 
     useEffect(() => {
         const fetchData = async () => {
-            const uid = sessionStorage.getItem("uid");
+            const partner_id = location.state.ptner.PID;
             try {
-                const response = await axios.post("/back/api/partner/detail", { uid });
+                const response = await axios.get("/back/api/partner/detail", { partner_id });
+
 
 
                 let CopyData = [...partner];
 
-                CopyData = response.data;
-                setPartner('copy',CopyData);
+                CopyData = response.data.partner_info;
+
+                setPartner(CopyData);
+
+
+                console.log(CopyData)
 
             } catch (err) {
 
-                console.log('ddd')
-                console.log(err.message);
+                console.log(123, err.message);
             }
         };
         fetchData();
-    },[]);
+    }, []);
+
+
+
+
+
 
     return (
         <>
@@ -57,10 +85,11 @@ function Detail() {
 
                         <div className={styles.Partnercontainer}>
                             <div className={styles.PartnerInfo}>
-                                <p style={{ fontSize: '1.5rem' }}>{partner.NAME} 트레이너</p>
-                                <p>남성 <span className={styles.line}>|</span> 30세</p>
-                                <p>성북구 정릉동 <span className={styles.line}>|</span> 웰니스</p>
-                                <p>⭐️⭐️⭐️⭐️⭐️ <span>4.8 (28)</span></p>
+                                <p style={{ fontSize: '1.5rem' }}>
+                                    {partner.partner_name}  트레이너</p>
+                                <p>{partner.partner_gender == 1 ? '남성' : '여성'} <span className={styles.line}>|</span> 30세</p>
+                                <p>{partner.partner_gu}  {partner.partner_dong} <span className={styles.line}>|</span> {partner.GNAME}</p>
+                                <p>⭐️⭐️⭐️⭐️⭐️ <span>{ptner.avg_rate} (28)</span></p>
 
                             </div>
 
@@ -68,13 +97,13 @@ function Detail() {
                                 <div className={styles.price}>
                                     <div>
                                         <p>정상가 (회당)</p>
-                                        <span className={styles.Pricefont}>30000</span>
+                                        <span className={styles.Pricefont}>{partner.PRICE}</span>
                                         <span className={styles.Pricefont}>원</span>
                                     </div>
                                     <span className={styles.line}>|</span>
                                     <div>
                                         <p>1회 체험가</p>
-                                        <span className={styles.Pricefont}>20000</span>
+                                        <span className={styles.Pricefont}>{partner.EPRICE}</span>
                                         <span className={styles.Pricefont}>원</span>
                                     </div>
                                 </div>
@@ -94,7 +123,7 @@ function Detail() {
                 <div className={styles.Introduce}>
                     <h4>파트너 소개</h4>
                     <hr></hr>
-                    <div>안녕하세요 박석진입니다. 여러분의 건강한 몸을 책임지겠습니다</div>
+                    <div>{partner.INTRO}</div>
                 </div>
 
 
@@ -105,9 +134,9 @@ function Detail() {
                             <h4>Expert</h4>
                             <hr></hr>
                             <ul>
-                                <li>다이어트</li>
+                                <li>{partner.EXPERT1}</li>
 
-                                <li>재활</li>
+                                <li>{partner.EXPERT2}</li>
                             </ul>
                         </div>
 
@@ -128,7 +157,7 @@ function Detail() {
                             <h4>헬스장 정보</h4>
                             <hr></hr>
                             <div>
-                                <span style={{ fontSize: '1.5rem' }}>ABC 헬스장</span>
+                                <span style={{ fontSize: '1.5rem' }}>{partner.GNAME}</span>
                                 <span className={styles.line}>|</span>
                                 <span>서울시 성북구 정릉로 48</span>
                             </div>

@@ -1,0 +1,38 @@
+.Subscrbing,
+.Subscrbed {
+    display: flex;
+    color: grey;
+
+    width: 100%;
+    margin-top: 2rem;
+}
+
+.SubscrbingInfo>span,
+.SubscrbedInfo>span {
+
+    margin: 0rem 0.5rem 0 1rem;
+}
+
+.SubscrbingBtn,
+.SubscrbedBtn {
+    display: flex;
+    padding-right: 5rem;
+}
+
+.SubscrbingBtn>div,
+.SubscrbingBtn>button,
+.SubscrbedBtn>div,
+.SubscrbedBtn>button {
+    width: 8rem;
+    text-align: center;
+    margin-right: 2rem;
+    height: 2rem;
+}
+
+.SubscrbingBtn>button,
+.SubscrbedBtn>button {
+    border: 1px solid grey;
+    background-color: white;
+    border-radius: 0.5rem;
+
+}

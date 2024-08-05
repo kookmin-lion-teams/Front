@@ -8,6 +8,9 @@ import axios from "axios";
 import { useFindState } from "../store/Statefind";
 
 function Detail() {
+
+  const [one, setone] = useState(); 
+
   const findState = useFindState();
   const [partner, setPartner] = useState([
     {
@@ -45,6 +48,7 @@ function Detail() {
 
   useEffect(() => {
     const fetchData = async () => {
+      
       const partner_id = location.state.ptner.PID;
 
       console.log("PTD", partner_id);
@@ -59,6 +63,9 @@ function Detail() {
         CopyData = response.data.partner_info;
 
         setPartner(CopyData);
+
+        console.log(CopyData); //추가했어
+
       } catch (err) {
         console.log(123, err.message);
       }
@@ -119,7 +126,7 @@ function Detail() {
         </div>
 
         <div className={styles.Introduce}>
-          <h4>파트너 소개</h4>
+          <h4> 파트너 소개 </h4>
           <hr></hr>
           <div>{partner.INTRO}</div>
         </div>
@@ -190,13 +197,10 @@ function Detail() {
                 <div style={{ flexGrow: "1" }}></div>
                 <div>2024.07.14</div>
               </div>
-
               <div className={styles.ReviewContent}>
-                안녕하세요 안녕하세요 안녕하세요 안녕하세요 안녕하세요
-                안녕하세요 안녕하세요 안녕하세요 안녕하세요 안녕하세요
-                안녕하세요 안녕하세요 안녕하세요 안녕하세요 안녕하세요
-                안녕하세요 안녕하세요 안녕하세요 안녕하세요 안녕하세요
-                안녕하세요 안녕하세요 안녕하세요 안녕하세요
+                {partner.GNAME}
+                에서 너무나도 친절하게 알려주시고 너무 감사드립니다
+                수업도 너무 재미있네요
               </div>
             </div>
 

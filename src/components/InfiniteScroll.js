@@ -29,7 +29,11 @@ function InfiniteScroll() {
   useEffect(() => {
     if (findState === "파트너 찾기") {
       const newF = partner.map((item, index) => (
-        <PtCard key={`${item.PID}-${index}`} partner={item} />
+        <PtCard
+          key={`${item.PID}-${index}`}
+          cardKey={item.PID}
+          partner={item}
+        />
       ));
       setFragment(newF);
     }
@@ -38,7 +42,11 @@ function InfiniteScroll() {
   useEffect(() => {
     if (findState === "헬스장으로 찾기") {
       const newF = partnersList.map((item, index) => (
-        <PtCard key={`${item.PID}-${index}`} partner={item} />
+        <PtCard
+          key={`${item.PID}-${index}`}
+          cardKey={item.PID}
+          partner={item}
+        />
       ));
       setFragment(newF);
     }

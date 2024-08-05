@@ -1,66 +1,53 @@
 .Reserving,
 .Reserved {
-    display: flex;
-    color: #5c5c5c; /* 약간 어두운 회색 텍스트로 변경 */
-    width: 100%;
-    margin-top: 2rem;
+  display: flex;
+  color: grey;
+  width: 100%;
+  margin-top: 2rem;
 }
 
-.ReservingInfo>span,
-.ReservedInfo>span {
-    margin: 0rem 0.5rem 0 1rem;
+.ReservingInfo > span,
+.ReservedInfo > span {
+  margin: 0rem 0.5rem 0 1rem;
 }
 
 .ReservingBtn,
 .ReservedBtn {
-    padding-right: 5rem;
+  padding-right: 5rem;
 }
 
-.ReservingBtn>button:nth-child(1) {
-    border: 0;
+.ReservingBtn > button:nth-child(1) {
+  border: 0;
 }
 
-.ReservingBtn>button {
-    border: 1px solid #0ABAB5; /* 티파니 블루 테두리 */
-    background-color: #ffffff; /* 흰색 배경 */
-    color: #0ABAB5; /* 티파니 블루 텍스트 */
-    border-radius: 0.5rem;
-    width: 8rem;
-    text-align: center;
-    margin-right: 2rem;
-    height: 2rem;
-    transition: background-color 0.2s ease, color 0.2s ease,
-        border-color 0.2s ease; /* 부드러운 호버 효과 */
+.ReservingBtn > button {
+  border: 1px solid grey;
+  background-color: white;
+  border-radius: 0.5rem;
+  width: 8rem;
+  text-align: center;
+  margin-right: 2rem;
+  height: 2rem;
+  transition: background-color 0.2s ease, color 0.2s ease,
+    border-color 0.2s ease; /* 부드러운 호버 효과 */
 }
 
-.ReservingBtn>button:hover {
-    background-color: #0ABAB5; /* 호버 시 티파니 블루 배경 */
-    color: #ffffff; /* 호버 시 흰색 텍스트 */
-    border-color: #0ABAB5; /* 티파니 블루 테두리 유지 */
+.ReservingBtn > span {
+  width: 8rem;
+  text-align: center;
+  margin-right: 4rem;
+  height: 2rem;
 }
 
-.ReservingBtn>span {
-    width: 8rem;
-    text-align: center;
-    margin-right: 4rem;
-    height: 2rem;
-}
-
-.ReservedBtn>button {
-    border: 1px solid #0ABAB5; /* 티파니 블루 테두리 */
-    background-color: #0ABAB5; /* 티파니 블루 배경 */
-    color: #ffffff; /* 흰색 텍스트 */
-    border-radius: 0.5rem;
-    width: 8rem;
-    text-align: center;
-    margin-right: 2rem;
-    height: 2rem;
-    transition: background-color 0.2s ease, color 0.2s ease,
-        border-color 0.2s ease; /* 부드러운 호버 효과 */
-}
-
-.ReservedBtn>button:hover {
-    background-color: #0a8982; /* 호버 시 더 어두운 블루 */
-    border-color: #0a8982; /* 호버 시 테두리도 더 어두운 블루 */
-    color: #ffffff; /* 흰색 텍스트 유지 */
+.ReservedBtn > button {
+  border: 1px solid grey;
+  background-color: black;
+  color: white;
+  border-radius: 0.5rem;
+  width: 8rem;
+  text-align: center;
+  margin-right: 2rem;
+  height: 2rem;
+  transition: background-color 0.2s ease, color 0.2s ease,
+    border-color 0.2s ease; /* 부드러운 호버 효과 */
 }

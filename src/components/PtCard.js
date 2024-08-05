@@ -5,11 +5,7 @@ import { useEffect } from "react";
 function PtCard({ cardKey, partner }) {
   let navigate = useNavigate();
   useEffect(() => {
-    console.log("@@@@", cardKey);
-  }, [cardKey]);
-  useEffect(() => {
-    console.log("####", partner);
-  }, [partner]);
+  
   return (
     <>
       <div

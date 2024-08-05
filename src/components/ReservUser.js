@@ -78,7 +78,9 @@ export default function ReservUser() {
   useEffect(() => {
     fetchData();
   }, [findState]);
-
+  useEffect(() => {
+    fetchData();
+  }, [activeModal]);
   let ReservedList = [];
   let ReservingList = [];
   UserReservList.map((lst, idx) => {

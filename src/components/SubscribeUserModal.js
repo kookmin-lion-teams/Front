@@ -155,7 +155,11 @@ export default function SubscribeUserModal({
         </div>
       </div>
 
-      <Review openModal={openReview} closeModal={closeModal}></Review>
+      <Review
+        openModal={openReview}
+        closeModal={closeModal}
+        info={info}
+      ></Review>
     </Modal>
   );
 }

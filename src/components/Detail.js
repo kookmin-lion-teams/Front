@@ -45,15 +45,34 @@ function Detail() {
     const fetchData = async () => {
       const partner_id = location.state.ptner.PID;
       try {
-        const response = await axios.get("/back/api/user/partner_detail", {
+        const response = await axios.get("/back/api/partner/detail", {
           params: { partner_id },
         });
 
-        let CopyData = [...partner];
+        useEffect(() => {
+          const fetchData = async () => {
+            const partner_id = location.state.ptner.PID;
+            try {
+              const response = await axios.get(
+                "/back/api/user/partner_detail",
+                {
+                  params: { partner_id },
+                }
+              );
 
-        CopyData = response.data.partner_info;
+              let CopyData = [...partner];
 
-        setPartner(CopyData);
+              CopyData = response.data.partner_info;
+
+              setPartner(CopyData);
+
+              console.log(CopyData, "dddd");
+            } catch (err) {
+              console.log(123, err.message);
+            }
+          };
+          fetchData();
+        }, []);
 
         console.log(CopyData);
       } catch (err) {

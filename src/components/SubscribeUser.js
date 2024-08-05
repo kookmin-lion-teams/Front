@@ -4,9 +4,18 @@ import TabFrame from "./TabFrame";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faLocationDot } from "@fortawesome/free-solid-svg-icons";
 import { useState } from "react";
+import Modal from "react-modal";
+import SubscribeUserModal from "./SubscribeUserModal";
 
 export default function SubscribeUser() {
 
+    const [modalIsOpen, setModalIsOpen] = useState(false);
+    const openModal = () => {
+        setModalIsOpen(true);
+    };
+    const closeModal = () => {
+        setModalIsOpen(false);
+    };
 
     return (
 
@@ -74,9 +83,11 @@ export default function SubscribeUser() {
                     <div><span>0</span>
                         <span style={{ margin: '0 1rem 0 1.3rem' }}>/</span>
                         <span>10</span></div>
-                    <button>상세보기</button>
+                    <button onClick= {openModal}>상세보기</button>
                 </div>
             </div>
+
+            <SubscribeUserModal openModal={modalIsOpen} closeModal={closeModal} setopenModal={openModal}></SubscribeUserModal>
 
 
         </TabFrame>

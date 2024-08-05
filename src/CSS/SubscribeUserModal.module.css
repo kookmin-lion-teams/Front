@@ -1,0 +1,96 @@
+hr {
+    margin: 1rem 0 0.5rem 0;
+}
+
+.line {
+    margin: 0 1rem 0 1rem;
+}
+
+.ModalContainer {
+    width: 60vw;
+
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 5vh;
+
+    z-index: 1033;
+}
+
+.ModalForm {
+    background-color: white;
+    padding: 1rem 3rem 0rem 3rem;
+    border-radius: 1rem;
+    height: 90vh;
+    border: 2px solid #cbbebe;
+}
+
+.Header {
+    padding-top: 1.5rem;
+    height: 10%;
+}
+
+.Header>button {
+    font-size: 2rem;
+    line-height: 1.5rem;
+    color: rgb(107, 114, 128);
+    background-color: transparent;
+
+    border: 0;
+    position: absolute;
+    float: left;
+}
+
+.Header>div {
+    font-weight: 700;
+    font-size: 1.25rem;
+    line-height: 1.75rem;
+    text-align: center;
+}
+
+
+
+.MainContainer {
+    padding: 1rem;
+    height: 60vh;
+    font-size: 0.8rem;
+}
+
+
+/*상세보기*/
+.Content{
+    margin-top: 2rem;
+}
+
+.Content>p {
+    font-size: 1.3rem;
+    font-weight: 400;
+}
+
+.Content > div > div{
+    height:0.5rem;
+}
+
+
+.MarginRight{
+    margin-right: 3rem;
+
+}   
+
+
+.footer {
+    height: 5%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 1rem;
+    gap: 3rem;
+}
+
+.footer>button {
+    width: 15rem;
+    height: 3rem;
+    border-radius: 0.5rem;
+    background-color: black;
+    color: white;
+    font-size: 1.5rem;
+}

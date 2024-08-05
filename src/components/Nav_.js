@@ -20,6 +20,11 @@ export default function Nav_() {
     changeState(role === "1" ? "공고 관리" : "파트너 찾기");
   }, [role, changeState]);
 
+
+
+
+  
+
   // 클릭시 이동 :signup, signin
   const handleClicktoNav = (where) => {
     navigate(`/${where}`);

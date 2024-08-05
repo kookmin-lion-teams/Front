@@ -19,12 +19,11 @@
 
 }
 
-.ReservingBtn>button:nth-child(2) {
+.ReservingBtn>button:nth-child(1) {
     border: 0;
 }
 
-.ReservingBtn>button,
-.ReservedBtn > button {
+.ReservingBtn>button {
     border: 1px solid grey;
     background-color: white;
     border-radius: 0.5rem;
@@ -32,5 +31,25 @@
     text-align: center;
     margin-right: 2rem;
     height: 2rem;
+
 }
 
+.ReservingBtn>span {
+
+    width: 8rem;
+    text-align: center;
+    margin-right: 4rem;
+    height: 2rem;
+}
+
+
+.ReservedBtn > button{
+    border: 1px solid grey;
+    background-color: black;
+    color : white;
+    border-radius: 0.5rem;
+    width: 8rem;
+    text-align: center;
+    margin-right: 2rem;
+    height: 2rem;
+}

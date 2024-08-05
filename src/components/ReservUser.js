@@ -4,11 +4,52 @@ import TabFrame from "./TabFrame";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faLocationDot } from "@fortawesome/free-solid-svg-icons";
 import { useState } from "react";
+import ReservUserModal from "./ReservUserModal";
+import Modal from 'react-modal';
+import Review from "./Review";
 export default function ReservUser() {
 
-
-
+  Modal.setAppElement('#root');
+  const [selectmodal, setSelectmodal] = useState('')
   const [checkreview, setCheckReview] = useState([0, 0, 0]);
+  const [checkrsub, setChecksub] = useState([0, 0, 0]);
+
+  //
+  const completeReview = (idx) => {
+    let cp = [...checkreview];
+    cp[idx] = 1;
+    setCheckReview(cp);
+  }
+
+  const completeSub = (idx) => {
+    let cp = [...checkrsub];
+    cp[idx] = 1;
+    setChecksub(cp);
+  }
+
+  // 모달 상태를 관리하는 state
+  const [activeModal, setActiveModal] = useState(null);
+  const [openReview, setOpenReview] = useState(null);
+
+  // 모달을 열기 위한 함수
+  const openModal = (modalType) => {
+    setActiveModal(modalType);
+  };
+
+  // 모달을 닫기 위한 함수
+  const closeModal = () => {
+    setActiveModal(null);
+  };
+
+  //review modal open
+  const openReviewModal = () => {
+    setOpenReview(true)
+  }
+
+  //review modal close
+  const closeReviewModal = () => {
+    setOpenReview(null);
+  }
 
   return (
     <>
@@ -26,10 +67,15 @@ export default function ReservUser() {
           <div style={{ flexGrow: '1' }}></div>
 
           <div className={styles.ReservingBtn}>
-            <button>상세보기</button>
-            <button>예약확정</button>
+            <span >예약확정</span>
+            <button onClick={() => {
+              openModal(true)
+              setSelectmodal('상세보기')
+            }}>상세보기</button>
+
           </div>
         </div>
+
 
 
         <TabLine content="예약 내역" />
@@ -44,19 +90,26 @@ export default function ReservUser() {
           </div>
           <div style={{ flexGrow: '1' }}></div>
 
+
+          {/* 리뷰 작성은 Review 모달을 열기 */}
           <div className={styles.ReservedBtn}>
             <button onClick={() => {
-              let cp = [...checkreview]
 
-              cp[0] = 1;
-              setCheckReview(cp);
-            }} style={checkreview[0] ? { backgroundColor: 'black', color: 'white' } : null}
+              openReviewModal()
+
+            }} style={checkreview[0] ? { backgroundColor: 'white', color: 'black' } : null}
 
             >{checkreview[0] ? '리뷰 작성 완료' : '리뷰 작성'}</button>
-            <button style={{ backgroundColor: 'black', color: 'white' }}>구독 신청</button>
+
+
+            <button onClick={() => {
+              openModal(true)
+              setSelectmodal('구독신청')
+            }} style={checkrsub[0] ? { backgroundColor: 'white', color: 'black' } : null}
+
+            >{checkrsub[0] ? '구독 신청 완료' : '구독 신청'}</button>
           </div>
         </div>
-
 
 
 
@@ -75,41 +128,29 @@ export default function ReservUser() {
 
           <div className={styles.ReservedBtn}>
             <button onClick={() => {
-              let cp = [...checkreview]
-
-              cp[1] = 1;
-              setCheckReview(cp);
-            }} style={checkreview[1] ? { backgroundColor: 'black', color: 'white' } : null}
+              openReviewModal()
+            }} style={checkreview[1] ? { backgroundColor: 'white', color: 'black' } : null}
 
             >{checkreview[1] ? '리뷰 작성 완료' : '리뷰 작성'}</button>
-            <button style={{ backgroundColor: 'black', color: 'white' }}>구독 신청</button>
-          </div>
-        </div>
 
-        <div className={styles.Reserved}>
-          <div className={styles.ReservedInfo}>
-            <span>박석진 트레이너</span>
-            <span>|</span>
-            <span>2024.08.01(목) 18:00</span>
-            <span><FontAwesomeIcon icon={faLocationDot} style={{ gap: '2rem' }} /> ABC헬스장</span>
 
-          </div>
-          <div style={{ flexGrow: '1' }}></div>
-
-          <div className={styles.ReservedBtn}>
             <button onClick={() => {
-              let cp = [...checkreview]
+              let cp = [...checkrsub]
 
-              cp[2] = 1;
-              setCheckReview(cp);
-            }} style={checkreview[2] ? { backgroundColor: 'black', color: 'white' } : null}
+              cp[1] = 1;
+              setChecksub(cp);
 
-            >{checkreview[2] ? '리뷰 작성 완료' : '리뷰 작성'}</button>
-            <button style={{ backgroundColor: 'black', color: 'white' }}>구독 신청</button>
+
+            }} style={checkrsub[1] ? { backgroundColor: 'white', color: 'black' } : null}
+
+            >{checkrsub[1] ? '구독 신청 완료' : '구독 신청'}</button>
           </div>
         </div>
 
+        {/* map으로 받아와서 나중에 리스트 idx 추가하기 */}
+        <ReservUserModal activeModal={activeModal} closeModal={closeModal} selectmodal={selectmodal} completeReview={completeReview} completeSub={completeSub} i></ReservUserModal>
 
+        <Review openModal={openReview} closeModal={closeReviewModal}></Review>
       </TabFrame>
     </>
   );

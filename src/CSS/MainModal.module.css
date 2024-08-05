@@ -73,7 +73,7 @@
 .Genderfilter,
 .Pricefilter {
     display: grid;
-    grid-template-columns: repeat(7, 1fr);
+    grid-template-columns: repeat(6, 1fr);
     gap: 10px;
     padding: 10px 10px 0 10px;
 }
@@ -82,23 +82,19 @@
     text-align: center;
 }
 
-.Formlabel>input {
-    display: none;
-}
 
 
-.Formbutton,
-.Formlabel {
+/* 버튼 디자인 */
+.Formbutton, .Region {
     padding: 10px;
     cursor: pointer;
     border: 2px solid #eee;
     background-color: white;
     border-radius: 10px;
+    text-align: center;
 }
 
-input[type="radio"]::before .Formlabel{
-    background-color: orange;
-}
+
 
 .Modalfooter{
     display: flex;

@@ -4,7 +4,7 @@ import SearchBar from "./SearchBar";
 import { useNavigate, useLocation } from "react-router-dom";
 import { useEffect, useState } from "react";
 import NavTab from "./NavTab";
-
+import LLMButton from "./LLMButton";
 export default function Nav_() {
   const navigate = useNavigate();
   const location = useLocation();
@@ -20,16 +20,15 @@ export default function Nav_() {
     changeState(role === "1" ? "공고 관리" : "파트너 찾기");
   }, [role, changeState]);
 
-
-
-
-  
-
   // 클릭시 이동 :signup, signin
   const handleClicktoNav = (where) => {
     navigate(`/${where}`);
   };
-
+  const handleLogout = () => {
+    sessionStorage.removeItem("pid");
+    sessionStorage.removeItem("uid");
+    navigate("/signin");
+  };
   return (
     <nav className={styles.navFrame}>
       <div className={styles.navLevel1}>
@@ -39,12 +38,18 @@ export default function Nav_() {
             navigate("/");
           }}
         ></div>
-        <div className={styles.searchBox}>
-          <SearchBar />
+        <div className={styles.searchBox}>{/* <SearchBar /> */}</div>
+        <div className={styles.LLMButton}>
+          <LLMButton />
         </div>
         <div className={styles.registerBox}>
           {name ? (
-            <p>반갑습니다! {name}님!</p>
+            <>
+              <div>
+                <span>반갑습니다! {name}님!</span>
+              </div>
+              <div onClick={handleLogout}>로그아웃</div>
+            </>
           ) : (
             <>
               <div onClick={() => handleClicktoNav("signin")}>로그인</div>

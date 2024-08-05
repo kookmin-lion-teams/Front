@@ -2,7 +2,6 @@
 import Map from "./Map";
 import Nav_ from "./Nav_";
 import Filter from "./Filter";
-import Checkout from "./Checkout";
 import ReservUser from "./ReservUser";
 import ManageUser from "./ManageUser";
 import ManagePaper from "./ManagePaper";
@@ -13,16 +12,13 @@ import InfiniteScroll from "./InfiniteScroll";
 import { useEffect, useState } from "react";
 import { useGymState } from "../store/StateGym";
 import { useFindState, useActions } from "../store/Statefind";
-import MainModal from "./MainModal";
-import Modal from "react-modal";
-
 
 function Main() {
   const gymName = useGymState();
   // 전역상태 : find
   const findState = useFindState();
 
-  const {changeState} = useActions();
+  const { changeState } = useActions();
 
   //find 전역상태로 css 결정
   const [scrollClassName, setScrollClassName] = useState(styles.scrollFrame1);
@@ -38,16 +34,15 @@ function Main() {
 
   const [F2Partners, setF2Partners] = useState([]);
 
-
- // window.location.href를 사용하여 현재 페이지의 URL을 가져올 수 있습니다.
-const currentUrl = window.location.href;
-//결제 완료하면 예약 내역 페이지로 넘어감
-useEffect(()=>{
-  if(currentUrl[currentUrl.length-1] != '/'){
-    window.history.pushState({}, '', '/');
-    changeState('예약 내역')
-  }
-},[currentUrl])
+  // window.location.href를 사용하여 현재 페이지의 URL을 가져올 수 있습니다.
+  const currentUrl = window.location.href;
+  //결제 완료하면 예약 내역 페이지로 넘어감
+  useEffect(() => {
+    if (currentUrl[currentUrl.length - 1] != "/") {
+      window.history.pushState({}, "", "/");
+      changeState("예약 내역");
+    }
+  }, [currentUrl]);
 
   return (
     <>
@@ -101,8 +96,7 @@ useEffect(()=>{
                 </div>
               </div>
             )}
-
-            <InfiniteScroll list={F2Partners} />
+            <InfiniteScroll />
           </div>
           {findState === "헬스장으로 찾기" && (
             <div className={styles.mapFrame}>

@@ -59,7 +59,7 @@ export default function ReservUser() {
 
   //유저의 예약 리스트 데이터 받아오기
   const findState = useFindState();
-  
+
   const fetchData = async () => {
     const user_id = sessionStorage.getItem("uid");
     try {
@@ -71,7 +71,7 @@ export default function ReservUser() {
       console.log(err.message);
     }
   };
-=
+
 
   useEffect(() => {
     fetchData();
@@ -98,6 +98,7 @@ export default function ReservUser() {
         {
           ReservingList.map((rsv, idx) => {
             console.log(rsv)
+
             return (
 
               <>
@@ -112,33 +113,23 @@ export default function ReservUser() {
                   <div className={styles.ReservingBtn}>
                     <span>예약확정</span>
                     <button onClick={() => {
-                      openModal(true)
+                      openModal(true);  
                       setSelectmodal('상세보기')
+
+
                     }}>상세보기</button>
                   </div>
                 </div>
 
+                    
                 <ReservUserModal activeModal={activeModal} closeModal={closeModal} selectmodal={selectmodal} completeReview={completeReview} completeSub={completeSub} bid={rsv.BOOKID}></ReservUserModal>
 
+
               </>
-            )
-
+            );
           })
-
-
         }
 
-              <ReservUserModal
-                activeModal={activeModal}
-                closeModal={closeModal}
-                selectmodal={selectmodal}
-                completeReview={completeReview}
-                completeSub={completeSub}
-                bid={rsv.BOOKID}
-              ></ReservUserModal>
-            </>
-          );
-        })}
 
         <TabLine content="예약 내역" />
 
@@ -171,21 +162,25 @@ export default function ReservUser() {
 
 
                   <button onClick={() => {
-
                     setSelectmodal('구독신청');
                     openModal(true);
                   }}
-                  style={
-                    checkrsub[idx]
-                      ? { backgroundColor: "white", color: "black" }
-                      : null
-                  }
-                >
-                  {checkrsub[idx] ? "구독 신청 완료" : "구독 신청"}
-                </button>
+                    style={
+                      checkrsub[idx]
+                        ? { backgroundColor: "white", color: "black" }
+                        : null
+                    }
+                  >
+                    {checkrsub[idx] ? "구독 신청 완료" : "구독 신청"}
+                  </button>
+                </div>
+                <ReservUserModal activeModal={activeModal} closeModal={closeModal} selectmodal={selectmodal} completeReview={completeReview} completeSub={completeSub} bid={rsv.BOOKID}></ReservUserModal>
+
+
               </div>
 
-            )
+              
+            );
           })
         }
 

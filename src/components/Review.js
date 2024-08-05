@@ -17,27 +17,22 @@ export default function Review({ openModal, closeModal, Reviewparam }) {
 
     const submitReview = async () => {
         const pid = Reviewparam.PID;
-
-
-
-
         try {
             const response = await axios.post("/back/api/review/one_time", {
                 pid,
                 rate,
-                content,
+                content
 
             });
         } catch (err) {
             console.log(err.message);
         }
     };
+    
 
 
 
-    useEffect(()=>{
-        submitReview();
-    },[findState])
+
 
 
     return (

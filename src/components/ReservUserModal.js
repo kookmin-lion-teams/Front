@@ -17,6 +17,8 @@ function ReservUserModal({
 }) {
   let [cnt, setCnt] = useState(0);
 
+
+
   const [BookingDetail, setBookingDetail] = useState([]);
 
   const findState = useFindState();
@@ -42,7 +44,9 @@ function ReservUserModal({
 
     fetchData();
   }, [findState]);
-  const handleDateChange = (date) => {};
+
+
+  const handleDateChange = (date) => { };
   const tileDisabled = ({ date, view }) => {
     const today = new Date();
     today.setHours(0, 0, 0, 0);
@@ -83,7 +87,7 @@ function ReservUserModal({
         <div className={styles.main}>
           {
             {
-              상세보기: (
+              '상세보기': (
                 <div className={styles.MainContainer}>
                   <div className={styles.Content} style={{ marginTop: "0rem" }}>
                     <p>파트너 정보</p>
@@ -144,7 +148,7 @@ function ReservUserModal({
                 </div>
               ),
 
-              구독신청: (
+              '구독신청': (
                 <div className={styles.MainContainer}>
                   {
                     {
@@ -237,7 +241,7 @@ function ReservUserModal({
           {/* footer button */}
           {
             {
-              상세보기: (
+              '상세보기': (
                 <div
                   className={styles.footer}
                   style={
@@ -261,7 +265,7 @@ function ReservUserModal({
                 </div>
               ),
 
-              구독신청: (
+              '구독신청': (
                 <div className={styles.footer}>
                   {0 < cnt && cnt < 4 ? (
                     <button

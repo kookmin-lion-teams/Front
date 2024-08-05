@@ -47,13 +47,13 @@ function Detail() {
   const location = useLocation();
 
   const ptner = location.state.ptner;
+  
   let partner_id;
-
+  
   useEffect(() => {
 
     const fetchData = async () => {
-      partner_id = location.state.ptner.PID;
-
+       partner_id = location.state.ptner.PID;
 
       try {
         const [Partnerresponse, Reviewresponse] = await Promise.all([
@@ -227,7 +227,7 @@ function Detail() {
 
 
 
-
+        
 
           </div>
         </div>

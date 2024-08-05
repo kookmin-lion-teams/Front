@@ -2,8 +2,10 @@ import Modal from 'react-modal'
 import styles from '../CSS/SubscribeUserModal.module.css'
 import Review from './Review'
 import { useEffect, useState } from 'react';
+import { useFindState } from '../store/Statefind';
+import axios from 'axios';
 
-export default function SubscribeUserModal({ openModal, closeModal ,setopenModal}) {
+export default function SubscribeUserModal({ openModal, closeModal, setopenModal, info }) {
 
     const [openReview, setOpenReview] = useState(null);
     //review modal open
@@ -15,6 +17,36 @@ export default function SubscribeUserModal({ openModal, closeModal ,setopenModal
     const closeReviewModal = () => {
         setOpenReview(null);
     }
+
+
+    console.log(info, 'sdfsdfsd')
+
+
+    const [InfoList, setInfoList] = useState([]);
+
+    const findState = useFindState();
+    useEffect(() => {
+        const fetchData = async () => {
+            const rid = info.RID
+            try {
+                const response = await axios.get("/back/api/reservation_detail", { params: { rid } });
+                let CopyData = [...InfoList];
+
+                CopyData = response.data.reservation_info;
+
+                setInfoList(CopyData);
+
+            } catch (err) {
+                console.log(err.message);
+            }
+        };
+
+        fetchData();
+    }, [findState]);
+
+
+
+    console.log(InfoList.PT_SESSIONS)
 
 
 
@@ -38,10 +70,10 @@ export default function SubscribeUserModal({ openModal, closeModal ,setopenModal
                         <div>
                             <span>이름</span>
                             <span className={styles.line}>|</span>
-                            <span className={styles.MarginRight}>박석진</span>
+                            <span className={styles.MarginRight}>{InfoList.PARTNER_NAME}</span>
                             <span>헬스장</span>
                             <span className={styles.line}>|</span>
-                            <span>ABC헬스짐</span>
+                            <span>{InfoList.GYM_NAME}</span>
                         </div>
                     </div>
 
@@ -50,25 +82,25 @@ export default function SubscribeUserModal({ openModal, closeModal ,setopenModal
                         <div>
                             <span>횟수</span>
                             <span className={styles.line}>|</span>
-                            <span className={styles.MarginRight}>10회</span>
+                            <span className={styles.MarginRight}>{InfoList.FCOUNT}회</span>
                             <span>회당가격</span>
                             <span className={styles.line}>|</span>
-                            <span>30000원</span>
+                            <span>{InfoList.PRICE}원</span>
 
                             <div></div>
 
                             <span>시작일</span>
                             <span className={styles.line}>|</span>
-                            <span className={styles.MarginRight}>2024.08.02(금)</span>
+                            <span className={styles.MarginRight}>{InfoList.FDATE}</span>
                             <span>종료일</span>
                             <span className={styles.line}>|</span>
-                            <span>2024.09.02(금)</span>
+                            <span>{InfoList.EDATE}</span>
 
                             <div></div>
 
                             <span>총 결제 금액</span>
                             <span className={styles.line}>|</span>
-                            <span>300,000원</span>
+                            <span>{InfoList.FCOUNT * InfoList.PRICE}원</span>
                         </div>
                     </div>
 
@@ -77,8 +109,23 @@ export default function SubscribeUserModal({ openModal, closeModal ,setopenModal
                         <div>
                             <span>잔여 횟수</span>
                             <span className={styles.line}>|</span>
-                            <span>8회</span>
+                            <span>{InfoList.REMAINING_SESSIONS}회</span>
                             <div></div>
+                            {
+
+                                InfoList.PT_SESSIONS.length && (InfoList.PT_SESSIONS).map((ss, idx) => {
+
+                                    return (
+                                        <>
+                                            <span>No.{ss.No}</span>
+                                            <span className={styles.line}></span>
+                                            <span>{ss.CHECK_DATE}</span>
+                                            <div></div>
+                                        </>
+                                    )
+                                })
+
+                            }
                             <span>No.1</span>
                             <span className={styles.line}></span>
                             <span>2024.08.04(금)</span>
@@ -103,17 +150,17 @@ export default function SubscribeUserModal({ openModal, closeModal ,setopenModal
                     <button style={{ backgroundColor: 'white', color: 'black' }}>구독 취소하기</button>
                     <button onClick={() => {
                         openReviewModal()
-                        
+
                     }}>리뷰 작성하기</button>
-                    <Review openModal={openReview} closeModal={closeReviewModal}></Review>
+
                 </div>
             </div>
 
-            
 
 
-        <Review openModal={openReview} closeModal={closeModal}></Review>
-        
+
+            <Review openModal={openReview} closeModal={closeModal}></Review>
+
 
         </Modal>
     )

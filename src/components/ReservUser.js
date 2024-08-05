@@ -66,7 +66,7 @@ export default function ReservUser() {
   const findState = useFindState();
   useEffect(() => {
     const fetchData = async () => {
-      const user_id = sessionStorage.getItem("uid");
+       const user_id = sessionStorage.getItem("uid");
 
 
       try {
@@ -86,12 +86,6 @@ export default function ReservUser() {
     fetchData();
   }, [findState]);
 
-  console.log('userList', UserReservList)
-
-
-
-  
-
 
   let ReservedList = []
   let ReservingList = []
@@ -102,11 +96,6 @@ export default function ReservUser() {
 
   let bid;
 
-
-  useEffect(()=>{
-    setBookingid(bid);
-  },[bid])
-
   return (
     <>
       <TabFrame>
@@ -114,10 +103,10 @@ export default function ReservUser() {
 
         {
           ReservingList.map((rsv, idx) => {
-
-            bid = rsv.BOOKID
-
+            console.log(rsv)
             return (
+
+              <>
               <div className={styles.Reserving}>
                 <div className={styles.ReservingInfo}>
                   <span>{rsv.PARTNER_NAME} 트레이너</span>
@@ -129,29 +118,24 @@ export default function ReservUser() {
                 <div className={styles.ReservingBtn}>
                   <span>예약확정</span>
                   <button onClick={() => {
-                    
-
-
                     openModal(true)
-                    setSelectmodal('상세보기')
-
-                    console.log(bid, 'dada' ,bookingid)
+                    setSelectmodal('상세보기')  
                   }}>상세보기</button>
                 </div>
               </div>
+              
+              <ReservUserModal activeModal={activeModal} closeModal={closeModal} selectmodal={selectmodal} completeReview={completeReview} completeSub={completeSub} bid={rsv.BOOKID}></ReservUserModal>
 
+              </>
             )
 
           })
 
-
+          
         }
 
 
-
-
         <TabLine content="예약 내역" />
-
         {
 
           ReservedList.map((rsv, idx) => {
@@ -175,14 +159,15 @@ export default function ReservUser() {
 
                     openReviewModal()
 
-                  }} style={checkreview[0] ? { backgroundColor: 'white', color: 'black' } : null}
+                  }} style={checkreview[idx] ? { backgroundColor: 'white', color: 'black' } : null}
 
                   >{checkreview[idx] ? '리뷰 작성 완료' : '리뷰 작성'}</button>
 
 
                   <button onClick={() => {
-                    openModal(true)
-                    setSelectmodal('구독신청')
+                    
+                    setSelectmodal('구독신청');
+                    openModal(true);
                   }} style={checkrsub[idx] ? { backgroundColor: 'white', color: 'black' } : null}
                   >{checkrsub[idx] ? '구독 신청 완료' : '구독 신청'}</button>
 
@@ -200,9 +185,8 @@ export default function ReservUser() {
 
         {/* map으로 받아와서 나중에 리스트 idx 추가하기 */}
 
-        <ReservUserModal activeModal={activeModal} closeModal={closeModal} selectmodal={selectmodal} completeReview={completeReview} completeSub={completeSub} bid ={bid}></ReservUserModal>
-
-        <Review openModal={openReview} closeModal={closeReviewModal}></Review>
+      
+        <Review openModal={openReview} closeModal={closeReviewModal} bid={bid}></Review>
 
 
 

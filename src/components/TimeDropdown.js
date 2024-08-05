@@ -1,6 +1,6 @@
 import React from "react";
 
-const TimeDropdown = ({ content }) => {
+const TimeDropdown = ({ content, name, value, onChange }) => {
   return (
     <div
       style={{
@@ -10,15 +10,16 @@ const TimeDropdown = ({ content }) => {
       }}
     >
       <label
-        htmlFor="time"
+        htmlFor={name}
         style={{ marginRight: "10px", fontSize: "14px", color: "#333" }}
       >
         {content} 시간
       </label>
       <select
-        name="time"
-        id="time"
-        defaultValue=""
+        name={name}
+        id={name}
+        value={value}
+        onChange={onChange}
         style={{
           backgroundColor: "#f9f9f9",
           border: "1px solid #ccc",
@@ -33,7 +34,7 @@ const TimeDropdown = ({ content }) => {
           -
         </option>
         {Array.from({ length: 13 }, (_, i) => 10 + i).map((hour) => (
-          <option key={hour} value={hour}>
+          <option key={hour} value={`${hour}:00`}>
             {`${hour}:00`}
           </option>
         ))}

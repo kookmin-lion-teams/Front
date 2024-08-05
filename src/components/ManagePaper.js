@@ -7,7 +7,7 @@ import TimeDropdown from "./TimeDropdown";
 import React from "react";
 const ManagePaper = () => {
   const [name] = useState(sessionStorage.getItem("name"));
-  const [pid] = useState(sessionStorage.getItem("pid"));
+  const [partner_id] = useState(sessionStorage.getItem("pid"));
   const [isInfo, setIsInfo] = useState(false);
   const [partnerInfo, setPartnerInfo] = useState({
     expert1: "",
@@ -18,13 +18,13 @@ const ManagePaper = () => {
     eprice: "",
     price: "",
     closed_days: {
-      MON: false,
-      TUE: false,
-      WED: false,
-      THU: false,
-      FRI: false,
-      SAT: false,
-      SUN: false,
+      mon: "0",
+      tue: "0",
+      wed: "0",
+      thur: "0",
+      fri: "0",
+      sat: "0",
+      sun: "0",
     },
     weekday_start_time: "",
     weekday_end_time: "",
@@ -37,16 +37,18 @@ const ManagePaper = () => {
   useEffect(() => {
     console.log(partnerInfo);
   }, [partnerInfo]);
-
+  useEffect(() => {
+    console.log("isInfo: ", isInfo);
+  }, [isInfo]);
   //  첫 렌더시 공고 가져오기
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await axios.get("back/api/partner/view_myinfo", {
-          params: { pid },
+        const response = await axios.get("back/api/partner/myinfo_view", {
+          params: { partner_id },
         });
         const data = response.data.partner_info;
-
+        setIsInfo(true);
         console.log("공고: ", data, data.expert1);
         setIsInfo(data.expert1 ? true : false);
         setPartnerInfo({
@@ -68,15 +70,15 @@ const ManagePaper = () => {
       }
     };
     fetchData();
-  }, [pid]);
+  }, [partner_id]);
 
   ///  서브밋
   const handleSubmit = async (event) => {
     event.preventDefault();
     try {
       const endpoint = isInfo
-        ? "back/api/partner/update_myinfo"
-        : "back/api/partner/write_myinfo";
+        ? "back/api/partner/myinfo_update"
+        : "back/api/partner/myinfo_write";
 
       const response = await axios.post(
         endpoint,
@@ -107,52 +109,57 @@ const ManagePaper = () => {
     }
   };
 
-  //  Text  Input 변할때
+  // Input 변할때
   const handleInputChange = (e) => {
     const { name, value } = e.target;
-    setPartnerInfo((prevInfo) => ({ ...prevInfo, [name]: value }));
+    // name이 price 또는 eprice 일때, value를 int로 바꿔서 넣기
+    const intValue =
+      name === "price" || name === "eprice" ? parseInt(value, 10) : value;
+    setPartnerInfo((prevInfo) => ({ ...prevInfo, [name]: intValue }));
   };
 
   // 휴무일 체크박스 변할때
-  const handleCheckboxChange = (e) => {
-    const { id, checked } = e.target;
-    let day = id;
-    if (id === "월") day = "MON";
-    else if (id === "화") day = "TUE";
-    else if (id === "수") day = "WED";
-    else if (id === "목") day = "THU";
-    else if (id === "금") day = "FRI";
-    else if (id === "토") day = "SAT";
-    else if (id === "일") day = "SUN";
-
+  const clickDay = (v) => {
     setPartnerInfo((prevInfo) => ({
       ...prevInfo,
       closed_days: {
         ...prevInfo.closed_days,
-        [day]: checked,
+        [v]: prevInfo.closed_days[v] === "1" ? "0" : "1",
       },
     }));
   };
 
   // 시간 변할때
   const handleTimeChange = (name, value) => {
-    setPartnerInfo((prevInfo) => ({ ...prevInfo, [name]: value }));
+    setPartnerInfo((prevInfo) => ({ ...prevInfo, [name]: `${value}` }));
   };
 
+  // queue
   const addQ = (v) => {
-    setQueue((prevQueue) => {
-      // queue에 새로운 값 추가
-      const newQueue = [...prevQueue, v];
-      return newQueue;
-    });
+    if (queue[0] === v) {
+      setQueue((prev) => {
+        const [first, second] = prev;
+        return [second];
+      });
+    } else if (queue[1] === v) {
+      setQueue((prev) => {
+        const [first, second] = prev;
+        return [first];
+      });
+    } else {
+      setQueue((prev) => {
+        const newQueue = [...prev, v];
+        return newQueue;
+      });
+    }
   };
+
   useEffect(() => {
     const dequeue = () => {
       setQueue((prevQueue) => {
         if (prevQueue.length <= 2) return prevQueue;
-
-        const [first, second, ...rest] = prevQueue;
-        return [second, ...rest];
+        const [first, ...rest] = prevQueue;
+        return [...rest];
       });
     };
 
@@ -169,6 +176,11 @@ const ManagePaper = () => {
   const isExpertSelected = (expert) => {
     return partnerInfo.expert1 === expert || partnerInfo.expert2 === expert;
   };
+
+  const isDaySelected = (day) => {
+    return partnerInfo.closed_days[day] === "1";
+  };
+
   const options = [
     "다이어트",
     "체력증진",
@@ -177,6 +189,9 @@ const ManagePaper = () => {
     "체형교정",
     "재활",
   ];
+  const day_options = ["월", "화", "수", "목", "금", "토", "일"];
+  const day_options_e = ["mon", "tue", "wed", "thur", "fri", "sat", "sun"];
+
   return (
     <TabFrame>
       <form onSubmit={handleSubmit}>
@@ -204,8 +219,6 @@ const ManagePaper = () => {
               className={styles.cInput}
               value={partnerInfo.gname}
               onChange={handleInputChange}
-              disabled
-              readOnly
             />
             <button
               style={{
@@ -270,7 +283,7 @@ const ManagePaper = () => {
             gap: "10px",
           }}
         >
-          {["평일", "주말"].map((dayType, index) => (
+          {["weekday", "weekend"].map((dayType, index) => (
             <div
               key={index}
               style={{
@@ -279,7 +292,16 @@ const ManagePaper = () => {
                 justifyContent: "flex-start",
               }}
             >
-              <div className={styles.rightBorder}>{dayType}</div>
+              <div
+                className={styles.rightBorder}
+                style={{
+                  display: "flex",
+                  justifyContent: "content",
+                  alignItems: "center",
+                }}
+              >
+                <span>{dayType === "weekday" ? "평일" : "주말"}</span>
+              </div>
               <div
                 style={{ padding: "0px 1rem", display: "flex", gap: "10px" }}
               >
@@ -296,6 +318,7 @@ const ManagePaper = () => {
                     )
                   }
                 />
+
                 <TimeDropdown
                   content="종료"
                   name={`${dayType}_end_time`}
@@ -317,20 +340,22 @@ const ManagePaper = () => {
               justifyContent: "flex-start",
             }}
           >
-            <div className={styles.rightBorder}>휴무일</div>
-            <div style={{ padding: "0px 1rem", display: "flex", gap: "10px" }}>
-              {["월", "화", "수", "목", "금", "토", "일"].map((day, index) => (
-                <div key={index} className={styles.cbContainer}>
-                  <input
-                    type="checkbox"
-                    id={day}
-                    className={styles.cb}
-                    onChange={handleCheckboxChange}
-                  />
-                  <label htmlFor={day} className={styles.checkboxLabel}>
-                    {day}
-                  </label>
-                </div>
+            <div
+              className={styles.TabLineUnderContentContainer}
+              style={{ display: "flex", alignItems: "center" }}
+            >
+              <div className={styles.rightBorder}>휴무일</div>
+
+              {day_options.map((option, index) => (
+                <React.Fragment key={option}>
+                  <div
+                    className={`${styles.chBox} ${
+                      isDaySelected(day_options_e[index]) ? styles.chBoxO : ""
+                    }`}
+                    onClick={() => clickDay(day_options_e[index])}
+                  ></div>
+                  <small>{option}</small>
+                </React.Fragment>
               ))}
             </div>
           </div>
@@ -348,7 +373,7 @@ const ManagePaper = () => {
             <div className={styles.rightBorder}>정상가</div>
             <div style={{ padding: "0px 1rem" }}>
               <input
-                type="text"
+                type="number"
                 name="price"
                 value={partnerInfo.price || ""}
                 className={styles.cInput}
@@ -361,7 +386,7 @@ const ManagePaper = () => {
             <div className={styles.rightBorder}>1회 체험가</div>
             <div style={{ padding: "0px 1rem" }}>
               <input
-                type="text"
+                type="number"
                 name="eprice"
                 className={styles.cInput}
                 value={partnerInfo.eprice || ""}
@@ -405,6 +430,7 @@ const ManagePaper = () => {
                 color: "white",
                 fontSize: "1.5rem",
               }}
+              onClick={handleSubmit}
             >
               등록하기
             </button>

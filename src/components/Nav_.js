@@ -5,6 +5,7 @@ import { useNavigate, useLocation } from "react-router-dom";
 import { useEffect, useState } from "react";
 import NavTab from "./NavTab";
 import LLMButton from "./LLMButton";
+import axios from "axios";
 export default function Nav_() {
   const navigate = useNavigate();
   const location = useLocation();
@@ -24,9 +25,16 @@ export default function Nav_() {
   const handleClicktoNav = (where) => {
     navigate(`/${where}`);
   };
-  const handleLogout = () => {
+  const handleLogout = async () => {
     sessionStorage.removeItem("pid");
     sessionStorage.removeItem("uid");
+    try {
+      const response = await axios.post("back/api/logout");
+      console.log(response.data);
+    } catch (e) {
+      console.log(e);
+    }
+
     navigate("/signin");
   };
   return (

@@ -33,13 +33,19 @@
   font-size: 3.25rem;
 }
 .searchBox {
-  width: 810px;
+  width: 610px;
+  height: var(--navLevel1-content-height);
+  border-radius: 5px;
+  position: relative;
+}
+.LLMBox {
+  width: 200px;
   height: var(--navLevel1-content-height);
   border-radius: 5px;
   position: relative;
 }
 .registerBox {
-  width: 203.17px;
+  width: 240.17px;
   height: 89.75px;
   display: flex;
   justify-content: space-around;

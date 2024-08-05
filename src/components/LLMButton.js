@@ -23,12 +23,10 @@ const LLMButton = () => {
   const mergeChats = () => {
     const mergedChats = [];
     const maxLength = Math.max(myChat.length, LLMChat.length);
-
     for (let i = 0; i < maxLength; i++) {
       if (i < myChat.length) mergedChats.push(myChat[i]);
       if (i < LLMChat.length) mergedChats.push(LLMChat[i]);
     }
-
     return mergedChats;
   };
 

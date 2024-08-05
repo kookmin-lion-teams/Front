@@ -75,9 +75,21 @@ const ManageUser = () => {
     fetchData();
   }, [partner_id, manage]);
   //예약 확정 버튼
-  const handleConfirmButton = async () => {
-    const response = await axios.post("back/api/partner/booking_submit");
+  const handleConfirmButton = async (v) => {
+    const booking_id = v.BOOKID;
+    const year = v.YEAR;
+    const month = v.MONTH;
+    const day = v.DAY;
+    const time = v.TIME;
+    const response = await axios.post("back/api/partner/booking_submit", {
+      booking_id,
+      year,
+      month,
+      day,
+      time,
+    });
     console.log("예약 확정: ", response.data);
+    fetchData();
   };
   //예약 취소 버튼
   const handleQuitReservationButton = async (booking_id) => {
@@ -249,7 +261,13 @@ const ManageUser = () => {
                     <div style={{ flexGrow: "1" }}></div>
 
                     <div className={styles.WaitingReservBtn}>
-                      <button onClick={handleConfirmButton}>확인하기</button>
+                      <button
+                        onClick={() => {
+                          handleConfirmButton(v);
+                        }}
+                      >
+                        확인하기
+                      </button>
                     </div>
                   </div>
                 )

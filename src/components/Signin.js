@@ -41,6 +41,7 @@ function SignIn() {
       sessionStorage.setItem("gu", response.data.GU);
       sessionStorage.setItem("dong", response.data.DONG);
       sessionStorage.setItem("role", response.data.ROLE);
+      sessionStorage.setItem("pNumber", response.data.TEL);
       navigate(`/`);
     } catch (error) {
       console.error("로그인 실패:", error.response?.data || error.message);

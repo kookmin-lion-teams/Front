@@ -21,27 +21,30 @@ export default function SubscribeUser() {
   const [subUser, setSubUser] = useState([]);
 
   const findState = useFindState();
+  const fetchData = async () => {
+    const user_id = sessionStorage.getItem("uid");
+
+    try {
+      const response = await axios.get("/back/api/user/r_list", {
+        params: { user_id },
+      });
+      let CopyData = [...subUser];
+
+      CopyData = response.data;
+
+      setSubUser(CopyData.reservations);
+    } catch (err) {
+      console.log(err.message);
+    }
+  };
+
   useEffect(() => {
-    const fetchData = async () => {
-      const user_id = sessionStorage.getItem("uid");
-
-      try {
-        const response = await axios.get("/back/api/user/r_list", {
-          params: { user_id },
-        });
-        let CopyData = [...subUser];
-
-        CopyData = response.data;
-
-        setSubUser(CopyData.reservations);
-      } catch (err) {
-        console.log(err.message);
-      }
-    };
-
     fetchData();
   }, [findState]);
 
+  useEffect(() => {
+    fetchData();
+  }, [modalIsOpen]);
   let SubscrbedList = [];
   let SubscrbingList = [];
   console.log(subUser);

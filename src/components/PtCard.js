@@ -1,10 +1,10 @@
 import { useState } from "react";
 import {
-  Navigate,
-  useNavigate,
-  uselocation,
-  location,
-  useLocation,
+    Navigate,
+    useNavigate,
+    uselocation,
+    location,
+    useLocation,
 } from "react-router-dom";
 import styles from "../CSS/PtCard.module.css";
 
@@ -13,7 +13,7 @@ function PtCard({ Key, partner }) {
 
 
     let navigate = useNavigate();
-    
+
     let location = useLocation();
 
 
@@ -23,7 +23,7 @@ function PtCard({ Key, partner }) {
         <>
             <div className={styles.container} onClick={() => {
 
-                navigate(`/detail/${Key}`, {state : {ptner : partner}})
+                navigate(`/detail/${Key}`, { state: { ptner: partner } })
             }}>
 
                 <div className={styles.cardimg}></div>
@@ -50,7 +50,7 @@ function PtCard({ Key, partner }) {
 
                     <div>
                         <div className={styles.user}><div>1회 체험</div></div>
-                        <span>{(100-(partner.eprice/partner.price)*100).toFixed(1)}</span>%
+                        <span>{(100 - (partner.eprice / partner.price) * 100).toFixed(1)}</span>%
                         <span className={styles.discount}>{partner.price}원</span>
                     </div>
                     <div class={styles.nowprice}>{partner.eprice}</div>원

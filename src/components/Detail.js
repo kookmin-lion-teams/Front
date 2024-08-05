@@ -8,6 +8,9 @@ import axios from "axios";
 import { useFindState } from "../store/Statefind";
 
 function Detail() {
+
+  const [one, setone] = useState(); 
+
   const findState = useFindState();
   const [partner, setPartner] = useState([
     {

@@ -6,7 +6,7 @@ import { Navigate, useNavigate, useLocation, location } from "react-router-dom";
 import DetailModal from "../components/DetailModal";
 import axios from "axios";
 import { useFindState } from "../store/Statefind";
-
+import DetailMap from "./DetailMap";
 function Detail() {
   const [one, setone] = useState();
 
@@ -47,6 +47,7 @@ function Detail() {
   const location = useLocation();
 
   const ptner = location.state.ptner;
+
   let partner_id;
 
   useEffect(() => {
@@ -71,13 +72,14 @@ function Detail() {
         copyreview = Reviewresponse.data.reviews;
         setReview(copyreview);
       } catch (err) {
-        console.log(123, err.message);
+        console.log(err.message);
       }
     };
     fetchData();
   }, [findState]);
-
-  console.log(partner);
+  useEffect(() => {
+    console.log("파트너", partner);
+  }, [partner]);
 
   return (
     <>
@@ -181,7 +183,13 @@ function Detail() {
                 <span>{partner.gym_address}</span>
               </div>
             </div>
-            <div className={styles.GymMap}>123</div>
+            <div className={styles.GymMap}>
+              <DetailMap
+                gu={partner.partner_gu}
+                dong={partner.partner_dong}
+                address={partner.gym_address}
+              />
+            </div>
           </div>
         </div>
 

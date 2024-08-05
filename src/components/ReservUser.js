@@ -54,25 +54,24 @@ export default function ReservUser() {
 
   const [UserReservList, setUserReservList] = useState([]);
   const [bookingid, setBookingid] = useState();
+
   let bookId;
 
   //유저의 예약 리스트 데이터 받아오기
   const findState = useFindState();
+  
   const fetchData = async () => {
     const user_id = sessionStorage.getItem("uid");
-
     try {
-      const response = await axios.get("/back/api/user/booking_list", {
-        params: { user_id },
-      });
+      const response = await axios.get("/back/api/user/booking_list", { params: { user_id } });
       let CopyData = [...UserReservList];
-
       CopyData = response.data;
       setUserReservList(CopyData.bookings);
     } catch (err) {
       console.log(err.message);
     }
   };
+=
 
   useEffect(() => {
     fetchData();
@@ -84,45 +83,50 @@ export default function ReservUser() {
     lst.APPLY ? ReservedList.push(lst) : ReservingList.push(lst);
   });
 
-  let bid;
 
+  let bid;
+  const [Reviewparam, setReviewparam] = useState([])
+
+
+  //  values = (pid, uid, rate, content, 0, today)
   return (
     <>
       <TabFrame>
         <TabLine content="진행중인 예약" />
 
-        {ReservingList.map((rsv, idx) => {
-          console.log(rsv);
-          return (
-            <>
-              <div className={styles.Reserving}>
-                <div className={styles.ReservingInfo}>
-                  <span>{rsv.PARTNER_NAME} 트레이너</span>
-                  <span>|</span>
-                  <span>
-                    {rsv.YEAR}.{rsv.MONTH}.{rsv.DAY} {rsv.TIME}
-                  </span>
-                  <span>
-                    <FontAwesomeIcon
-                      icon={faLocationDot}
-                      style={{ gap: "2rem" }}
-                    />{" "}
-                    {rsv.GYM_NAME}
-                  </span>
+
+        {
+          ReservingList.map((rsv, idx) => {
+            console.log(rsv)
+            return (
+
+              <>
+                <div className={styles.Reserving}>
+                  <div className={styles.ReservingInfo}>
+                    <span>{rsv.PARTNER_NAME} 트레이너</span>
+                    <span>|</span>
+                    <span>{rsv.YEAR}.{rsv.MONTH}.{rsv.DAY} {rsv.TIME}</span>
+                    <span><FontAwesomeIcon icon={faLocationDot} style={{ gap: '2rem' }} /> {rsv.GYM_NAME}</span>
+                  </div>
+                  <div style={{ flexGrow: '1' }}></div>
+                  <div className={styles.ReservingBtn}>
+                    <span>예약확정</span>
+                    <button onClick={() => {
+                      openModal(true)
+                      setSelectmodal('상세보기')
+                    }}>상세보기</button>
+                  </div>
                 </div>
-                <div style={{ flexGrow: "1" }}></div>
-                <div className={styles.ReservingBtn}>
-                  <span>예약확정</span>
-                  <button
-                    onClick={() => {
-                      openModal(true);
-                      setSelectmodal("상세보기");
-                    }}
-                  >
-                    상세보기
-                  </button>
-                </div>
-              </div>
+
+                <ReservUserModal activeModal={activeModal} closeModal={closeModal} selectmodal={selectmodal} completeReview={completeReview} completeSub={completeSub} bid={rsv.BOOKID}></ReservUserModal>
+
+              </>
+            )
+
+          })
+
+
+        }
 
               <ReservUserModal
                 activeModal={activeModal}
@@ -137,43 +141,38 @@ export default function ReservUser() {
         })}
 
         <TabLine content="예약 내역" />
-        {ReservedList.map((rsv, idx) => {
-          return (
-            <div div className={styles.Reserved}>
-              <div className={styles.ReservedInfo}>
-                <span>{rsv.PARTNER_NAME} 트레이너</span>
-                <span>|</span>
-                <span>
-                  {rsv.YEAR}.{rsv.MONTH}.{rsv.DAY} {rsv.TIME}
-                </span>
-                <span>
-                  <FontAwesomeIcon
-                    icon={faLocationDot}
-                    style={{ gap: "2rem" }}
-                  />{" "}
-                  {rsv.GYM_NAME}
-                </span>
-              </div>
-              <div style={{ flexGrow: "1" }}></div>
 
-              {/* 리뷰 작성은 Review 모달을 열기 */}
-              <div className={styles.ReservedBtn}>
-                <button
-                  onClick={() => {
-                    openReviewModal();
-                  }}
-                  style={
-                    checkreview[idx]
-                      ? { backgroundColor: "white", color: "black" }
-                      : null
-                  }
-                >
-                  {checkreview[idx] ? "리뷰 작성 완료" : "리뷰 작성"}
-                </button>
+        {
 
-                <button
-                  onClick={() => {
-                    setSelectmodal("구독신청");
+          ReservedList.map((rsv, idx) => {
+
+
+            return (
+
+              <div div className={styles.Reserved} >
+                <div className={styles.ReservedInfo}>
+                  <span>{rsv.PARTNER_NAME}  트레이너</span>
+                  <span>|</span>
+                  <span>{rsv.YEAR}.{rsv.MONTH}.{rsv.DAY} {rsv.TIME}</span>
+                  <span><FontAwesomeIcon icon={faLocationDot} style={{ gap: '2rem' }} /> {rsv.GYM_NAME}</span>
+
+                </div>
+                <div style={{ flexGrow: '1' }}></div>
+
+
+                {/* 리뷰 작성은 Review 모달을 열기 */}
+                <div className={styles.ReservedBtn}>
+                  <button onClick={() => {
+                    setReviewparam(rsv)
+                    openReviewModal()
+                  }} style={checkreview[idx] ? { backgroundColor: 'white', color: 'black' } : null}
+
+                  >{checkreview[idx] ? '리뷰 작성 완료' : '리뷰 작성'}</button>
+
+
+                  <button onClick={() => {
+
+                    setSelectmodal('구독신청');
                     openModal(true);
                   }}
                   style={
@@ -185,18 +184,21 @@ export default function ReservUser() {
                   {checkrsub[idx] ? "구독 신청 완료" : "구독 신청"}
                 </button>
               </div>
-            </div>
-          );
-        })}
+
+            )
+          })
+        }
+
+
 
         {/* map으로 받아와서 나중에 리스트 idx 추가하기 */}
 
-        <Review
-          openModal={openReview}
-          closeModal={closeReviewModal}
-          bid={bid}
-        ></Review>
-      </TabFrame>
+
+        {openReview && <Review openModal={openReview} closeModal={closeReviewModal} Reviewparam={Reviewparam}></Review>}
+
+
+
+      </TabFrame >
     </>
   );
 }

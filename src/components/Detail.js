@@ -5,8 +5,10 @@ import { useEffect, useState } from "react";
 import { Navigate, useNavigate, useLocation, location } from "react-router-dom";
 import DetailModal from "../components/DetailModal";
 import axios from "axios";
+import { useFindState } from "../store/Statefind";
 
 function Detail() {
+  const findState = useFindState();
   const [partner, setPartner] = useState([
     {
       EPRICE: null,
@@ -44,43 +46,27 @@ function Detail() {
   useEffect(() => {
     const fetchData = async () => {
       const partner_id = location.state.ptner.PID;
+
+      console.log("PTD", partner_id);
+
       try {
-        const response = await axios.get("/back/api/partner/detail", {
+        const response = await axios.get("/back/api/user/partner_detail", {
           params: { partner_id },
         });
 
-        useEffect(() => {
-          const fetchData = async () => {
-            const partner_id = location.state.ptner.PID;
-            try {
-              const response = await axios.get(
-                "/back/api/user/partner_detail",
-                {
-                  params: { partner_id },
-                }
-              );
+        let CopyData = [...partner];
 
-              let CopyData = [...partner];
+        CopyData = response.data.partner_info;
 
-              CopyData = response.data.partner_info;
-
-              setPartner(CopyData);
-
-              console.log(CopyData, "dddd");
-            } catch (err) {
-              console.log(123, err.message);
-            }
-          };
-          fetchData();
-        }, []);
-
-        console.log(CopyData);
+        setPartner(CopyData);
       } catch (err) {
         console.log(123, err.message);
       }
     };
     fetchData();
-  }, []);
+  }, [findState]);
+
+  console.log("ptner2", partner, ptner);
 
   return (
     <>

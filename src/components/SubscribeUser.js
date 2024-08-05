@@ -10,129 +10,129 @@ import { useFindState } from "../store/Statefind";
 import axios from "axios";
 
 export default function SubscribeUser() {
+  const [modalIsOpen, setModalIsOpen] = useState(false);
+  const openModal = () => {
+    setModalIsOpen(true);
+  };
+  const closeModal = () => {
+    setModalIsOpen(false);
+  };
 
-    const [modalIsOpen, setModalIsOpen] = useState(false);
-    const openModal = () => {
-        setModalIsOpen(true);
+  const [subUser, setSubUser] = useState([]);
+
+  const findState = useFindState();
+  useEffect(() => {
+    const fetchData = async () => {
+      const user_id = sessionStorage.getItem("uid");
+
+      try {
+        const response = await axios.get("/back/api/user/r_list", {
+          params: { user_id },
+        });
+        let CopyData = [...subUser];
+
+        CopyData = response.data;
+
+        setSubUser(CopyData.reservations);
+      } catch (err) {
+        console.log(err.message);
+      }
     };
-    const closeModal = () => {
-        setModalIsOpen(false);
-    };
 
-    const [subUser, setSubUser] = useState([])
+    fetchData();
+  }, [findState]);
 
-    const findState = useFindState();
-    useEffect(() => {
-        const fetchData = async () => {
-            const user_id = sessionStorage.getItem("uid");
+  let SubscrbedList = [];
+  let SubscrbingList = [];
+  console.log(subUser);
 
+  const [info, setInfo] = useState([[]]);
 
-            try {
-                const response = await axios.get("/back/api/user/r_list", { params: { user_id } });
-                let CopyData = [...subUser];
+  subUser.map((sub, idx) => {
+    let Edate = new Date(sub.EDATE);
+    Edate = new Date(Edate.getFullYear(), Edate.getMonth(), Edate.getDate());
+    const today = new Date();
+    Edate < today ? SubscrbedList.push(sub) : SubscrbingList.push(sub);
+  });
 
-                CopyData = response.data;
+  return (
+    <TabFrame>
+      <TabLine content={"현재 구독 내용"}></TabLine>
 
-                setSubUser(CopyData.reservations);
+      {SubscrbingList.map((sub, idx) => {
+        return (
+          <>
+            <div className={styles.Subscrbed}>
+              <div className={styles.SubscrbedInfo}>
+                <span>{sub.PARTNER_NAME} 트레이너</span>
+                <span>|</span>
+                <span>{sub.EDATE} 까지</span>
+              </div>
 
-            } catch (err) {
-                console.log(err.message);
-            }
-        };
+              <div style={{ flexGrow: "1" }}></div>
 
-        fetchData();
-    }, [findState]);
+              <div className={styles.SubscrbedBtn}>
+                <div>
+                  <span>{sub.CURRENT_COUNT}</span>
+                  <span style={{ margin: "0 1rem 0 1.3rem" }}>/</span>
+                  <span>{sub.FCOUNT}</span>
+                </div>
+                <button
+                  onClick={() => {
+                    openModal();
+                    setInfo(sub);
+                  }}
+                >
+                  상세보기
+                </button>
+              </div>
+            </div>
+          </>
+        );
+      })}
 
+      <TabLine content={"이전 구독 내용"}></TabLine>
 
-    let SubscrbedList = []
-    let SubscrbingList = []
-    console.log(subUser)
+      {SubscrbedList.map((sub, idx) => {
+        return (
+          <>
+            <div className={styles.Subscrbed}>
+              <div className={styles.SubscrbedInfo}>
+                <span>{sub.PARTNER_NAME} 트레이너</span>
+                <span>|</span>
+                <span>{sub.EDATE} 까지</span>
+              </div>
 
-    const [info, setInfo] = useState([[]])
+              <div style={{ flexGrow: "1" }}></div>
 
-    subUser.map((sub, idx) => {
-        let Edate = new Date(sub.EDATE)
-        Edate = new Date(Edate.getFullYear(), Edate.getMonth(), Edate.getDate())
-        const today = new Date();
-        Edate < today ? SubscrbedList.push(sub) : SubscrbingList.push(sub)
-    })
+              <div className={styles.SubscrbedBtn}>
+                <div>
+                  <span>{sub.CURRENT_COUNT}</span>
+                  <span style={{ margin: "0 1rem 0 1.3rem" }}>/</span>
+                  <span>{sub.FCOUNT}</span>
+                </div>
+                <button
+                  onClick={() => {
+                    openModal();
+                    setInfo(sub);
+                  }}
+                >
+                  상세보기
+                </button>
+              </div>
+            </div>
+          </>
+        );
+      })}
 
-
-
-    return (
-
-        <TabFrame>
-            <TabLine content={'현재 구독 내용'}></TabLine>
-
-            {
-                SubscrbingList.map((sub, idx) => {
-
-                    return (
-                        <>
-                            <div className={styles.Subscrbed}>
-                                <div className={styles.SubscrbedInfo}>
-                                    <span>{sub.PARTNER_NAME} 트레이너</span>
-                                    <span>|</span>
-                                    <span>{sub.EDATE} 까지</span>
-                                </div>
-
-                                <div style={{ flexGrow: '1' }}></div>
-
-                                <div className={styles.SubscrbedBtn}>
-                                    <div><span>{sub.CURRENT_COUNT}</span>
-                                        <span style={{ margin: '0 1rem 0 1.3rem' }}>/</span>
-                                        <span>{sub.FCOUNT}</span></div>
-                                    <button onClick={() => { openModal(); setInfo(sub) }}>상세보기</button>
-                                </div>
-                            </div>
-
-
-
-                        </>
-                    )
-                })
-            }
-
-            <TabLine content={'이전 구독 내용'}></TabLine>
-
-            {
-                SubscrbedList.map((sub, idx) => {
-
-                    return (
-                        <>
-                            <div className={styles.Subscrbed}>
-                                <div className={styles.SubscrbedInfo}>
-                                    <span>{sub.PARTNER_NAME} 트레이너</span>
-                                    <span>|</span>
-                                    <span>{sub.EDATE} 까지</span>
-                                </div>
-
-                                <div style={{ flexGrow: '1' }}></div>
-
-                                <div className={styles.SubscrbedBtn}>
-                                    <div><span>{sub.CURRENT_COUNT}</span>
-                                        <span style={{ margin: '0 1rem 0 1.3rem' }}>/</span>
-                                        <span>{sub.FCOUNT}</span></div>
-                                    <button onClick={() => { openModal(); setInfo(sub) }}>상세보기</button>
-                                </div>
-                            </div>
-
-
-                        </>
-                    )
-
-
-                })
-
-            }
-
-
-
-            {modalIsOpen && (<SubscribeUserModal openModal={modalIsOpen} closeModal={closeModal} setopenModal={openModal} info={info}></SubscribeUserModal>)}
-
-
-        </TabFrame>
-
-    )
-
+      {modalIsOpen && (
+        <SubscribeUserModal
+          openModal={modalIsOpen}
+          closeModal={closeModal}
+          setopenModal={openModal}
+          info={info}
+        ></SubscribeUserModal>
+      )}
+    </TabFrame>
+  );
 }

@@ -3,6 +3,9 @@ import styles from "../CSS/ManageUser.module.css";
 import React, { useState, useEffect } from "react";
 import TabLine from "./TabLine";
 import axios from "axios";
+import ReservUserModal from "./ReservUserModal";
+import Modal from "react-modal";
+import SubscribeUserModal from "./SubscribeUserModal";
 
 const ManageUser = () => {
   const [manage, setManage] = useState("구독");
@@ -11,32 +14,93 @@ const ManageUser = () => {
   const [partner_id] = useState(sessionStorage.getItem("pid"));
   const [subUserList, setSubUserList] = useState([]);
   const [bookUserList, setBookUserList] = useState([]);
-  useEffect(() => {
-    const fetchData = async () => {
-      const endpoint =
-        manage === "구독"
-          ? "back/api/partner/r_list"
-          : "back/api/partner/booking_list";
-      try {
-        const response = await axios.get(endpoint, {
-          params: { partner_id },
-        });
-        if (manage === "구독") {
-          const data = response.data.subscriptions;
-          setSubUserList(data); // 데이터를 상태에 저장합니다.
-          console.log("구독 리스트: ", data);
-        } else {
-          const data = response.data.bookings;
-          setBookUserList(data); // 데이터를 상태에 저장합니다.
-          console.log("예약 리스트: ", data);
-        }
-      } catch (err) {
-        console.log(err);
+  // 모달 상태를 관리하는 state
+  Modal.setAppElement("#root");
+  const [selectmodal, setSelectmodal] = useState("");
+  const [checkreview, setCheckReview] = useState([0, 0, 0]);
+  const [checkrsub, setChecksub] = useState([0, 0, 0]);
+
+  const [activeModal, setActiveModal] = useState(null);
+  const completeReview = (idx) => {
+    let cp = [...checkreview];
+    cp[idx] = 1;
+    setCheckReview(cp);
+  };
+
+  const completeSub = (idx) => {
+    let cp = [...checkrsub];
+    cp[idx] = 1;
+    setChecksub(cp);
+  };
+  const [modalIsOpen, setModalIsOpen] = useState(false);
+  const openModal = () => {
+    setModalIsOpen(true);
+  };
+  const closeModal = () => {
+    setModalIsOpen(false);
+  };
+
+  // 모달을 열기 위한 함수
+  const openModal2 = (modalType) => {
+    setActiveModal(modalType);
+  };
+
+  // 모달을 닫기 위한 함수
+  const closeModal2 = () => {
+    setActiveModal(null);
+  };
+  const fetchData = async () => {
+    const endpoint =
+      manage === "구독"
+        ? "back/api/partner/r_list"
+        : "back/api/partner/booking_list";
+    try {
+      const response = await axios.get(endpoint, {
+        params: { partner_id },
+      });
+      if (manage === "구독") {
+        const data = response.data.subscriptions;
+        setSubUserList(data); // 데이터를 상태에 저장합니다.
+        console.log("구독 리스트: ", data);
+      } else {
+        const data = response.data.bookings;
+        setBookUserList(data); // 데이터를 상태에 저장합니다.
+        console.log("예약 리스트: ", data);
       }
-    };
+    } catch (err) {
+      console.log(err);
+    }
+  };
+  useEffect(() => {
     fetchData();
   }, [partner_id, manage]);
+  //예약 확정 버튼
+  const handleConfirmButton = async () => {
+    const response = await axios.post("back/api/partner/booking_submit");
+    console.log("예약 확정: ", response.data);
+  };
+  //예약 취소 버튼
+  const handleQuitReservationButton = async (booking_id) => {
+    const response = await axios.post("back/api/partner/booking_cancel", {
+      booking_id,
+    });
+    console.log("예약 취소: ", response.data);
+    fetchData();
+  };
 
+  useEffect(() => {
+    fetchData();
+  }, [activeModal]);
+  const handleCheckButton = async (rid) => {
+    try {
+      const response = await axios.post("back/api/partner/check_session", {
+        rid,
+      });
+      console.log("횟수 추가: ", response.data);
+    } catch (e) {
+      console.log(e);
+    }
+  };
   return (
     <div style={{ width: "100%" }}>
       <div className={styles.manageTab}>
@@ -71,11 +135,25 @@ const ManageUser = () => {
 
                 <div className={styles.SubscrbingCustInfoBtn}>
                   <div>
-                    <span>{ptcount[index]}</span>
+                    <span>{v.CURRENT_COUNT}</span>
                     <span style={{ margin: "0 1rem 0 1.3rem" }}>/</span>
                     <span>{v.FCOUNT}</span>
                   </div>
-                  <button>상세보기</button>
+                  <button
+                    onClick={() => {
+                      openModal();
+                    }}
+                  >
+                    상세보기
+                  </button>
+                  {modalIsOpen && (
+                    <SubscribeUserModal
+                      openModal={modalIsOpen}
+                      closeModal={closeModal}
+                      setopenModal={openModal}
+                      info={v}
+                    ></SubscribeUserModal>
+                  )}
                   <button
                     onClick={() => {
                       let countcopy = [...ptcount];
@@ -85,6 +163,8 @@ const ManageUser = () => {
                       let checkcopy = [...check];
                       checkcopy[index] = 1;
                       setCheck(checkcopy);
+
+                      handleCheckButton(v.RID);
                     }}
                     style={
                       check[index]
@@ -122,9 +202,31 @@ const ManageUser = () => {
                     <div style={{ flexGrow: "1" }}></div>
 
                     <div className={styles.ConfirmedReservInfoBtn}>
-                      <button>상세보기</button>
-                      <button>예약 취소</button>
+                      <button
+                        onClick={() => {
+                          openModal2(true);
+                          setSelectmodal("상세보기");
+                        }}
+                      >
+                        상세보기
+                      </button>
+
+                      <button
+                        onClick={() => {
+                          handleQuitReservationButton(v.BOOKID);
+                        }}
+                      >
+                        예약 취소
+                      </button>
                     </div>
+                    <ReservUserModal
+                      activeModal={activeModal}
+                      closeModal2={closeModal2}
+                      selectmodal={selectmodal}
+                      completeReview={completeReview}
+                      completeSub={completeSub}
+                      bid={v.BOOKID}
+                    ></ReservUserModal>
                   </div>
                 )
             )}
@@ -147,7 +249,7 @@ const ManageUser = () => {
                     <div style={{ flexGrow: "1" }}></div>
 
                     <div className={styles.WaitingReservBtn}>
-                      <button>확인하기</button>
+                      <button onClick={handleConfirmButton}>확인하기</button>
                     </div>
                   </div>
                 )

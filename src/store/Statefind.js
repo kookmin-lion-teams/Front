@@ -14,7 +14,6 @@ const useFindStore = create((set, get) => ({
   },
 }));
 
-
 export const useFindState = () => useFindStore((state) => state.findState);
 
 // actions를 구독하는 훅

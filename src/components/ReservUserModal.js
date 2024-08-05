@@ -2,10 +2,42 @@ import styles from '../CSS/ReservUserModal.module.css';
 import { useEffect, useState } from "react";
 import Modal from 'react-modal';
 import Review from './Review';
+import axios from "axios";
+import { useFindState } from "../store/Statefind";
 
-function ReservUserModal({ activeModal, closeModal, selectmodal, completeReview, completeSub }) {
+function ReservUserModal({ activeModal, closeModal, selectmodal, completeReview, completeSub ,bid}) {
 
-    let [cnt, setCnt] = useState(0)
+    let [cnt, setCnt] = useState()
+
+    const [BookingDetailList, setBookingDetailList] = useState([])
+
+
+
+    const findState = useFindState();
+    useEffect(() => {
+        const fetchData = async () => {
+            
+
+
+
+            try {
+                const response = await axios.get("/back/api/booking_detail", { params: {  } });
+                let CopyData = [...BookingDetailList];
+
+                CopyData = response.data;
+
+                console.log("data123" , CopyData)
+                setBookingDetailList(CopyData.bookings);
+
+            } catch (err) {
+                console.log("RevervUserModal에서 에러발생",err.message);
+            }
+        };
+
+        fetchData();
+    }, [findState]);
+
+
 
     return (
 
@@ -22,7 +54,6 @@ function ReservUserModal({ activeModal, closeModal, selectmodal, completeReview,
                     {
                         {
                             '상세보기': <div>1회 체험 예약 정보</div>,
-                            '예약확정': <div>1회 체험 예약 정보</div>,
                             '구독신청': <div>구독신청</div>
                         }[selectmodal]
                     }

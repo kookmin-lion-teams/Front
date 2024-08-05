@@ -3,16 +3,20 @@ import TabLine from "./TabLine";
 import TabFrame from "./TabFrame";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faLocationDot } from "@fortawesome/free-solid-svg-icons";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import ReservUserModal from "./ReservUserModal";
 import Modal from 'react-modal';
 import Review from "./Review";
+import axios from "axios";
+import { useFindState } from "../store/Statefind";
+
 export default function ReservUser() {
 
   Modal.setAppElement('#root');
   const [selectmodal, setSelectmodal] = useState('')
   const [checkreview, setCheckReview] = useState([0, 0, 0]);
   const [checkrsub, setChecksub] = useState([0, 0, 0]);
+
 
   //
   const completeReview = (idx) => {
@@ -51,107 +55,158 @@ export default function ReservUser() {
     setOpenReview(null);
   }
 
+
+
+ 
+  const [UserReservList, setUserReservList] = useState([])
+  const [bookingid, setBookingid] = useState()
+  let bookId;
+
+  //유저의 예약 리스트 데이터 받아오기
+  const findState = useFindState();
+  useEffect(() => {
+    const fetchData = async () => {
+      const user_id = sessionStorage.getItem("uid");
+
+
+      try {
+        const response = await axios.get("/back/api/user/booking_list", { params: { user_id } });
+        let CopyData = [...UserReservList];
+
+        CopyData = response.data;
+        setUserReservList(CopyData.bookings);
+
+
+
+      } catch (err) {
+        console.log(err.message);
+      }
+    };
+
+    fetchData();
+  }, [findState]);
+
+  console.log('userList', UserReservList)
+
+
+
+  
+
+
+  let ReservedList = []
+  let ReservingList = []
+  UserReservList.map((lst, idx) => {
+    lst.APPLY ? ReservedList.push(lst) : ReservingList.push(lst);
+  })
+
+
+  let bid;
+
+
+  useEffect(()=>{
+    setBookingid(bid);
+  },[bid])
+
   return (
     <>
       <TabFrame>
         <TabLine content="진행중인 예약" />
 
-        <div className={styles.Reserving}>
-          <div className={styles.ReservingInfo}>
-            <span>박석진 트레이너</span>
-            <span>|</span>
-            <span>2024.08.01(목) 18:00</span>
-            <span><FontAwesomeIcon icon={faLocationDot} style={{ gap: '2rem' }} /> ABC헬스장</span>
+        {
+          ReservingList.map((rsv, idx) => {
 
-          </div>
-          <div style={{ flexGrow: '1' }}></div>
+            bid = rsv.BOOKID
 
-          <div className={styles.ReservingBtn}>
-            <span >예약확정</span>
-            <button onClick={() => {
-              openModal(true)
-              setSelectmodal('상세보기')
-            }}>상세보기</button>
+            return (
+              <div className={styles.Reserving}>
+                <div className={styles.ReservingInfo}>
+                  <span>{rsv.PARTNER_NAME} 트레이너</span>
+                  <span>|</span>
+                  <span>{rsv.YEAR}.{rsv.MONTH}.{rsv.DAY} {rsv.TIME}</span>
+                  <span><FontAwesomeIcon icon={faLocationDot} style={{ gap: '2rem' }} /> {rsv.GYM_NAME}</span>
+                </div>
+                <div style={{ flexGrow: '1' }}></div>
+                <div className={styles.ReservingBtn}>
+                  <span>예약확정</span>
+                  <button onClick={() => {
+                    
 
-          </div>
-        </div>
+
+                    openModal(true)
+                    setSelectmodal('상세보기')
+
+                    console.log(bid, 'dada' ,bookingid)
+                  }}>상세보기</button>
+                </div>
+              </div>
+
+            )
+
+          })
+
+
+        }
+
 
 
 
         <TabLine content="예약 내역" />
 
-        <div className={styles.Reserved}>
-          <div className={styles.ReservedInfo}>
-            <span>박석진 트레이너</span>
-            <span>|</span>
-            <span>2024.08.01(목) 18:00</span>
-            <span><FontAwesomeIcon icon={faLocationDot} style={{ gap: '2rem' }} /> ABC헬스장</span>
+        {
 
-          </div>
-          <div style={{ flexGrow: '1' }}></div>
+          ReservedList.map((rsv, idx) => {
 
+            return (
 
-          {/* 리뷰 작성은 Review 모달을 열기 */}
-          <div className={styles.ReservedBtn}>
-            <button onClick={() => {
+              <div div className={styles.Reserved} >
+                <div className={styles.ReservedInfo}>
+                  <span>{rsv.PARTNER_NAME}  트레이너</span>
+                  <span>|</span>
+                  <span>{rsv.YEAR}.{rsv.MONTH}.{rsv.DAY} {rsv.TIME}</span>
+                  <span><FontAwesomeIcon icon={faLocationDot} style={{ gap: '2rem' }} /> {rsv.GYM_NAME}</span>
 
-              openReviewModal()
-
-            }} style={checkreview[0] ? { backgroundColor: 'white', color: 'black' } : null}
-
-            >{checkreview[0] ? '리뷰 작성 완료' : '리뷰 작성'}</button>
+                </div>
+                <div style={{ flexGrow: '1' }}></div>
 
 
-            <button onClick={() => {
-              openModal(true)
-              setSelectmodal('구독신청')
-            }} style={checkrsub[0] ? { backgroundColor: 'white', color: 'black' } : null}
+                {/* 리뷰 작성은 Review 모달을 열기 */}
+                <div className={styles.ReservedBtn}>
+                  <button onClick={() => {
 
-            >{checkrsub[0] ? '구독 신청 완료' : '구독 신청'}</button>
-          </div>
-        </div>
+                    openReviewModal()
 
+                  }} style={checkreview[0] ? { backgroundColor: 'white', color: 'black' } : null}
 
-
+                  >{checkreview[idx] ? '리뷰 작성 완료' : '리뷰 작성'}</button>
 
 
+                  <button onClick={() => {
+                    openModal(true)
+                    setSelectmodal('구독신청')
+                  }} style={checkrsub[idx] ? { backgroundColor: 'white', color: 'black' } : null}
+                  >{checkrsub[idx] ? '구독 신청 완료' : '구독 신청'}</button>
 
-        <div className={styles.Reserved}>
-          <div className={styles.ReservedInfo}>
-            <span>박석진 트레이너</span>
-            <span>|</span>
-            <span>2024.08.01(목) 18:00</span>
-            <span><FontAwesomeIcon icon={faLocationDot} style={{ gap: '2rem' }} /> ABC헬스장</span>
-
-          </div>
-          <div style={{ flexGrow: '1' }}></div>
-
-          <div className={styles.ReservedBtn}>
-            <button onClick={() => {
-              openReviewModal()
-            }} style={checkreview[1] ? { backgroundColor: 'white', color: 'black' } : null}
-
-            >{checkreview[1] ? '리뷰 작성 완료' : '리뷰 작성'}</button>
+                </div>
+              </div>
+            )
+          })
+        }
 
 
-            <button onClick={() => {
-              let cp = [...checkrsub]
-
-              cp[1] = 1;
-              setChecksub(cp);
 
 
-            }} style={checkrsub[1] ? { backgroundColor: 'white', color: 'black' } : null}
 
-            >{checkrsub[1] ? '구독 신청 완료' : '구독 신청'}</button>
-          </div>
-        </div>
+
 
         {/* map으로 받아와서 나중에 리스트 idx 추가하기 */}
-        <ReservUserModal activeModal={activeModal} closeModal={closeModal} selectmodal={selectmodal} completeReview={completeReview} completeSub={completeSub} i></ReservUserModal>
+
+        <ReservUserModal activeModal={activeModal} closeModal={closeModal} selectmodal={selectmodal} completeReview={completeReview} completeSub={completeSub} bid ={bid}></ReservUserModal>
 
         <Review openModal={openReview} closeModal={closeReviewModal}></Review>
-      </TabFrame>
+
+
+
+      </TabFrame >
     </>
   );
 }

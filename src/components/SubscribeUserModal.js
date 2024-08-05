@@ -1,3 +1,4 @@
+
 import Modal from 'react-modal'
 import styles from '../CSS/SubscribeUserModal.module.css'
 import Review from './Review'
@@ -139,13 +140,85 @@ export default function SubscribeUserModal({ openModal, closeModal, setopenModal
 
                 </div>
             </div>
+          </div>
 
+          <div className={styles.Content}>
+            <p>PT 정보</p>
+            <div>
+              <span>횟수</span>
+              <span className={styles.line}>|</span>
+              <span className={styles.MarginRight}>{InfoList.FCOUNT}회</span>
+              <span>회당가격</span>
+              <span className={styles.line}>|</span>
+              <span>{InfoList.PRICE}원</span>
 
+              <div></div>
 
+              <span>시작일</span>
+              <span className={styles.line}>|</span>
+              <span className={styles.MarginRight}>{InfoList.FDATE}</span>
+              <span>종료일</span>
+              <span className={styles.line}>|</span>
+              <span>{InfoList.EDATE}</span>
 
-            <Review openModal={openReview} closeModal={closeModal}></Review>
+              <div></div>
 
+              <span>총 결제 금액</span>
+              <span className={styles.line}>|</span>
+              <span>{InfoList.FCOUNT * InfoList.PRICE}원</span>
+            </div>
+          </div>
 
-        </Modal>
-    )
+          <div className={styles.Content}>
+            <p>PT 내역</p>
+            <div>
+              <span>잔여 횟수</span>
+              <span className={styles.line}>|</span>
+              <span>{InfoList.REMAINING_SESSIONS}회</span>
+              {/* <div></div> */}
+              {InfoList.PT_SESSIONS &&
+                InfoList.PT_SESSIONS.map((ss, idx) => {
+                  return (
+                    <>
+                      <span>No.{ss.No}</span>
+                      <span className={styles.line}></span>
+                      <span>{ss.CHECK_DATE}</span>
+                      <div></div>
+                    </>
+                  );
+                })}
+              <span>No.1</span>
+              <span className={styles.line}></span>
+              <span>2024.08.04(금)</span>
+              <div></div>
+
+              <span>No.2</span>
+              <span className={styles.line}></span>
+              <span>2024.08.04(금)</span>
+              <div></div>
+
+              <span>No.3</span>
+              <span className={styles.line}></span>
+              <span>2024.08.04(금)</span>
+            </div>
+          </div>
+        </div>
+
+        <div className={styles.footer}>
+          <button style={{ backgroundColor: "white", color: "black" }}>
+            구독 취소하기
+          </button>
+          <button
+            onClick={() => {
+              openReviewModal();
+            }}
+          >
+            리뷰 작성하기
+          </button>
+        </div>
+      </div>
+
+      <Review openModal={openReview} closeModal={closeModal}></Review>
+    </Modal>
+  );
 }

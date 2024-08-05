@@ -119,7 +119,15 @@ const ManagePaper = () => {
       console.log(err);
     }
   };
-
+  //서브밋 삭제
+  const handleDelete = async (event) => {
+    event.preventDefault();
+    const response = await axios.delete("back/api/partner/myinfo_delete", {
+      partner_id,
+    });
+    console.log(response.data);
+    window.location.reload();
+  };
   // Input 변할때
   const handleInputChange = (e) => {
     const { name, value } = e.target;
@@ -446,20 +454,36 @@ const ManagePaper = () => {
               등록하기
             </button>
           ) : (
-            <button
-              type="button"
-              style={{
-                width: "21rem",
-                height: "4rem",
-                borderRadius: "0.5rem",
-                backgroundColor: "white",
-                color: "black",
-                fontSize: "1.5rem",
-              }}
-              onClick={handleSubmit}
-            >
-              수정하기
-            </button>
+            <>
+              <button
+                type="submit"
+                style={{
+                  width: "21rem",
+                  height: "4rem",
+                  borderRadius: "0.5rem",
+                  backgroundColor: "white",
+                  color: "black",
+                  fontSize: "1.5rem",
+                }}
+                onClick={handleDelete}
+              >
+                공고 삭제
+              </button>
+              <button
+                type="button"
+                style={{
+                  width: "21rem",
+                  height: "4rem",
+                  borderRadius: "0.5rem",
+                  backgroundColor: "black",
+                  color: "white",
+                  fontSize: "1.5rem",
+                }}
+                onClick={handleSubmit}
+              >
+                변경사항 저장
+              </button>
+            </>
           )}
         </div>
       </form>

@@ -1,15 +1,9 @@
-import { useNavigate, useLocation } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import styles from "../CSS/PtCard.module.css";
-import { useEffect } from "react";
 
 function PtCard({ cardKey, partner }) {
   let navigate = useNavigate();
-  useEffect(() => {
-    console.log("@@@@", cardKey);
-  }, [cardKey]);
-  useEffect(() => {
-    console.log("####", partner);
-  }, [partner]);
+
   return (
     <>
       <div

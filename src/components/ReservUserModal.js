@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 import Modal from "react-modal";
 import Review from "./Review";
 import axios from "axios";
-import { useFindState } from "../store/Statefind";
+import { useFindState, useActions } from "../store/Statefind";
 import Calendar from "react-calendar";
 import "react-calendar/dist/Calendar.css";
 
@@ -20,6 +20,7 @@ function ReservUserModal({
   const [BookingDetail, setBookingDetail] = useState([]);
 
   const findState = useFindState();
+  const { changeState } = useActions();
   useEffect(() => {
     const fetchData = async () => {
       const book_id = bid;
@@ -49,6 +50,16 @@ function ReservUserModal({
   };
 
   const calendarMinDate = new Date();
+
+  //예약 취소 버튼
+  const handleQuitReservationButton = async (booking_id) => {
+    const response = await axios.post("back/api/partner/booking_cancel", {
+      booking_id,
+    });
+    console.log("예약 취소: ", response.data);
+    closeModal();
+  };
+
   return (
     <Modal
       isOpen={activeModal}
@@ -241,6 +252,9 @@ function ReservUserModal({
                         ? { backgroundColor: "white", color: "black" }
                         : null
                     }
+                    onClick={() => {
+                      handleQuitReservationButton(bid);
+                    }}
                   >
                     예약 취소
                   </button>

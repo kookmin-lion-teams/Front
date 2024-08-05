@@ -48,7 +48,18 @@ export default function SubscribeUserModal({
   useEffect(() => {
     console.log(InfoList, "ddds", info);
   }, [InfoList]);
-
+  const handleCancleSubscribeButton = async () => {
+    try {
+      const rid = info.RID;
+      const response = await axios.post("/back/api/user/cancel_reservation", {
+        rid,
+      });
+      console.log("구독취소: ", response.data);
+      closeModal();
+    } catch (e) {
+      console.log(e);
+    }
+  };
   return (
     <Modal
       isOpen={openModal}
@@ -128,7 +139,10 @@ export default function SubscribeUserModal({
         </div>
 
         <div className={styles.footer}>
-          <button style={{ backgroundColor: "white", color: "black" }}>
+          <button
+            style={{ backgroundColor: "white", color: "black" }}
+            onClick={handleCancleSubscribeButton}
+          >
             구독 취소하기
           </button>
           <button

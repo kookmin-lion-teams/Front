@@ -57,16 +57,17 @@ export default function ReservUser() {
 
 
 
- 
+
   const [UserReservList, setUserReservList] = useState([])
   const [bookingid, setBookingid] = useState()
+
   let bookId;
 
   //유저의 예약 리스트 데이터 받아오기
   const findState = useFindState();
   useEffect(() => {
     const fetchData = async () => {
-       const user_id = sessionStorage.getItem("uid");
+      const user_id = sessionStorage.getItem("uid");
 
 
       try {
@@ -95,7 +96,10 @@ export default function ReservUser() {
 
 
   let bid;
+  const [Reviewparam, setReviewparam] = useState([])
 
+  console.log(ReservedList, 'dfsfdsf')
+  //  values = (pid, uid, rate, content, 0, today)
   return (
     <>
       <TabFrame>
@@ -107,31 +111,31 @@ export default function ReservUser() {
             return (
 
               <>
-              <div className={styles.Reserving}>
-                <div className={styles.ReservingInfo}>
-                  <span>{rsv.PARTNER_NAME} 트레이너</span>
-                  <span>|</span>
-                  <span>{rsv.YEAR}.{rsv.MONTH}.{rsv.DAY} {rsv.TIME}</span>
-                  <span><FontAwesomeIcon icon={faLocationDot} style={{ gap: '2rem' }} /> {rsv.GYM_NAME}</span>
+                <div className={styles.Reserving}>
+                  <div className={styles.ReservingInfo}>
+                    <span>{rsv.PARTNER_NAME} 트레이너</span>
+                    <span>|</span>
+                    <span>{rsv.YEAR}.{rsv.MONTH}.{rsv.DAY} {rsv.TIME}</span>
+                    <span><FontAwesomeIcon icon={faLocationDot} style={{ gap: '2rem' }} /> {rsv.GYM_NAME}</span>
+                  </div>
+                  <div style={{ flexGrow: '1' }}></div>
+                  <div className={styles.ReservingBtn}>
+                    <span>예약확정</span>
+                    <button onClick={() => {
+                      openModal(true)
+                      setSelectmodal('상세보기')
+                    }}>상세보기</button>
+                  </div>
                 </div>
-                <div style={{ flexGrow: '1' }}></div>
-                <div className={styles.ReservingBtn}>
-                  <span>예약확정</span>
-                  <button onClick={() => {
-                    openModal(true)
-                    setSelectmodal('상세보기')  
-                  }}>상세보기</button>
-                </div>
-              </div>
-              
-              <ReservUserModal activeModal={activeModal} closeModal={closeModal} selectmodal={selectmodal} completeReview={completeReview} completeSub={completeSub} bid={rsv.BOOKID}></ReservUserModal>
+
+                <ReservUserModal activeModal={activeModal} closeModal={closeModal} selectmodal={selectmodal} completeReview={completeReview} completeSub={completeSub} bid={rsv.BOOKID}></ReservUserModal>
 
               </>
             )
 
           })
 
-          
+
         }
 
 
@@ -139,6 +143,7 @@ export default function ReservUser() {
         {
 
           ReservedList.map((rsv, idx) => {
+
 
             return (
 
@@ -156,16 +161,15 @@ export default function ReservUser() {
                 {/* 리뷰 작성은 Review 모달을 열기 */}
                 <div className={styles.ReservedBtn}>
                   <button onClick={() => {
-
+                    setReviewparam(rsv)
                     openReviewModal()
-
                   }} style={checkreview[idx] ? { backgroundColor: 'white', color: 'black' } : null}
 
                   >{checkreview[idx] ? '리뷰 작성 완료' : '리뷰 작성'}</button>
 
 
                   <button onClick={() => {
-                    
+
                     setSelectmodal('구독신청');
                     openModal(true);
                   }} style={checkrsub[idx] ? { backgroundColor: 'white', color: 'black' } : null}
@@ -179,14 +183,10 @@ export default function ReservUser() {
 
 
 
-
-
-
-
         {/* map으로 받아와서 나중에 리스트 idx 추가하기 */}
 
-      
-        <Review openModal={openReview} closeModal={closeReviewModal} bid={bid}></Review>
+
+        {openReview && <Review openModal={openReview} closeModal={closeReviewModal} Reviewparam={Reviewparam}></Review>}
 
 
 

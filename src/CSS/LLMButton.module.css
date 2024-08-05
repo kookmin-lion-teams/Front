@@ -1,0 +1,241 @@
+.myButton {
+  color: white; /* 텍스트 색상 흰색 */
+  background: linear-gradient(
+    to right,
+    #a855f7,
+    #ec4899
+  ); /* 배경 그라디언트 색상 */
+  font-weight: 700; /* 글꼴 두께 500 */
+  border-radius: 0.375rem; /* 둥근 테두리 반지름 */
+  font-size: 0.875rem; /* 글꼴 크기 */
+  padding: 0.625rem 1.25rem; /* 패딩 값 */
+  text-align: center; /* 텍스트 중앙 정렬 */
+  margin-right: 0.5rem; /* 오른쪽 여백 */
+  margin-bottom: 0.5rem; /* 아래쪽 여백 */
+  position: relative; /* 상대적 위치 */
+  overflow: hidden; /* 넘치는 내용 숨김 */
+  border: none; /* 테두리 없음 */
+  width: 100%;
+  height: 100%;
+}
+
+.myButton::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 200%;
+  height: 100%;
+  background: linear-gradient(
+    to right,
+    #a855f7,
+    #ec4899,
+    #a855f7
+  ); /* 배경 그라디언트 */
+  z-index: 0;
+  transition: all 0.4s; /* 모든 변화 0.4초 동안 애니메이션 */
+  background-size: 200% 100%; /* 배경 크기 */
+}
+
+.myButton:hover::before {
+  animation: move-gradient 2s linear infinite; /* 그라디언트 움직이는 애니메이션 */
+}
+
+.myButton:hover {
+  color: white; /* 호버 시 텍스트 색상 유지 */
+}
+
+.myButton::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: inherit; /* 상속된 배경 */
+  z-index: -1;
+}
+
+.myButton:focus {
+  outline: none; /* 포커스 시 아웃라인 없음 */
+}
+
+@keyframes move-gradient {
+  0% {
+    background-position: 0% 200%;
+  }
+  100% {
+    background-position: 200% 0%;
+  }
+}
+
+.myButton::before {
+  content: "";
+  position: absolute;
+  top: -2px;
+  left: -2px;
+  right: -2px;
+  bottom: -2px;
+  background: linear-gradient(45deg, #a855f7, #ec4899); /* 45도 그라디언트 */
+  border-radius: 5px; /* 둥근 테두리 반지름 */
+  z-index: -1;
+  transition: all 0.3s ease; /* 모든 변화 0.3초 동안 애니메이션 */
+  opacity: 0; /* 투명도 */
+}
+
+.myButton:hover::before {
+  opacity: 1; /* 호버 시 투명도 1 */
+  animation: spin 1s linear infinite; /* 회전 애니메이션 */
+}
+
+@keyframes spin {
+  from {
+    transform: rotate(0deg); /* 회전 0도 */
+  }
+  to {
+    transform: rotate(360deg); /* 회전 360도 */
+  }
+}
+
+.LLMModal {
+  /* 모달의 스타일 */
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background: #fff;
+  padding: 0vw 1vw;
+  border-radius: 5px;
+  height: 90vh;
+  width: 50vw;
+  display: flex;
+  flex-direction: column;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.2); /* 얇은 그림자 */
+}
+
+.level_1 {
+  width: 100%;
+  height: 5%;
+  display: flex;
+  justify-content: end;
+  align-items: center;
+
+  /* background-color: #a855f7; */
+}
+.level_1 button {
+}
+
+.level_2 {
+  /* background-color: #ec4899; */
+  width: 100%;
+  height: 85%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  overflow-y: auto;
+}
+.chatContainer {
+  width: 100%;
+  height: 100%;
+  border-radius: 5px;
+  background-color: #fff;
+}
+.chatScrollContainer {
+  width: 100%;
+  height: 100%;
+  overflow-y: auto;
+}
+.chatScrollContainer::-webkit-scrollbar {
+  display: none;
+}
+
+.level_3 {
+  /* background-color: #a855f7; */
+  width: 100%;
+  height: 10%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 10px 0px;
+}
+
+.formContainer {
+  max-width: 100%;
+  width: 90%;
+  margin: 0 auto;
+}
+
+.searchWrapper {
+  position: relative;
+}
+.searchIcon {
+  position: absolute;
+  top: 50%;
+  left: 10px;
+  transform: translateY(-50%);
+  width: 16px;
+  height: 16px;
+  color: #9ca3af; /* Gray 500 */
+}
+.searchInput {
+  width: 100%;
+  padding: 10px 10px 10px 10px;
+  font-size: 14px;
+  color: #1f2937; /* Gray 900 */
+  border: 1px solid #d1d5db; /* Gray 300 */
+  border-radius: 8px;
+  background-color: #f9fafb; /* Gray 50 */
+  outline: none;
+}
+.searchInput:focus {
+  border-color: #3b82f6; /* Blue 500 */
+  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.3); /* Blue 300 */
+}
+.searchButton {
+  position: absolute;
+  top: 50%;
+  right: 10px;
+  transform: translateY(-50%);
+  background-color: #3b82f6; /* Blue 700 */
+  color: white;
+  border: none;
+  border-radius: 8px;
+  padding: 8px 16px;
+  font-size: 14px;
+  cursor: pointer;
+}
+.searchButton:hover {
+  background-color: #2563eb; /* Blue 800 */
+}
+.searchButton:focus {
+  outline: 4px solid rgba(59, 130, 246, 0.3); /* Blue 300 */
+  outline-offset: 2px;
+}
+.myChatDiv {
+  max-width: 50%;
+  height: auto;
+  background-color: #dbdbdb;
+  padding: 1rem 1.25rem;
+  border-radius: 5px;
+}
+.LLMChatDiv {
+  max-width: 100%;
+  height: auto;
+  background-color: #dbdbdb;
+  padding: 1rem 1.25rem;
+  border-radius: 5px;
+}
+
+.myChatCon,
+.LLMChatCon {
+  display: flex;
+  margin-bottom: 6vh;
+  width: 100%;
+}
+.myChatCon {
+  justify-content: end;
+}
+.LLMChatCon {
+  justify-content: start;
+}

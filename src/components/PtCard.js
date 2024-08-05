@@ -4,8 +4,7 @@ import { useEffect } from "react";
 
 function PtCard({ cardKey, partner }) {
   let navigate = useNavigate();
-  useEffect(() => {
-  
+
   return (
     <>
       <div

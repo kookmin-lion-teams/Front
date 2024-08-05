@@ -37,9 +37,12 @@ const ManagePaper = () => {
   useEffect(() => {
     console.log(partnerInfo);
   }, [partnerInfo]);
+
+  // isInfo 감시
   useEffect(() => {
     console.log("isInfo: ", isInfo);
   }, [isInfo]);
+
   //  첫 렌더시 공고 가져오기
   useEffect(() => {
     const fetchData = async () => {
@@ -48,9 +51,8 @@ const ManagePaper = () => {
           params: { partner_id },
         });
         const data = response.data.partner_info;
-        setIsInfo(true);
+        setIsInfo((prev) => true);
         console.log("공고: ", data, data.expert1);
-        setIsInfo(data.expert1 ? true : false);
         setPartnerInfo({
           expert1: data.EXPERT1 || "",
           expert2: data.EXPERT2 || "",
@@ -59,7 +61,15 @@ const ManagePaper = () => {
           IG: data.IG || "",
           eprice: data.EPRICE || "",
           price: data.PRICE || "",
-          closed_days: data.closed_days || {},
+          closed_days: data.closed_days || {
+            mon: "0",
+            tue: "0",
+            wed: "0",
+            thur: "0",
+            fri: "0",
+            sat: "0",
+            sun: "0",
+          },
           weekday_start_time: data.weekday_start_time || "",
           weekday_end_time: data.weekday_end_time || "",
           weekend_start_time: data.weekend_start_time || "",
@@ -103,7 +113,8 @@ const ManagePaper = () => {
           },
         }
       );
-      console.log(response.data);
+      console.log("등록,수정 성공: ", response.data);
+      setIsInfo(true);
     } catch (err) {
       console.log(err);
     }

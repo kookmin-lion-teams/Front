@@ -22,6 +22,8 @@ hr {
     border-radius: 1rem;
     height: 90vh;
     border: 2px solid #cbbebe;
+
+    
 }
 
 .Header {
@@ -53,8 +55,13 @@ hr {
     padding: 1rem;
     height: 60vh;
     font-size: 0.8rem;
+
+    overflow-y: scroll;
 }
 
+.MainContainer::-webkit-scrollbar {
+    display: none; /* Chrome, Safari, Opera*/
+}   
 
 /*상세보기*/
 .Content{

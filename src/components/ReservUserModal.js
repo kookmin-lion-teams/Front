@@ -5,37 +5,38 @@ import Review from './Review';
 import axios from "axios";
 import { useFindState } from "../store/Statefind";
 
-function ReservUserModal({ activeModal, closeModal, selectmodal, completeReview, completeSub ,bid}) {
+function ReservUserModal({ activeModal, closeModal, selectmodal, completeReview, completeSub, bid}) {
 
-    let [cnt, setCnt] = useState()
+    let [cnt, setCnt] = useState(0)
 
-    const [BookingDetailList, setBookingDetailList] = useState([])
+    const [BookingDetail, setBookingDetail] = useState([])
+
 
 
 
     const findState = useFindState();
     useEffect(() => {
         const fetchData = async () => {
-            
-
-
-
+            const book_id = bid
+            console.log('bookid' , bid)
             try {
-                const response = await axios.get("/back/api/booking_detail", { params: {  } });
-                let CopyData = [...BookingDetailList];
+                const response = await axios.get("/back/api/booking_detail", { params: { book_id } });
+                let CopyData = [...BookingDetail];
 
-                CopyData = response.data;
+                CopyData = response.data.booking_info;
 
-                console.log("data123" , CopyData)
-                setBookingDetailList(CopyData.bookings);
+                setBookingDetail(CopyData)
+                console.log("data123", CopyData)
+
 
             } catch (err) {
-                console.log("RevervUserModal에서 에러발생",err.message);
+                console.log("RevervUserModal에서 에러발생", err.message);
             }
         };
 
         fetchData();
     }, [findState]);
+
 
 
 
@@ -71,10 +72,10 @@ function ReservUserModal({ activeModal, closeModal, selectmodal, completeReview,
                                         <div>
                                             <span>이름</span>
                                             <span className={styles.line}>|</span>
-                                            <span>박석진</span>
+                                            <span>{BookingDetail.USER_NAME}</span>
                                             <span>휴대폰 번호</span>
                                             <span className={styles.line}>|</span>
-                                            <span>010-1234-5678</span>
+                                            <span>{BookingDetail.USER_TEL}</span>
                                         </div>
                                     </div>
 
@@ -83,10 +84,10 @@ function ReservUserModal({ activeModal, closeModal, selectmodal, completeReview,
                                         <div>
                                             <span>이름</span>
                                             <span className={styles.line}>|</span>
-                                            <span>홍길동</span>
+                                            <span>{BookingDetail.PARTNER_NAME}</span>
                                             <span>휴대폰 번호</span>
                                             <span className={styles.line}>|</span>
-                                            <span>010-1234-5678</span>
+                                            <span>{BookingDetail.PARTNER_TEL}</span>
                                         </div>
                                     </div>
 
@@ -95,15 +96,15 @@ function ReservUserModal({ activeModal, closeModal, selectmodal, completeReview,
                                         <div>
                                             <span>목적</span>
                                             <span className={styles.line}>|</span>
-                                            <span>다이어트</span>
+                                            <span>{BookingDetail.PURPOSE}</span>
                                             <div></div>
                                             <span>헬스 경력</span>
                                             <span className={styles.line}>|</span>
-                                            <span>입문 / 초급자</span>
+                                            <span>{BookingDetail.EXPERIENCE}</span>
                                             <div></div>
                                             <span>선호 시간대</span>
                                             <span className={styles.line}>|</span>
-                                            <span>저녁(18시~20시)</span>
+                                            <span>{BookingDetail.PRTIME}</span>
                                         </div>
                                     </div>
 
@@ -112,11 +113,11 @@ function ReservUserModal({ activeModal, closeModal, selectmodal, completeReview,
                                         <div>
                                             <span>날짜</span>
                                             <span className={styles.line}>|</span>
-                                            <span>2024.06.24(월)</span>
+                                            <span>{BookingDetail.YEAR}.{BookingDetail.MONTH}.{BookingDetail.DAY}</span>
                                             <div></div>
                                             <span>시간</span>
                                             <span className={styles.line}>|</span>
-                                            <span>18:00</span>
+                                            <span>{BookingDetail.TIME}</span>
                                         </div>
                                     </div>
                                 </div>,

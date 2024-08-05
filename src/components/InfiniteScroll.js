@@ -22,16 +22,10 @@ function InfiniteScroll() {
       } catch (err) {
         console.log(err.message);
       }
-    };
-
-    } catch (err) {
-      console.log(err.message);
     }
-  };
-
-  useEffect(() => {
     fetchData();
   }, [findState]);
+
 
 
   useEffect(() => {

@@ -1,17 +1,23 @@
 import React, { useState, useEffect } from "react";
 import { Map, MapInfoWindow } from "react-kakao-maps-sdk";
 import axios from "axios";
-import { useGymActions } from "../store/StateGym";
-const OptimizedKakaoMap = ({ getGymsPartners }) => {
+import { useGymActions, useGymState } from "../store/StateGym";
+import { usePartnersState, usePartnersActions } from "../store/statePartners";
+import { useFindState } from "../store/Statefind";
+const OptimizedKakaoMap = () => {
   const [positions, setPositions] = useState([]);
   const [name, setName] = useState("");
   const [gu] = useState(sessionStorage.getItem("gu") || "");
   const [dong] = useState(sessionStorage.getItem("dong") || "");
   const [gyms, setGyms] = useState([]);
   const { setGymState } = useGymActions();
-
+  const { setPartnersState } = usePartnersActions();
+  const findState = useFindState();
+  const p = usePartnersState();
+  console.log("파트너state", p);
   // 전역 상태에 선택된 헬스장 이름 설정
   useEffect(() => {
+    console.log("name: ", name);
     setGymState(name);
   }, [name]);
 
@@ -83,13 +89,18 @@ const OptimizedKakaoMap = ({ getGymsPartners }) => {
           "Map: 헬스장 클릭시 파트너 정보 fetch",
           response.data[0].partners
         );
-        getGymsPartners(response.data[0].partners);
+        setPartnersState(response.data[0].partners);
       } catch (e) {
         console.log(`헬스장의 파트너 정보를 가져오는 도중 발생한 에러`, e);
       }
     };
-    fetchGym();
+    if (name) fetchGym();
   }, [name]);
+
+  useEffect(() => {
+    setPartnersState([]);
+  }, [findState]);
+  useEffect(() => {}, []);
   return (
     <Map
       center={{ lat: 36.450701, lng: 128.570667 }} // 기본 지도 중심을 대한민국으로 설정

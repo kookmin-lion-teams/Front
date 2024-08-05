@@ -8,8 +8,7 @@ import axios from "axios";
 import { useFindState } from "../store/Statefind";
 
 function Detail() {
-
-  const [one, setone] = useState(); 
+  const [one, setone] = useState();
 
   const findState = useFindState();
   const [partner, setPartner] = useState([
@@ -48,7 +47,6 @@ function Detail() {
 
   useEffect(() => {
     const fetchData = async () => {
-      
       const partner_id = location.state.ptner.PID;
 
       console.log("PTD", partner_id);
@@ -64,8 +62,7 @@ function Detail() {
 
         setPartner(CopyData);
 
-        console.log(CopyData); //추가했어
-
+        console.log(CopyData);
       } catch (err) {
         console.log(123, err.message);
       }
@@ -199,8 +196,8 @@ function Detail() {
               </div>
               <div className={styles.ReviewContent}>
                 {partner.GNAME}
-                에서 너무나도 친절하게 알려주시고 너무 감사드립니다
-                수업도 너무 재미있네요
+                에서 너무나도 친절하게 알려주시고 너무 감사드립니다 수업도 너무
+                재미있네요
               </div>
             </div>
 

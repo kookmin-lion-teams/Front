@@ -29,7 +29,7 @@ hr {
   height: 10%;
 }
 
-.Header>button {
+.Header > button {
   font-size: 2rem;
   line-height: 1.5rem;
   color: rgb(107, 114, 128);
@@ -40,21 +40,16 @@ hr {
   float: left;
 }
 
-.Header>div {
+.Header > div {
   font-weight: 700;
   font-size: 1.25rem;
   line-height: 1.75rem;
   text-align: center;
 }
 
-
-
 .main {
   height: 70%;
 }
-
-
-
 
 .GoalContainer {
   padding: 1rem;
@@ -72,7 +67,7 @@ hr {
 
 .CalendarContainer {
   width: 100%;
-  height: 70%;
+  height: auto;
   display: flex;
   justify-content: center;
   /* border: 1px solid #eee;
@@ -81,19 +76,16 @@ hr {
 
 /* 1 */
 
-
 .TimeGrid {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
 
   gap: 2rem;
 
-
   padding-top: 2rem;
 }
 
-
-.TimeGrid>div {
+.TimeGrid > div {
   display: flex;
 
   border: 1px solid grey;
@@ -105,7 +97,7 @@ hr {
 }
 
 /* 2 */
-.WhichGoalGrid{
+.WhichGoalGrid {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
   gap: 2rem;
@@ -113,8 +105,7 @@ hr {
   padding-top: 2rem;
 }
 
-
-.WhichGoalGrid > div{
+.WhichGoalGrid > div {
   display: flex;
 
   border: 1px solid grey;
@@ -125,19 +116,19 @@ hr {
   justify-content: center;
 }
 
-
 /* 3,4 */
 
-.CareerGrid, .TimeslotGrid{
+.CareerGrid,
+.TimeslotGrid {
   display: grid;
   grid-template-columns: repeat(1, 1fr);
   gap: 2rem;
 
   padding-top: 3rem;
-
 }
 
-.CareerGrid > div, .TimeslotGrid > div{
+.CareerGrid > div,
+.TimeslotGrid > div {
   display: flex;
 
   border: 1px solid grey;
@@ -150,36 +141,35 @@ hr {
 
 /* 5 */
 
-
-.GoalTitle > p{
+.GoalTitle > p {
   padding-top: 1rem;
   font-size: 0.8rem;
-  color : grey;
+  color: grey;
 }
 
-.Content, .payment {
-  margin-top : 3rem;
+.Content,
+.payment {
+  margin-top: 3rem;
 }
 
-.Content > p{
+.Content > p {
   font-size: 1.5rem;
-  font-weight:300;
+  font-weight: 300;
 }
 
-.Content > div > span:nth-child(2),.Content > div > span:nth-child(5){
-  margin : 0 1rem 0 1rem;
+.Content > div > span:nth-child(2),
+.Content > div > span:nth-child(5) {
+  margin: 0 1rem 0 1rem;
 }
 
-.Content > div > span:nth-child(4){
+.Content > div > span:nth-child(4) {
   margin-left: 3rem;
 }
 
-
-.payment{
+.payment {
   display: flex;
   justify-content: end;
   align-content: center;
-
 }
 
 .payment div {
@@ -187,12 +177,12 @@ hr {
   align-items: center;
 }
 
-.payment > div:nth-child(1){
-  color : grey;
+.payment > div:nth-child(1) {
+  color: grey;
   margin-right: 2rem;
 }
 
-.payment > div:nth-child(2){
+.payment > div:nth-child(2) {
   font-size: 2rem;
   margin-right: 2rem;
 }
@@ -207,7 +197,7 @@ hr {
   gap: 3rem;
 }
 
-.footer>button {
+.footer > button {
   width: 21rem;
   height: 4rem;
   border-radius: 0.5rem;

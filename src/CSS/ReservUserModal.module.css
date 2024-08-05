@@ -1,174 +1,163 @@
 hr {
-    margin: 1rem 0 0.5rem 0;
+  margin: 1rem 0 0.5rem 0;
 }
 
 .line {
-    margin: 0 1rem 0 1rem;
+  margin: 0 1rem 0 1rem;
 }
 
 .ModalContainer {
-    width: 60vw;
+  width: 60vw;
 
-    margin-left: auto;
-    margin-right: auto;
-    margin-top: 5vh;
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: 5vh;
 
-    z-index: 1033;
+  z-index: 1033;
 }
 
 .ModalForm {
-    background-color: white;
-    padding: 1rem 3rem 0rem 3rem;
-    border-radius: 1rem;
-    height: 90vh;
-    border: 2px solid #cbbebe;
+  background-color: white;
+  padding: 1rem 3rem 0rem 3rem;
+  border-radius: 1rem;
+  height: 90vh;
+  border: 2px solid #cbbebe;
 }
 
 .Header {
-    padding-top: 1.5rem;
-    height: 10%;
+  padding-top: 1.5rem;
+  height: 10%;
 }
 
-.Header>button {
-    font-size: 2rem;
-    line-height: 1.5rem;
-    color: rgb(107, 114, 128);
-    background-color: transparent;
+.Header > button {
+  font-size: 2rem;
+  line-height: 1.5rem;
+  color: rgb(107, 114, 128);
+  background-color: transparent;
 
-    border: 0;
-    position: absolute;
-    float: left;
+  border: 0;
+  position: absolute;
+  float: left;
 }
 
-.Header>div {
-    font-weight: 700;
-    font-size: 1.25rem;
-    line-height: 1.75rem;
-    text-align: center;
+.Header > div {
+  font-weight: 700;
+  font-size: 1.25rem;
+  line-height: 1.75rem;
+  text-align: center;
 }
 
-
-
-.main {}
-
-
+.main {
+}
 
 .MainContainer {
-    padding: 1rem;
-    height: 60vh;
-    font-size: 0.8rem;
+  padding: 1rem;
+  height: 60vh;
+  font-size: 0.8rem;
 }
-
 
 /*상세보기*/
-.Content{
-    margin-top: 2rem;
+.Content {
+  margin-top: 2rem;
 }
 
-.Content>p {
-    font-size: 1.3rem;
-    font-weight: 400;
+.Content > p {
+  font-size: 1.3rem;
+  font-weight: 400;
 }
 
-
-
-
-.Content>div>span:nth-child(4) {
-    margin-left: 3rem;
-
+.Content > div > span:nth-child(4) {
+  margin-left: 3rem;
 }
-
-
 
 /* 구독신청 */
 
-
-.ApplyContent{
-    padding: 2rem;
+.ApplyContent {
+  padding: 2rem;
+  height: 100%;
 }
 
-.ApplyContent > div{
-    font-size: 1.6rem;
-    font-weight: 500;
-    margin-bottom: 2rem;
+.ApplyContent > div {
+  font-size: 1.6rem;
+  font-weight: 500;
+  margin-bottom: 2rem;
 }
 
-.ApplyContent input{
-    text-align: right;
-    width: 15rem;
-    height: 4rem;
-    border-radius: 1rem;
-    border : 0.5px solid grey;
-    padding :1.5rem;
-    font-size: 1.5rem;
+.ApplyContent input {
+  text-align: right;
+  width: 15rem;
+  height: 4rem;
+  border-radius: 1rem;
+  border: 0.5px solid grey;
+  padding: 1.5rem;
+  font-size: 1.5rem;
 
-    margin-bottom: 0.7rem;
+  margin-bottom: 0.7rem;
 }
 
-    
-.calender{
-    width: 100%;
-    height: 35vh;
-    background-color: #eee;
+.calenderContainer {
+  width: 100%;
+  height: auto;
+  display: flex;
+  justify-content: center;
+}
+.calenderContainer div {
+  font-size: 1rem;
+  font-weight: 400;
 }
 
-.info  > p{
-    font-size: 1.1rem;
-    font-weight: 500;
+.info > p {
+  font-size: 1.1rem;
+  font-weight: 500;
 }
 
-.info > span{
-    font-size: 1rem;
-    font-weight: 300;
-    color : grey
+.info > span {
+  font-size: 1rem;
+  font-weight: 300;
+  color: grey;
 }
 
-
-.infoprice{
-    display: flex;
-    justify-content: end;
+.infoprice {
+  display: flex;
+  justify-content: end;
 }
 
-.infoprice div:nth-child(1){
-    font-size: 1rem;
-    font-weight: 300;
-    color : grey;
-    align-content: center;
-    margin-right: 1.3rem;
+.infoprice div:nth-child(1) {
+  font-size: 1rem;
+  font-weight: 300;
+  color: grey;
+  align-content: center;
+  margin-right: 1.3rem;
 }
 
-.infoprice div:nth-child(2){
-    font-size: 1.8rem;
-    font-weight: 600;
-
+.infoprice div:nth-child(2) {
+  font-size: 1.8rem;
+  font-weight: 600;
 }
 
-
-.ApplyContent > p{
-    font-size: 1.3rem;
+.ApplyContent > p {
+  font-size: 1.3rem;
 }
 
-
-.grid{
-    grid-template-columns: repeat(3, 2fr);
+.grid {
+  grid-template-columns: repeat(3, 2fr);
 }
-
 
 /* footer */
 .footer {
-    height: 5%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    padding: 1rem;
-    gap: 3rem;
+  height: 5%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 1rem;
+  gap: 3rem;
 }
 
-.footer>button {
-    width: 15rem;
-    height: 4rem;
-    border-radius: 0.5rem;
-    background-color: black;
-    color: white;
-    font-size: 1.5rem;
+.footer > button {
+  width: 15rem;
+  height: 4rem;
+  border-radius: 0.5rem;
+  background-color: black;
+  color: white;
+  font-size: 1.5rem;
 }

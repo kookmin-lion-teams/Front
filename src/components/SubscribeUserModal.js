@@ -4,6 +4,7 @@ import Review from "./Review";
 import { useEffect, useState } from "react";
 import { useFindState } from "../store/Statefind";
 import axios from "axios";
+import { findIconDefinition } from "@fortawesome/fontawesome-svg-core";
 
 export default function SubscribeUserModal({
   openModal,
@@ -22,11 +23,10 @@ export default function SubscribeUserModal({
     setOpenReview(null);
   };
 
-  console.log(info, "sdfsdfsd");
-
   const [InfoList, setInfoList] = useState([]);
 
   const findState = useFindState();
+
   useEffect(() => {
     const fetchData = async () => {
       const rid = info.RID;
@@ -34,20 +34,20 @@ export default function SubscribeUserModal({
         const response = await axios.get("/back/api/reservation_detail", {
           params: { rid },
         });
-        let CopyData = [...InfoList];
 
-        CopyData = response.data.reservation_info;
+        const CopyData = response.data.reservation_info;
 
         setInfoList(CopyData);
       } catch (err) {
         console.log(err.message);
       }
     };
-
     fetchData();
   }, [findState]);
 
-  console.log(InfoList.PT_SESSIONS);
+  useEffect(() => {
+    console.log(InfoList, "ddds", info);
+  }, [InfoList]);
 
   return (
     <Modal
@@ -111,7 +111,7 @@ export default function SubscribeUserModal({
               <span>잔여 횟수</span>
               <span className={styles.line}>|</span>
               <span>{InfoList.REMAINING_SESSIONS}회</span>
-              {/* <div></div> */}
+              <div></div>
               {InfoList.PT_SESSIONS &&
                 InfoList.PT_SESSIONS.map((ss, idx) => {
                   return (
@@ -123,19 +123,6 @@ export default function SubscribeUserModal({
                     </>
                   );
                 })}
-              <span>No.1</span>
-              <span className={styles.line}></span>
-              <span>2024.08.04(금)</span>
-              <div></div>
-
-              <span>No.2</span>
-              <span className={styles.line}></span>
-              <span>2024.08.04(금)</span>
-              <div></div>
-
-              <span>No.3</span>
-              <span className={styles.line}></span>
-              <span>2024.08.04(금)</span>
             </div>
           </div>
         </div>

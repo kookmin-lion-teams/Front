@@ -42,6 +42,7 @@ export default function ReservUser() {
   const closeModal = () => {
     setActiveModal(false);
   };
+
   //review modal open
   const openReviewModal = () => {
     setOpenReview(true);
@@ -54,6 +55,7 @@ export default function ReservUser() {
 
   const [UserReservList, setUserReservList] = useState([]);
   const [bookingid, setBookingid] = useState();
+
   let bookId;
 
   //유저의 예약 리스트 데이터 받아오기
@@ -73,7 +75,6 @@ export default function ReservUser() {
       console.log(err.message);
     }
   };
-
   useEffect(() => {
     fetchData();
   }, [findState]);
@@ -85,7 +86,9 @@ export default function ReservUser() {
   });
 
   let bid;
+  const [Reviewparam, setReviewparam] = useState([]);
 
+  //  values = (pid, uid, rate, content, 0, today)
   return (
     <>
       <TabFrame>
@@ -160,6 +163,7 @@ export default function ReservUser() {
               <div className={styles.ReservedBtn}>
                 <button
                   onClick={() => {
+                    setReviewparam(rsv);
                     openReviewModal();
                   }}
                   style={
@@ -191,11 +195,13 @@ export default function ReservUser() {
 
         {/* map으로 받아와서 나중에 리스트 idx 추가하기 */}
 
-        <Review
-          openModal={openReview}
-          closeModal={closeReviewModal}
-          bid={bid}
-        ></Review>
+        {openReview && (
+          <Review
+            openModal={openReview}
+            closeModal={closeReviewModal}
+            Reviewparam={Reviewparam}
+          ></Review>
+        )}
       </TabFrame>
     </>
   );

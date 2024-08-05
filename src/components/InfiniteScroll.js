@@ -9,6 +9,7 @@ function InfiniteScroll() {
   const [partner, setPartner] = useState([]);
   const [fragment, setFragment] = useState([]);
   const findState = useFindState();
+
   const partnersList = usePartnersState();
 
   useEffect(() => {
@@ -22,7 +23,6 @@ function InfiniteScroll() {
         console.log(err.message);
       }
     };
-
     fetchData();
   }, [findState]);
 

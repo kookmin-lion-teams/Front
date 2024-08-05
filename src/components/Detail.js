@@ -7,6 +7,7 @@ import DetailModal from "../components/DetailModal";
 import axios from "axios";
 import { useFindState } from "../store/Statefind";
 import DetailMap from "./DetailMap";
+
 function Detail() {
   const [one, setone] = useState();
 
@@ -72,14 +73,13 @@ function Detail() {
         copyreview = Reviewresponse.data.reviews;
         setReview(copyreview);
       } catch (err) {
-        console.log(err.message);
+        console.log(123, err.message);
       }
     };
     fetchData();
   }, [findState]);
-  useEffect(() => {
-    console.log("파트너", partner);
-  }, [partner]);
+
+  console.log(partner);
 
   return (
     <>
@@ -184,11 +184,14 @@ function Detail() {
               </div>
             </div>
             <div className={styles.GymMap}>
-              <DetailMap
-                gu={partner.partner_gu}
-                dong={partner.partner_dong}
-                address={partner.gym_address}
-              />
+              {" "}
+              <div className={styles.GymMap}>
+                <DetailMap
+                  gu={partner.partner_gu}
+                  dong={partner.partner_dong}
+                  address={partner.gym_address}
+                />
+              </div>
             </div>
           </div>
         </div>

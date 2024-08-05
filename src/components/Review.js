@@ -1,11 +1,31 @@
-import { useEffect } from "react";
+import { React, useEffect, useState } from "react";
 import styles from "../CSS/Review.module.css";
 import Modal from "react-modal";
-import React, { useState } from "react";
-export default function Review({ openModal, closeModal, info }) {
+import axios from "axios";
+import { useFindState } from "../store/Statefind";
+export default function Review({ openModal, closeModal, Reviewparam }) {
+  //  values = (pid, uid, rate, content, 0, today)
   useEffect(() => {
-    console.log("저옵: ", info);
-  }, [info]);
+    console.log("@@", Reviewparam);
+  }, [Reviewparam]);
+  let [content, setcontent] = useState("");
+  const findState = useFindState();
+
+  let rate = 2;
+
+  const submitReview = async () => {
+    const pid = Reviewparam.PID;
+    try {
+      const response = await axios.post("/back/api/review/one_time", {
+        pid,
+        rate,
+        content,
+      });
+      console.log(response.data);
+    } catch (err) {
+      console.log(err.message);
+    }
+  };
   const [rating, setRating] = useState(0.0);
   const handleRating = (value) => {
     setRating(value);
@@ -32,11 +52,11 @@ export default function Review({ openModal, closeModal, info }) {
               <div className={styles.title}>
                 <div>
                   <span>파트너</span>
-                  <span>{info.PARTNER_NAME} 트레이너</span>
+                  <span>{Reviewparam.PARTNER_NAME} 트레이너</span>
                 </div>
-                <div style={{ display: "flex", alignItems: "center" }}>
+                <div>
                   <span>평점</span>
-                  <div className={styles.starRating}>
+                  {/* <div className={styles.starRating}>
                     {[5, 4, 3, 2, 1].map((star) => (
                       <React.Fragment key={star}>
                         <input
@@ -56,19 +76,31 @@ export default function Review({ openModal, closeModal, info }) {
                         </label>
                       </React.Fragment>
                     ))}
-                  </div>
-                  <span style={{ marginLeft: "10px" }}> {rating}점 </span>
+                  </div> */}
+                  <span style={{ marginLeft: "10px" }}> {rating}점 </span>{" "}
                 </div>
               </div>
 
               <div className={styles.reviewcontent}>
-                <textarea placeholder="내용을 입력해주세요."></textarea>
+                <textarea
+                  placeholder="내용을 입력해주세요."
+                  value={content}
+                  onChange={(e) => {
+                    setcontent(e.target.value);
+                  }}
+                ></textarea>
               </div>
             </div>
           </div>
 
           <div className={styles.footer}>
-            <button>리뷰 등록하기</button>
+            <button
+              onClick={() => {
+                submitReview();
+              }}
+            >
+              리뷰 등록하기
+            </button>
           </div>
         </div>
       </div>

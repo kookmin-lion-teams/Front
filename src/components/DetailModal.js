@@ -92,7 +92,15 @@ const DetailModal = ({ isOpen, onRequestClose, pid }) => {
     const experience = selectedTimeslot;
 
     try {
-      const response = await axios.post("/back/api/booking/register", {});
+      const response = await axios.post("/back/api/booking/register", {
+        pid,
+        year,
+        month,
+        day,
+        time,
+        purpose,
+        experience,
+      });
     } catch (err) {
       console.log(123, err.message);
     }

@@ -4,7 +4,6 @@ import Review from "./Review";
 import { useEffect, useState } from "react";
 import { useFindState } from "../store/Statefind";
 import axios from "axios";
-import { findIconDefinition } from "@fortawesome/fontawesome-svg-core";
 
 export default function SubscribeUserModal({
   openModal,
@@ -23,10 +22,11 @@ export default function SubscribeUserModal({
     setOpenReview(null);
   };
 
+  console.log(info, "sdfsdfsd");
+
   const [InfoList, setInfoList] = useState([]);
 
   const findState = useFindState();
-
   useEffect(() => {
     const fetchData = async () => {
       const rid = info.RID;
@@ -34,17 +34,20 @@ export default function SubscribeUserModal({
         const response = await axios.get("/back/api/reservation_detail", {
           params: { rid },
         });
+        let CopyData = [...InfoList];
 
-        const CopyData = response.data.reservation_info;
+        CopyData = response.data.reservation_info;
 
         setInfoList(CopyData);
       } catch (err) {
         console.log(err.message);
       }
     };
+
     fetchData();
   }, [findState]);
 
+  console.log(InfoList.PT_SESSIONS);
   useEffect(() => {
     console.log(InfoList, "ddds", info);
   }, [InfoList]);
@@ -143,6 +146,7 @@ export default function SubscribeUserModal({
             style={{ backgroundColor: "white", color: "black" }}
             onClick={handleCancleSubscribeButton}
           >
+            {" "}
             구독 취소하기
           </button>
           <button
@@ -154,11 +158,10 @@ export default function SubscribeUserModal({
           </button>
         </div>
       </div>
-
       <Review
         openModal={openReview}
         closeModal={closeModal}
-        info={info}
+        Reviewparam={info}
       ></Review>
     </Modal>
   );

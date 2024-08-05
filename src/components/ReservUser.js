@@ -42,7 +42,6 @@ export default function ReservUser() {
   const closeModal = () => {
     setActiveModal(false);
   };
-
   //review modal open
   const openReviewModal = () => {
     setOpenReview(true);
@@ -60,21 +59,21 @@ export default function ReservUser() {
 
   //유저의 예약 리스트 데이터 받아오기
   const findState = useFindState();
+
   const fetchData = async () => {
     const user_id = sessionStorage.getItem("uid");
-
     try {
       const response = await axios.get("/back/api/user/booking_list", {
         params: { user_id },
       });
       let CopyData = [...UserReservList];
-
       CopyData = response.data;
       setUserReservList(CopyData.bookings);
     } catch (err) {
       console.log(err.message);
     }
   };
+
   useEffect(() => {
     fetchData();
   }, [findState]);
@@ -98,6 +97,7 @@ export default function ReservUser() {
 
         {ReservingList.map((rsv, idx) => {
           console.log(rsv);
+
           return (
             <>
               <div className={styles.Reserving}>
@@ -142,6 +142,7 @@ export default function ReservUser() {
         })}
 
         <TabLine content="예약 내역" />
+
         {ReservedList.map((rsv, idx) => {
           return (
             <div div className={styles.Reserved}>
@@ -191,6 +192,14 @@ export default function ReservUser() {
                   {checkrsub[idx] ? "구독 신청 완료" : "구독 신청"}
                 </button>
               </div>
+              {/* <ReservUserModal
+                activeModal={activeModal}
+                closeModal={closeModal}
+                selectmodal={selectmodal}
+                completeReview={completeReview}
+                completeSub={completeSub}
+                bid={rsv.BOOKID}
+              ></ReservUserModal> */}
             </div>
           );
         })}

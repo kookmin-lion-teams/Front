@@ -95,10 +95,11 @@ export default function ReservUser() {
   })
 
 
+
   let bid;
   const [Reviewparam, setReviewparam] = useState([])
 
-  console.log(ReservedList, 'dfsfdsf')
+
   //  values = (pid, uid, rate, content, 0, today)
   return (
     <>

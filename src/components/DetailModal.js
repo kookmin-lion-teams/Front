@@ -4,8 +4,10 @@ import styles from "../CSS/DetailModal.module.css";
 import Calendar from "react-calendar";
 import PaymentButton from './Checkout'
 import "react-calendar/dist/Calendar.css";
+import { useFindState } from "../store/Statefind";
+import axios from "axios";
 
-const DetailModal = ({ isOpen, onRequestClose }) => {
+const DetailModal = ({ isOpen, onRequestClose, pid }) => {
     const [selectedGoal, setSelectedGoal] = useState("");
 
     const handleSelection = (e) => {
@@ -58,6 +60,39 @@ const DetailModal = ({ isOpen, onRequestClose }) => {
     const Timeslot = ['오전(10시 ~ 12시)', '오후(12시 ~ 18시)', '저녁(18시 ~ 22시)']
     const [checkTimeslot, setCheckTimeslot] = useState(0);
 
+    //required_fields = ['pid', 'year', 'month', 'day', 'time', 'purpose', 'experience', 'preferred_time']
+
+
+
+    const fetchData = async () => {
+
+        const year = selectedYear;
+        const month = selectedMonth;
+        const day = selectedDay;
+        const time = selectedTime
+        const purpose = selectedgoal
+        const experience = selectedTimeslot
+
+        try {
+            const response = await axios.post("/back/api/booking/register", {
+
+            });
+
+          
+        }
+        catch (err) {
+            console.log(123, err.message);
+        }
+    };
+
+
+    const findState = useFindState();
+    useEffect(() => {
+        fetchData();
+    }, [findState])
+
+
+    console.log()
     return (
 
         <Modal
@@ -207,7 +242,7 @@ const DetailModal = ({ isOpen, onRequestClose }) => {
                                         <div>
                                             <span>이름</span>
                                             <span>|</span>
-                                            <span>홍길동</span>
+                                            <span>{ }</span>
                                             <span>휴대폰 번호</span>
                                             <span>|</span>
                                             <span>010-1234-5678</span>

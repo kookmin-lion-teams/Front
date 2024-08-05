@@ -33,6 +33,9 @@ function Detail() {
       weekend_start_time: null,
     },
   ]);
+
+  const [Review, setReview] = useState([]);
+
   const [modalIsOpen, setModalIsOpen] = useState(false);
   const openModal = () => {
     setModalIsOpen(true);
@@ -44,33 +47,39 @@ function Detail() {
   const location = useLocation();
 
   const ptner = location.state.ptner;
+  let partner_id;
 
   useEffect(() => {
-    const fetchData = async () => {
-      const partner_id = location.state.ptner.PID;
 
-      console.log("PTD", partner_id);
+    const fetchData = async () => {
+      partner_id = location.state.ptner.PID;
+
 
       try {
-        const response = await axios.get("/back/api/user/partner_detail", {
-          params: { partner_id },
-        });
+        const [Partnerresponse, Reviewresponse] = await Promise.all([
+          axios.get("/back/api/user/partner_detail", { params: { partner_id } }),
+          axios.get("/back/api/user/partner_reviews", { params: { partner_id } })
+        ]);
 
-        let CopyData = [...partner];
+        let copypt = [...partner];
+        copypt = Partnerresponse.data.partner_info;
+        setPartner(copypt);
 
-        CopyData = response.data.partner_info;
-
-        setPartner(CopyData);
-
-        console.log(CopyData);
-      } catch (err) {
+        let copyreview = [...Review];
+        copyreview = Reviewresponse.data.reviews
+        setReview(copyreview);
+      }
+      catch (err) {
         console.log(123, err.message);
       }
     };
     fetchData();
   }, [findState]);
 
-  console.log("ptner2", partner, ptner);
+
+  console.log(partner)
+
+
 
   return (
     <>
@@ -95,7 +104,7 @@ function Detail() {
                   <span className={styles.line}>|</span> {partner.GNAME}
                 </p>
                 <p>
-                  ⭐️⭐️⭐️⭐️⭐️ <span>{ptner.avg_rate} (28)</span>
+                  ⭐️⭐️⭐️⭐️⭐️ <span>{ptner.avg_rate} ({partner.review_count})</span>
                 </p>
               </div>
 
@@ -116,7 +125,7 @@ function Detail() {
                 <button onClick={openModal}>1회 체험 예약하기</button>
 
                 {/* DetailModal */}
-                <DetailModal isOpen={modalIsOpen} onRequestClose={closeModal} />
+                <DetailModal isOpen={modalIsOpen} onRequestClose={closeModal} pid={partner_id} />
               </div>
             </div>
           </div>
@@ -144,9 +153,13 @@ function Detail() {
               <h4>레슨 가능 시간</h4>
               <hr></hr>
               <ul>
-                <li>평일 : 10:00 ~ 22:00</li>
-                <li>주말 : 10:00 ~ 18:00</li>
-                <li>휴무일 : 화요일</li>
+                <li>평일 : {partner.weekday_start_time} ~ {partner.weekday_end_time}</li>
+                <li>주말 : {partner.weekend_start_time} ~ {partner.weekend_end_time}</li>
+                <li>휴무일 :
+                  {
+
+                  }
+                </li>
               </ul>
             </div>
           </div>
@@ -158,7 +171,7 @@ function Detail() {
               <div>
                 <span style={{ fontSize: "1.5rem" }}>{partner.GNAME}</span>
                 <span className={styles.line}>|</span>
-                <span>서울시 성북구 정릉로 48</span>
+                <span>{partner.gym_address}</span>
               </div>
             </div>
             <div className={styles.GymMap}>123</div>
@@ -186,55 +199,36 @@ function Detail() {
               <option>오래된 순</option>
             </select>
 
-            <div className={styles.ReviewDetail}>
-              <div className={styles.ReviewItem}>
-                <div>User Name</div>
-                <div>남성</div>
-                <div>⭐️⭐️⭐️⭐️⭐️</div>
-                <div style={{ flexGrow: "1" }}></div>
-                <div>2024.07.14</div>
-              </div>
-              <div className={styles.ReviewContent}>
-                {partner.GNAME}
-                에서 너무나도 친절하게 알려주시고 너무 감사드립니다 수업도 너무
-                재미있네요
-              </div>
-            </div>
 
-            <div className={styles.ReviewDetail}>
-              <div className={styles.ReviewItem}>
-                <div>User Name</div>
-                <div>남성</div>
-                <div>⭐️⭐️⭐️⭐️⭐️</div>
-                <div style={{ flexGrow: "1" }}></div>
-                <div>2024.07.14</div>
-              </div>
+            {
+              Review.map((review, idx) => {
 
-              <div className={styles.ReviewContent}>
-                안녕하세요 안녕하세요 안녕하세요 안녕하세요 안녕하세요
-                안녕하세요 안녕하세요 안녕하세요 안녕하세요 안녕하세요
-                안녕하세요 안녕하세요 안녕하세요 안녕하세요 안녕하세요
-                안녕하세요 안녕하세요 안녕하세요 안녕하세요 안녕하세요
-                안녕하세요 안녕하세요 안녕하세요 안녕하세요
-              </div>
-            </div>
-            <div className={styles.ReviewDetail}>
-              <div className={styles.ReviewItem}>
-                <div>User Name</div>
-                <div>남성</div>
-                <div>⭐️⭐️⭐️⭐️⭐️</div>
-                <div style={{ flexGrow: "1" }}></div>
-                <div>2024.07.14</div>
-              </div>
 
-              <div className={styles.ReviewContent}>
-                안녕하세요 안녕하세요 안녕하세요 안녕하세요 안녕하세요
-                안녕하세요 안녕하세요 안녕하세요 안녕하세요 안녕하세요
-                안녕하세요 안녕하세요 안녕하세요 안녕하세요 안녕하세요
-                안녕하세요 안녕하세요 안녕하세요 안녕하세요 안녕하세요
-                안녕하세요 안녕하세요 안녕하세요 안녕하세요
-              </div>
-            </div>
+                return (
+                  <div className={styles.ReviewDetail}>
+                    <div className={styles.ReviewItem}>
+                      <div>{review.user_name}</div>
+                      <div>{review.user_gender ? '여자' : '남자'}</div>
+                      <div>{review.RATE}</div>
+                      <div style={{ flexGrow: "1" }}></div>
+                      <div>{review.DATE}</div>
+                    </div>
+                    <div className={styles.ReviewContent}>
+                      {review.CONTENT}
+                    </div>
+                  </div>
+
+                )
+              })
+
+            }
+
+
+
+
+
+
+
           </div>
         </div>
       </div>

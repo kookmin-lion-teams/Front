@@ -41,7 +41,7 @@ export default function SubscribeUserModal({ openModal, closeModal, setopenModal
         fetchData();
     }, [findState]);
 
-
+ 
 
 
     useEffect(() => {

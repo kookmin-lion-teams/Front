@@ -46,7 +46,7 @@ export default function SubscribeUser() {
 
     let SubscrbedList = []
     let SubscrbingList = []
-    console.log(subUser)
+
 
     const [info, setInfo] = useState([[]])
 
@@ -82,7 +82,7 @@ export default function SubscribeUser() {
                                     <div><span>{sub.CURRENT_COUNT}</span>
                                         <span style={{ margin: '0 1rem 0 1.3rem' }}>/</span>
                                         <span>{sub.FCOUNT}</span></div>
-                                    <button onClick={() => { openModal(); setInfo(sub) }}>상세보기</button>
+                                    <button onClick={() => { setInfo(sub);openModal();  }}>상세보기</button>
                                 </div>
                             </div>
 
@@ -113,7 +113,7 @@ export default function SubscribeUser() {
                                     <div><span>{sub.CURRENT_COUNT}</span>
                                         <span style={{ margin: '0 1rem 0 1.3rem' }}>/</span>
                                         <span>{sub.FCOUNT}</span></div>
-                                    <button onClick={() => { openModal(); setInfo(sub) }}>상세보기</button>
+                                    <button onClick={() => { setInfo(sub);openModal();  }}>상세보기</button>
                                 </div>
                             </div>
 

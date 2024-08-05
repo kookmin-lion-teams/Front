@@ -9,6 +9,7 @@ function InfiniteScroll() {
   const [partner, setPartner] = useState([]);
   const [fragment, setFragment] = useState([]);
   const findState = useFindState();
+
   const partnersList = usePartnersState();
 
   useEffect(() => {
@@ -23,8 +24,15 @@ function InfiniteScroll() {
       }
     };
 
+    } catch (err) {
+      console.log(err.message);
+    }
+  };
+
+  useEffect(() => {
     fetchData();
   }, [findState]);
+
 
   useEffect(() => {
     if (findState === "파트너 찾기") {
@@ -40,6 +48,7 @@ function InfiniteScroll() {
   }, [partner, findState]);
 
   useEffect(() => {
+
     if (findState === "헬스장으로 찾기") {
       const newF = partnersList.map((item, index) => (
         <PtCard

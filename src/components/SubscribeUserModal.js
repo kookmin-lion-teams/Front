@@ -4,6 +4,7 @@ import Review from './Review'
 import { useEffect, useState } from 'react';
 import { useFindState } from '../store/Statefind';
 import axios from 'axios';
+import { findIconDefinition } from '@fortawesome/fontawesome-svg-core';
 
 export default function SubscribeUserModal({ openModal, closeModal, setopenModal, info }) {
 
@@ -19,20 +20,17 @@ export default function SubscribeUserModal({ openModal, closeModal, setopenModal
     }
 
 
-    console.log(info, 'sdfsdfsd')
-
-
     const [InfoList, setInfoList] = useState([]);
 
     const findState = useFindState();
+
     useEffect(() => {
         const fetchData = async () => {
             const rid = info.RID
             try {
                 const response = await axios.get("/back/api/reservation_detail", { params: { rid } });
-                let CopyData = [...InfoList];
 
-                CopyData = response.data.reservation_info;
+                const CopyData = response.data.reservation_info;
 
                 setInfoList(CopyData);
 
@@ -40,15 +38,15 @@ export default function SubscribeUserModal({ openModal, closeModal, setopenModal
                 console.log(err.message);
             }
         };
-
         fetchData();
     }, [findState]);
 
 
 
-    console.log(InfoList.PT_SESSIONS)
 
-
+    useEffect(() => {
+        console.log(InfoList, 'ddds', info)
+    }, [InfoList])
 
     return (
         <Modal isOpen={openModal}
@@ -113,7 +111,7 @@ export default function SubscribeUserModal({ openModal, closeModal, setopenModal
                             <div></div>
                             {
 
-                                InfoList.PT_SESSIONS.length && (InfoList.PT_SESSIONS).map((ss, idx) => {
+                                InfoList.PT_SESSIONS != undefined && InfoList.PT_SESSIONS.map((ss, idx) => {
 
                                     return (
                                         <>
@@ -126,20 +124,6 @@ export default function SubscribeUserModal({ openModal, closeModal, setopenModal
                                 })
 
                             }
-                            <span>No.1</span>
-                            <span className={styles.line}></span>
-                            <span>2024.08.04(금)</span>
-                            <div></div>
-
-                            <span>No.2</span>
-                            <span className={styles.line}></span>
-                            <span>2024.08.04(금)</span>
-                            <div></div>
-
-                            <span>No.3</span>
-                            <span className={styles.line}></span>
-                            <span>2024.08.04(금)</span>
-
                         </div>
                     </div>
 

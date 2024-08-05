@@ -4,7 +4,7 @@ import styles from "../CSS/ManagePaper.module.css";
 import axios from "axios";
 import { useState, useEffect } from "react";
 import TimeDropdown from "./TimeDropdown";
-
+import React from "react";
 const ManagePaper = () => {
   const [name] = useState(sessionStorage.getItem("name"));
   const [pid] = useState(sessionStorage.getItem("pid"));
@@ -31,13 +31,14 @@ const ManagePaper = () => {
     weekend_start_time: "",
     weekend_end_time: "",
   });
+  const [queue, setQueue] = useState([]);
 
-  const [selectedExperts, setSelectedExperts] = useState([]);
-
+  // 파트너 정보 감시
   useEffect(() => {
     console.log(partnerInfo);
   }, [partnerInfo]);
 
+  //  첫 렌더시 공고 가져오기
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -69,6 +70,7 @@ const ManagePaper = () => {
     fetchData();
   }, [pid]);
 
+  ///  서브밋
   const handleSubmit = async (event) => {
     event.preventDefault();
     try {
@@ -105,11 +107,13 @@ const ManagePaper = () => {
     }
   };
 
+  //  Text  Input 변할때
   const handleInputChange = (e) => {
     const { name, value } = e.target;
     setPartnerInfo((prevInfo) => ({ ...prevInfo, [name]: value }));
   };
 
+  // 휴무일 체크박스 변할때
   const handleCheckboxChange = (e) => {
     const { id, checked } = e.target;
     let day = id;
@@ -130,27 +134,49 @@ const ManagePaper = () => {
     }));
   };
 
+  // 시간 변할때
   const handleTimeChange = (name, value) => {
     setPartnerInfo((prevInfo) => ({ ...prevInfo, [name]: value }));
   };
 
-  const handleExpertChange = (e) => {
-    const { id, checked } = e.target;
-    const expertLabel = e.target.nextSibling.textContent;
-
-    let updatedExperts = [...selectedExperts];
-
-    setSelectedExperts(updatedExperts);
-
-    if (updatedExperts.length > 0) {
-      setPartnerInfo((prevInfo) => ({
-        ...prevInfo,
-        expert1: updatedExperts[0] || "",
-        expert2: updatedExperts[1] || "",
-      }));
-    }
+  const addQ = (v) => {
+    setQueue((prevQueue) => {
+      // queue에 새로운 값 추가
+      const newQueue = [...prevQueue, v];
+      return newQueue;
+    });
   };
+  useEffect(() => {
+    const dequeue = () => {
+      setQueue((prevQueue) => {
+        if (prevQueue.length <= 2) return prevQueue;
 
+        const [first, second, ...rest] = prevQueue;
+        return [second, ...rest];
+      });
+    };
+
+    // queue의 크기가 2 초과이면 dequeue 합니다.
+    if (queue.length > 2) {
+      dequeue();
+    }
+    const q1 = queue[0];
+    const q2 = queue[1];
+    console.log("q1,2: ", q1, q2);
+    setPartnerInfo((prevInfo) => ({ ...prevInfo, expert1: q1, expert2: q2 }));
+  }, [queue]);
+
+  const isExpertSelected = (expert) => {
+    return partnerInfo.expert1 === expert || partnerInfo.expert2 === expert;
+  };
+  const options = [
+    "다이어트",
+    "체력증진",
+    "근력강화",
+    "벌크업",
+    "체형교정",
+    "재활",
+  ];
   return (
     <TabFrame>
       <form onSubmit={handleSubmit}>
@@ -219,28 +245,20 @@ const ManagePaper = () => {
           onChange={handleInputChange}
         />
         <TabLine content="Expert" />
-        <div className={styles.TabLineUnderContentContainer}>
-          {[
-            "다이어트",
-            "체력증진",
-            "근력강화",
-            "벌크업",
-            "체형교정",
-            "재활",
-          ].map((label, index) => (
-            <label
-              htmlFor={`cb_${index}`}
-              key={index}
-              style={{ paddingLeft: "1vw" }}
-            >
-              <input
-                type="checkbox"
-                id={`cb_${index}`}
-                className={styles.checkbox}
-                onChange={handleExpertChange}
-              />
-              {label}
-            </label>
+        <div
+          className={styles.TabLineUnderContentContainer}
+          style={{ display: "flex", alignItems: "center" }}
+        >
+          {options.map((option) => (
+            <React.Fragment key={option}>
+              <div
+                className={`${styles.chBox} ${
+                  isExpertSelected(option) ? styles.chBoxO : ""
+                }`}
+                onClick={() => addQ(option)}
+              ></div>
+              <small>{option}</small>
+            </React.Fragment>
           ))}
         </div>
         <TabLine content="레슨 가능 시간*" />

@@ -47,7 +47,7 @@ const ManageUser = () => {
 
   // 모달을 닫기 위한 함수
   const closeModal2 = () => {
-    setActiveModal(null);
+    setActiveModal(false);
   };
 
   console.log(partner_id,'dsfsdf')
@@ -237,7 +237,7 @@ const ManageUser = () => {
                     </div>
                     <ReservUserModal
                       activeModal={activeModal}
-                      closeModal2={closeModal2}
+                      closeModal={closeModal2}
                       selectmodal={selectmodal}
                       completeReview={completeReview}
                       completeSub={completeSub}

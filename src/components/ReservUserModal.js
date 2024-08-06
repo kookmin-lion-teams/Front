@@ -6,7 +6,8 @@ import axios from "axios";
 import { useFindState, useActions } from "../store/Statefind";
 import Calendar from "react-calendar";
 import "react-calendar/dist/Calendar.css";
-import PaymentButton from './Checkout'
+import PaymentButton from "./Checkout";
+
 function ReservUserModal({
   activeModal,
   closeModal,
@@ -15,22 +16,23 @@ function ReservUserModal({
   completeSub,
   bid,
   pid,
-  Price
+  Price,
 }) {
-  let [cnt, setCnt] = useState(0);
-
+  const [cnt, setCnt] = useState(0);
   const [BookingDetail, setBookingDetail] = useState([]);
-
   const findState = useFindState();
   const { changeState } = useActions();
+
 
 
   const [DATE, setDATE] = useState();
   const [InputCnt, setInputCnt] = useState();
 
+
   const [selectedYear, setSelectedYear] = useState(null);
   const [selectedMonth, setSelectedMonth] = useState(null);
   const [selectedDay, setSelectedDay] = useState(null);
+  const [InputCnt, setInputCnt] = useState();
 
   const handleDateChange = (date) => {
     setSelectedYear(date.getFullYear());
@@ -38,44 +40,46 @@ function ReservUserModal({
     setSelectedDay(date.getDate());
   };
 
-  const Name = sessionStorage.getItem('name')
-  const Tel = sessionStorage.getItem('pNumber')
+  const Name = sessionStorage.getItem("name");
+  const Tel = sessionStorage.getItem("pNumber");
 
 
-
-
-  const BookingfetchData = async () => {
-    try {
-      const book_id = bid;
-      const response = await axios.get("/back/api/booking_detail", { params: { book_id } })
-      let CopyData = [...BookingDetail];
-      CopyData = response.data.booking_info;
-      setBookingDetail(CopyData);
-
-
-    } catch (err) {
-      console.log("RevervUserModal1에서 에러발생", err.message);
-    }
-  };
-
-
-
-
-    
-
+  let book_id = bid;
+  useEffect(() => {
     const fetchData = async () => {
-
-      const fcount = InputCnt;
-      const fdate = `${selectedYear}-${String(selectedMonth).padStart(2, '0')}-${String(selectedDay).padStart(2, '0')}`;
-
-      console.log(pid, fcount, fdate, 'pdj')
       try {
-        const response = await axios.post("/back/api/reservation/register", { pid, fcount, fdate });
+        const response = await axios.get("/back/api/booking_detail", {
+          params: { book_id },
+        });
+        let CopyData = [...BookingDetail];
+        CopyData = response.data.booking_info;
+        setBookingDetail(CopyData);
+      } catch (err) {
+        console.log("RevervUserModal1에서 에러발생", err.message);
+      }
+    };
 
+    fetchData();
+  }, [findState]);
+
+  useEffect(() => {
+    const ReservationfetchData = async () => {
+      const fcount = InputCnt;
+      const fdate = date;
+
+      console.log(pid, fcount, fdate, Price);
+
+      try {
+        const response = await axios.post("/back/api/reservation/register", {
+          pid,
+          fcount,
+          fdate,
+        });
       } catch (err) {
         console.log("RevervUserModal2에서 에러발생", err.message);
       }
     };
+
 
 
 
@@ -88,7 +92,6 @@ function ReservUserModal({
 
 
 
-
   const tileDisabled = ({ date, view }) => {
     const today = new Date();
     today.setHours(0, 0, 0, 0);
@@ -97,19 +100,18 @@ function ReservUserModal({
 
   const calendarMinDate = new Date();
 
-  //예약 취소 버튼
   const handleQuitReservationButton = async (booking_id) => {
-    const response = await axios.post("back/api/partner/booking_cancel", {
-      booking_id,
-    });
-
-    closeModal();
+    try {
+      const response = await axios.post("back/api/partner/booking_cancel", {
+        booking_id,
+      });
+      console.log("예약취소: ", response.data);
+      closeModal();
+      //여기에 모달을닫는코드작성
+    } catch (err) {
+      console.log("예약 취소 에러", err.message);
+    }
   };
-
-  
-
-
-
 
 
   return (
@@ -131,11 +133,10 @@ function ReservUserModal({
         </div>
         <hr></hr>
 
-        {/* main */}
         <div className={styles.main}>
           {
             {
-              '상세보기': (
+              상세보기: (
                 <div className={styles.MainContainer}>
                   <div className={styles.Content} style={{ marginTop: "0rem" }}>
                     <p>파트너 정보</p>
@@ -196,17 +197,22 @@ function ReservUserModal({
                 </div>
               ),
 
-              '구독신청': (
+              구독신청: (
                 <div className={styles.MainContainer}>
                   {
                     {
                       0: (
                         <div className={styles.ApplyContent}>
                           <div>한달동안 진행할 PT 횟수를 입력해주세요</div>
-                          <input placeholder="회" value={InputCnt} onChange={(e) => { setInputCnt(e.target.value) }}></input>
+                          <input
+                            placeholder="회"
+                            value={InputCnt}
+                            onChange={(e) => {
+                              setInputCnt(e.target.value);
+                            }}
+                          ></input>
                           <p>* 최대 30일까지만 입력 가능합니다.</p>
                         </div>
-
                       ),
 
                       1: (
@@ -241,13 +247,14 @@ function ReservUserModal({
                             <p>PT 정보</p>
                             <span>횟수</span>
                             <span className={styles.line}>|</span>
-                            <span style={{ marginRight: "3rem" }}>{InputCnt}회</span>
+                            <span style={{ marginRight: "3rem" }}>
+                              {InputCnt}회
+                            </span>
                             <span>회당 가격</span>
                             <span className={styles.line}>|</span>
                             <span>{Price}원</span>
 
                             <div></div>
-
                             <span>시작일</span>
                             <span className={styles.line}>|</span>
                             <span style={{ marginRight: "3rem" }}>
@@ -255,7 +262,9 @@ function ReservUserModal({
                             </span>
                             <span>종료일</span>
                             <span className={styles.line}>|</span>
-                            <span>{selectedYear}.{selectedMonth + 1}.{selectedDay}</span>
+                            <span>
+                              {selectedYear}.{selectedMonth + 1}.{selectedDay}
+                            </span>
                           </div>
 
                           <div className={styles.infoprice}>
@@ -264,7 +273,6 @@ function ReservUserModal({
                           </div>
                         </div>
                       ),
-
                     }[cnt]
                   }
                 </div>
@@ -272,7 +280,6 @@ function ReservUserModal({
             }[selectmodal]
           }
 
-          {/* footer button */}
           {
             {
               상세보기: (
@@ -323,7 +330,6 @@ function ReservUserModal({
                   {cnt == 2 ? (
                     <PaymentButton price={InputCnt * Price} fetchData={fetchData}></PaymentButton>
                   ) : null}
-
                 </div>
               ),
             }[selectmodal]

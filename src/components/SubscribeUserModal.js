@@ -5,7 +5,6 @@ import { useEffect, useState } from "react";
 import { useFindState } from "../store/Statefind";
 import axios from "axios";
 
-
 export default function SubscribeUserModal({
   openModal,
   closeModal,
@@ -53,10 +52,10 @@ export default function SubscribeUserModal({
     fetchData();
   }, [findState]);
 
-  console.log(InfoList.PT_SESSIONS);
   useEffect(() => {
     console.log(InfoList, "ddds", info);
   }, [InfoList]);
+
   const handleCancleSubscribeButton = async () => {
     try {
       const rid = info.RID;
@@ -145,23 +144,6 @@ export default function SubscribeUserModal({
                 })}
             </div>
           </div>
-        </div>
-
-        <div className={styles.footer}>
-          <button
-            style={{ backgroundColor: "white", color: "black" }}
-            onClick={handleCancleSubscribeButton}
-          >
-            {" "}
-            구독 취소하기
-          </button>
-          <button
-            onClick={() => {
-              openReviewModal();
-            }}
-          >
-            리뷰 작성하기
-          </button>
         </div>
       </div>
       <Review

@@ -44,6 +44,14 @@ function Main() {
     }
   }, [currentUrl]);
 
+  // sort 관련 ----
+  const [sortOrder, setSortOrder] = useState("기본순");
+
+  // sort 변경 감지
+  const handleSortChange = (event) => {
+    setSortOrder(event.target.value);
+  };
+
   return (
     <>
       <Nav_ />
@@ -54,10 +62,13 @@ function Main() {
           <Filter />
 
           {/* 정렬버튼 */}
-          <select className={styles.sort}>
-            <option value={"기본순"}>기본순</option>
+          <select
+            className={styles.sort}
+            value={sortOrder}
+            onChange={handleSortChange}
+          >
+            <option value={"기본순"}>평점순</option>
             <option value={"가격순"}>가격순</option>
-            <option value={"최신순"}>최신순</option>
           </select>
         </div>
       ) : (
@@ -96,7 +107,7 @@ function Main() {
                 </div>
               </div>
             )}
-            <InfiniteScroll />
+            <InfiniteScroll sortOrder={sortOrder} />
           </div>
           {findState === "헬스장으로 찾기" && (
             <div className={styles.mapFrame}>

@@ -92,6 +92,7 @@ const DetailModal = ({ isOpen, onRequestClose, pid ,eprice}) => {
     const experience = selectedTimeslot;
 
     try {
+      
       const response = await axios.post("/back/api/booking/register", {
         pid,
         year,
@@ -99,8 +100,11 @@ const DetailModal = ({ isOpen, onRequestClose, pid ,eprice}) => {
         day,
         time,
         purpose,
-        experience,
-      });
+        experience
+
+      }
+      
+    );
     } catch (err) {
       console.log(123, err.message);
     }
@@ -331,7 +335,7 @@ const DetailModal = ({ isOpen, onRequestClose, pid ,eprice}) => {
               다음
             </button>
           ) : null}
-          {level == 5 ? <PaymentButton price={eprice}></PaymentButton> : null}
+          {level == 5 ? <PaymentButton price={eprice} fetchData={fetchData}></PaymentButton> : null}
         </div>
       </div>
     </Modal>

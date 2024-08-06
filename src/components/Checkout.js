@@ -1,7 +1,7 @@
 import React from "react";
 import { loadTossPayments } from "@tosspayments/payment-sdk";
 
-const PaymentButton = ({price}) => {
+const PaymentButton = ({price, fetchData}) => {
   const clientKey = process.env.REACT_APP_TOSS_PAYMENTS_CLIENT_KEY;
   const originUrl = process.env.REACT_APP_ORIGIN_URL;
 
@@ -42,7 +42,10 @@ const PaymentButton = ({price}) => {
       });
   };
 
-  return <button onClick={payment}>결제하기</button>;
+  return <button onClick={()=>{
+    payment();
+    fetchData();
+  }}>결제하기</button>;
 };
 
 export default PaymentButton;

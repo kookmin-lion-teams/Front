@@ -89,6 +89,8 @@ export default function ReservUser() {
   let bid;
   const [Reviewparam, setReviewparam] = useState([]);
 
+
+
   //  values = (pid, uid, rate, content, 0, today)
   return (
     <>
@@ -96,8 +98,8 @@ export default function ReservUser() {
         <TabLine content="진행중인 예약" />
 
         {ReservingList.map((rsv, idx) => {
-          console.log(rsv);
 
+          
           return (
             <>
               <div className={styles.Reserving}>
@@ -136,6 +138,9 @@ export default function ReservUser() {
                 completeReview={completeReview}
                 completeSub={completeSub}
                 bid={rsv.BOOKID}
+                pid={rsv.PID}
+                pname={rsv.PARTNER_NAME}
+
               ></ReservUserModal>
             </>
           );
@@ -144,6 +149,8 @@ export default function ReservUser() {
         <TabLine content="예약 내역" />
 
         {ReservedList.map((rsv, idx) => {
+
+console.log(rsv, 'rdd');
           return (
             <div div className={styles.Reserved}>
               <div className={styles.ReservedInfo}>
@@ -180,6 +187,7 @@ export default function ReservUser() {
 
                 <button
                   onClick={() => {
+
                     setSelectmodal("구독신청");
                     openModal(true);
                   }}
@@ -192,19 +200,25 @@ export default function ReservUser() {
                   {checkrsub[idx] ? "구독 신청 완료" : "구독 신청"}
                 </button>
               </div>
-              {/* <ReservUserModal
+              <ReservUserModal
                 activeModal={activeModal}
                 closeModal={closeModal}
                 selectmodal={selectmodal}
                 completeReview={completeReview}
                 completeSub={completeSub}
                 bid={rsv.BOOKID}
-              ></ReservUserModal> */}
+                pid={rsv.PID}
+                price={rsv.PRICE}
+              ></ReservUserModal>
             </div>
           );
         })}
 
         {/* map으로 받아와서 나중에 리스트 idx 추가하기 */}
+
+
+
+
 
         {openReview && (
           <Review

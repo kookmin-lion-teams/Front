@@ -6,7 +6,7 @@ import axios from "axios";
 import { useFindState, useActions } from "../store/Statefind";
 import Calendar from "react-calendar";
 import "react-calendar/dist/Calendar.css";
-
+import PaymentButton from './Checkout'
 function ReservUserModal({
   activeModal,
   closeModal,
@@ -14,6 +14,8 @@ function ReservUserModal({
   completeReview,
   completeSub,
   bid,
+  pid,
+  price
 }) {
   let [cnt, setCnt] = useState(0);
 
@@ -21,28 +23,52 @@ function ReservUserModal({
 
   const findState = useFindState();
   const { changeState } = useActions();
+
+
+  const [date, setDate] = useState();
+
+  const [selectedYear, setSelectedYear] = useState(null);
+  const [selectedMonth, setSelectedMonth] = useState(null);
+  const [selectedDay, setSelectedDay] = useState(null);
+
+  const handleDateChange = (date) => {
+    setSelectedYear(date.getFullYear());
+    setSelectedMonth(date.getMonth() + 1);
+    setSelectedDay(date.getDate());
+  };
+
+  const Name = sessionStorage.getItem('name')
+  const Tel = sessionStorage.getItem('pNumber')
+
+
   useEffect(() => {
     const fetchData = async () => {
       const book_id = bid;
-      console.log("bookid", bid);
+      const fcount = cnt;
+      const fdate = date
+
       try {
-        const response = await axios.get("/back/api/booking_detail", {
-          params: { book_id },
-        });
+        const [response, applyresponse] = await Promise.all([
+          axios.get("/back/api/booking_detail", { params: { book_id }, }),
+          axios.post("/back/api/reservation/register", { pid, fcount, fdate }),
+        ]);
         let CopyData = [...BookingDetail];
-
         CopyData = response.data.booking_info;
-
         setBookingDetail(CopyData);
-        console.log("data123", CopyData);
+
+
       } catch (err) {
         console.log("RevervUserModal에서 에러발생", err.message);
       }
     };
 
     fetchData();
+
   }, [findState]);
-  const handleDateChange = (date) => {};
+
+
+
+
   const tileDisabled = ({ date, view }) => {
     const today = new Date();
     today.setHours(0, 0, 0, 0);
@@ -56,9 +82,14 @@ function ReservUserModal({
     const response = await axios.post("back/api/partner/booking_cancel", {
       booking_id,
     });
-    console.log("예약 취소: ", response.data);
+
     closeModal();
   };
+
+
+  const [InputCnt, setInputCnt] = useState();
+
+
 
   return (
     <Modal
@@ -83,7 +114,7 @@ function ReservUserModal({
         <div className={styles.main}>
           {
             {
-              상세보기: (
+              '상세보기': (
                 <div className={styles.MainContainer}>
                   <div className={styles.Content} style={{ marginTop: "0rem" }}>
                     <p>파트너 정보</p>
@@ -144,16 +175,17 @@ function ReservUserModal({
                 </div>
               ),
 
-              구독신청: (
+              '구독신청': (
                 <div className={styles.MainContainer}>
                   {
                     {
                       0: (
                         <div className={styles.ApplyContent}>
                           <div>한달동안 진행할 PT 횟수를 입력해주세요</div>
-                          <input placeholder="회"></input>
+                          <input placeholder="회" value={InputCnt} onChange={(e) => { setInputCnt(e.target.value) }}></input>
                           <p>* 최대 30일까지만 입력 가능합니다.</p>
                         </div>
+
                       ),
 
                       1: (
@@ -178,55 +210,40 @@ function ReservUserModal({
                             <p>파트너 정보</p>
                             <span>이름</span>
                             <span className={styles.line}>|</span>
-                            <span style={{ marginRight: "3rem" }}>홍길동</span>
+                            <span style={{ marginRight: "3rem" }}>{Name}</span>
                             <span>휴대폰 번호</span>
                             <span className={styles.line}>|</span>
-                            <span>010-1234-5678</span>
+                            <span>{Tel}</span>
                           </div>
 
                           <div className={styles.info}>
                             <p>PT 정보</p>
                             <span>횟수</span>
                             <span className={styles.line}>|</span>
-                            <span style={{ marginRight: "3rem" }}>10회</span>
+                            <span style={{ marginRight: "3rem" }}>{InputCnt}회</span>
                             <span>회당 가격</span>
                             <span className={styles.line}>|</span>
-                            <span>30000원</span>
+                            <span>{price}원</span>
 
                             <div></div>
 
                             <span>시작일</span>
                             <span className={styles.line}>|</span>
                             <span style={{ marginRight: "3rem" }}>
-                              2024.08.02(금)
+                              {selectedYear}.{selectedMonth}.{selectedDay}
                             </span>
                             <span>종료일</span>
                             <span className={styles.line}>|</span>
-                            <span>2024.09.02(금)</span>
+                            <span>{selectedYear}.{selectedMonth+1}.{selectedDay}</span>
                           </div>
 
                           <div className={styles.infoprice}>
                             <div>총 결제 금액</div>
-                            <div>300000원</div>
+                            <div>{InputCnt * price}원</div>
                           </div>
                         </div>
                       ),
 
-                      3: (
-                        <div className={styles.ApplyContent}>
-                          <div>결제를 완료해주세요</div>
-                          <p>결제수단 선택</p>
-
-                          <div className={styles.grid}>
-                            <div>신용카드</div>
-                            <div>카카오페이</div>
-                            <div>토스</div>
-
-                            <div>네이버페이</div>
-                            <div>휴대폰결제</div>
-                          </div>
-                        </div>
-                      ),
                     }[cnt]
                   }
                 </div>
@@ -282,25 +299,10 @@ function ReservUserModal({
                       다음
                     </button>
                   ) : null}
-                  {cnt == 2 || cnt == 3 ? (
-                    <button
-                      onClick={() => {
-                        setCnt(cnt + 1);
-                      }}
-                    >
-                      결제하기
-                    </button>
+                  {cnt == 2 ? (
+                    <PaymentButton price={InputCnt * price}></PaymentButton>
                   ) : null}
-                  {cnt == 4 ? (
-                    <button
-                      onClick={() => {
-                        closeModal();
-                        completeSub(0);
-                      }}
-                    >
-                      확인
-                    </button>
-                  ) : null}
+              
                 </div>
               ),
             }[selectmodal]

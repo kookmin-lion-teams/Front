@@ -215,7 +215,10 @@ const ManagePaper = () => {
     <TabFrame>
       <form onSubmit={handleSubmit}>
         <TabLine content="파트너 기본 정보" />
-        <div className={styles.TabLineUnderContentContainer}>
+        <div
+          className={styles.TabLineUnderContentContainer}
+          style={{ display: "flex", alignItems: "center" }}
+        >
           <div className={styles.rightBorder}>이름</div>
           <div style={{ padding: "0px 1rem" }}>
             <input
@@ -239,16 +242,6 @@ const ManagePaper = () => {
               value={partnerInfo.gname}
               onChange={handleInputChange}
             />
-            <button
-              style={{
-                marginLeft: "10px",
-                padding: "0.25rem 0.75rem",
-                border: "1px solid #979797",
-                borderRadius: "5px",
-              }}
-            >
-              선택
-            </button>
           </div>
           <div className={styles.rightBorder}>인스타그램</div>
           <div style={{ padding: "0px 1rem" }}>

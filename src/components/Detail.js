@@ -183,15 +183,13 @@ function Detail() {
                 <span>{partner.gym_address}</span>
               </div>
             </div>
+
             <div className={styles.GymMap}>
-              {" "}
-              <div className={styles.GymMap}>
-                <DetailMap
-                  gu={partner.partner_gu}
-                  dong={partner.partner_dong}
-                  address={partner.gym_address}
-                />
-              </div>
+              <DetailMap
+                gu={partner.partner_gu}
+                dong={partner.partner_dong}
+                address={partner.gym_address}
+              />
             </div>
           </div>
         </div>

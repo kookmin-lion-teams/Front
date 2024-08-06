@@ -16,13 +16,15 @@ function ReservUserModal({
   completeSub,
   bid,
   pid,
-  price,
+  Price,
 }) {
   const [cnt, setCnt] = useState(0);
   const [BookingDetail, setBookingDetail] = useState([]);
   const findState = useFindState();
   const { changeState } = useActions();
   const [date, setDate] = useState();
+  const [InputCnt, setInputCnt] = useState();
+
   const [selectedYear, setSelectedYear] = useState(null);
   const [selectedMonth, setSelectedMonth] = useState(null);
   const [selectedDay, setSelectedDay] = useState(null);
@@ -37,36 +39,43 @@ function ReservUserModal({
   const Name = sessionStorage.getItem("name");
   const Tel = sessionStorage.getItem("pNumber");
 
+  let book_id = bid;
   useEffect(() => {
-    const fetchBookingDetail = async () => {
-      const book_id = bid;
+    const fetchData = async () => {
       try {
         const response = await axios.get("/back/api/booking_detail", {
           params: { book_id },
         });
-        setBookingDetail(response.data.booking_info);
+        let CopyData = [...BookingDetail];
+        CopyData = response.data.booking_info;
+        setBookingDetail(CopyData);
       } catch (err) {
-        console.log("예약 정보 가져오기 에러", err.message);
+        console.log("RevervUserModal1에서 에러발생", err.message);
       }
     };
 
-    const registerReservation = async () => {
-      const fcount = cnt;
+    fetchData();
+  }, [findState]);
+
+  useEffect(() => {
+    const ReservationfetchData = async () => {
+      const fcount = InputCnt;
       const fdate = date;
+
+      console.log(pid, fcount, fdate, Price);
       try {
-        await axios.post("/back/api/reservation/register", {
+        const response = await axios.post("/back/api/reservation/register", {
           pid,
           fcount,
           fdate,
         });
       } catch (err) {
-        console.log("예약 등록 에러", err.message);
+        console.log("RevervUserModal2에서 에러발생", err.message);
       }
     };
 
-    fetchBookingDetail();
-    registerReservation();
-  }, [findState, bid, pid, cnt, date]);
+    ReservationfetchData();
+  }, [findState]);
 
   const tileDisabled = ({ date, view }) => {
     const today = new Date();
@@ -88,6 +97,8 @@ function ReservUserModal({
       console.log("예약 취소 에러", err.message);
     }
   };
+
+  console.log(BookingDetail, "ddd ");
 
   return (
     <Modal
@@ -227,7 +238,8 @@ function ReservUserModal({
                             </span>
                             <span>회당 가격</span>
                             <span className={styles.line}>|</span>
-                            <span>{price}원</span>
+                            <span>{Price}원</span>
+
                             <div></div>
                             <span>시작일</span>
                             <span className={styles.line}>|</span>
@@ -243,7 +255,7 @@ function ReservUserModal({
 
                           <div className={styles.infoprice}>
                             <div>총 결제 금액</div>
-                            <div>{InputCnt * price}원</div>
+                            <div>{InputCnt * Price}원</div>
                           </div>
                         </div>
                       ),
@@ -302,7 +314,7 @@ function ReservUserModal({
                     </button>
                   ) : null}
                   {cnt == 2 ? (
-                    <PaymentButton price={InputCnt * price}></PaymentButton>
+                    <PaymentButton price={InputCnt * Price}></PaymentButton>
                   ) : null}
                 </div>
               ),

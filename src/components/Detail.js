@@ -50,7 +50,7 @@ function Detail() {
   const ptner = location.state.ptner;
 
 
-  console.log(partner)
+  console.log(partner, 'fdfdf')
   let partner_id;
 
   useEffect(() => {
@@ -83,7 +83,7 @@ function Detail() {
 
 
 
-  const pt = partner.closed_days
+
   return (
     <>
       <Nav_></Nav_>
@@ -134,7 +134,7 @@ function Detail() {
                 <DetailModal
                   isOpen={modalIsOpen}
                   onRequestClose={closeModal}
-                  pid={partner_id}
+                  pid={ptner.PID}
                   eprice={partner.EPRICE}
                 />
               </div>

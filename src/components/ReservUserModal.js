@@ -23,7 +23,6 @@ function ReservUserModal({
   const findState = useFindState();
   const { changeState } = useActions();
   const [date, setDate] = useState();
-  const [InputCnt, setInputCnt] = useState();
 
   const [selectedYear, setSelectedYear] = useState(null);
   const [selectedMonth, setSelectedMonth] = useState(null);

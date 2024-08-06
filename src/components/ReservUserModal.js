@@ -42,10 +42,11 @@ function ReservUserModal({
   const Tel = sessionStorage.getItem('pNumber')
 
 
-let book_id = bid;
+
   useEffect(() => {
     const fetchData = async () => {
       try {
+        const book_id = bid;
         const response = await axios.get("/back/api/booking_detail", { params: { book_id } })
         let CopyData = [...BookingDetail];
         CopyData = response.data.booking_info;
@@ -61,7 +62,7 @@ let book_id = bid;
 
   }, [findState]);
 
-
+console.log(Price)
 
   useEffect(() => {
     const ReservationfetchData = async () => {

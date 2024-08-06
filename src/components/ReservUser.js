@@ -55,7 +55,6 @@ export default function ReservUser() {
   const [UserReservList, setUserReservList] = useState([]);
   const [bookingid, setBookingid] = useState();
 
-  let bookId;
 
   //유저의 예약 리스트 데이터 받아오기
   const findState = useFindState();
@@ -91,7 +90,7 @@ export default function ReservUser() {
   const [Reviewparam, setReviewparam] = useState([]);
 
   const [PID,setPID] = useState()
-  const [PRICE,setPRICE] = useState()
+  const [PRICE,setPRICE] = useState(0)
 
   //  values = (pid, uid, rate, content, 0, today)
   return (

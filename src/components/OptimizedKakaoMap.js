@@ -20,7 +20,7 @@ const OptimizedKakaoMap = () => {
     console.log("name: ", name);
     setGymState(name);
   }, [name]);
-
+  const { kakao } = window;
   // 첫 렌더링시 유저 주소로 헬스장 불러오기
   useEffect(() => {
     const searchGym = async () => {
@@ -39,13 +39,13 @@ const OptimizedKakaoMap = () => {
           return;
         }
 
-        const geocoder = new window.kakao.maps.services.Geocoder();
+        const geocoder = new kakao.maps.services.Geocoder();
         const gymDataWithCoords = [];
 
         for (const gym of response.data) {
           const coords = await new Promise((resolve, reject) => {
             geocoder.addressSearch(gym.ADDRESS, (result, status) => {
-              if (status === window.kakao.maps.services.Status.OK) {
+              if (status === kakao.maps.services.Status.OK) {
                 resolve({
                   lat: parseFloat(result[0].y),
                   lng: parseFloat(result[0].x),

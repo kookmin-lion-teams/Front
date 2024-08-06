@@ -32,11 +32,13 @@ const LLMButton = () => {
 
   const invoke = async (e) => {
     e.preventDefault(); // 폼 제출 기본 동작 방지
-    setMyChat((prev) => [...prev, userInput]);
 
+    const uip = userInput;
+    setMyChat((prev) => [...prev, userInput]);
+    setUserInput((prev) => "");
     try {
       const endpoint = "back/api/dubot";
-      const response = await axios.post(endpoint, { user_input: userInput });
+      const response = await axios.post(endpoint, { user_input: uip });
       const k = response.data.response;
       console.log(k);
       setLLMChat((prev) => [...prev, k]);
@@ -94,7 +96,7 @@ const LLMButton = () => {
                 type="search"
                 id="LLM"
                 className={styles.searchInput}
-                placeholder="안녕하세요 placeholder입니다..."
+                placeholder="벌크업 식단 추천해줘"
                 value={userInput}
                 onChange={(e) => setUserInput(e.target.value)}
                 required

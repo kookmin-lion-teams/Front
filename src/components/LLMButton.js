@@ -48,7 +48,7 @@ const LLMButton = () => {
   return (
     <>
       <button type="button" className={styles.myButton} onClick={openModal}>
-        LLM 버튼!
+        듀봇에게 물어보기
       </button>
 
       <Modal

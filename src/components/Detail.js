@@ -49,6 +49,8 @@ function Detail() {
 
   const ptner = location.state.ptner;
 
+
+  console.log(partner)
   let partner_id;
 
   useEffect(() => {
@@ -79,8 +81,9 @@ function Detail() {
     fetchData();
   }, [findState]);
 
-  console.log(partner);
 
+
+  const pt = partner.closed_days
   return (
     <>
       <Nav_></Nav_>
@@ -132,6 +135,7 @@ function Detail() {
                   isOpen={modalIsOpen}
                   onRequestClose={closeModal}
                   pid={partner_id}
+                  eprice={partner.EPRICE}
                 />
               </div>
             </div>
@@ -168,7 +172,8 @@ function Detail() {
                   주말 : {partner.weekend_start_time} ~{" "}
                   {partner.weekend_end_time}
                 </li>
-                <li>휴무일 :{}</li>
+                
+
               </ul>
             </div>
           </div>

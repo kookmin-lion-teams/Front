@@ -66,7 +66,7 @@ function Signup() {
       sessionStorage.setItem("name", data.name);
       sessionStorage.setItem("gu", data.gu);
       sessionStorage.setItem("dong", data.dong);
-      sessionStorage.setItem("role", isUser ? 1 : 0);
+      sessionStorage.setItem("role", isUser ? 0 : 1);
       navigate(`/`);
     } catch (error) {
       console.error("회원가입 실패:", error.response?.data || error.message);

@@ -40,11 +40,13 @@ const OptimizedKakaoMap = () => {
         }
 
         const geocoder = new kakao.maps.services.Geocoder();
+        const geocoder = new kakao.maps.services.Geocoder();
         const gymDataWithCoords = [];
 
         for (const gym of response.data) {
           const coords = await new Promise((resolve, reject) => {
             geocoder.addressSearch(gym.ADDRESS, (result, status) => {
+              if (status === kakao.maps.services.Status.OK) {
               if (status === kakao.maps.services.Status.OK) {
                 resolve({
                   lat: parseFloat(result[0].y),

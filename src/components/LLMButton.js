@@ -10,7 +10,7 @@ const LLMButton = () => {
   const [myChat, setMyChat] = useState([]);
   const [LLMChat, setLLMChat] = useState([]);
   const [userInput, setUserInput] = useState("");
-
+  const [isLoading, setIsLoading] = useState(false);
   const openModal = () => setModalIsOpen(true);
   const closeModal = () => {
     setMyChat([]);

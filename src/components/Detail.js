@@ -104,7 +104,7 @@ function Detail() {
                   <span className={styles.line}>|</span> {partner.GNAME}
                 </p>
                 <p>
-                  ⭐️⭐️⭐️⭐️⭐️{" "}
+                  {`평점:  `}
                   <span>
                     {ptner.avg_rate} ({partner.review_count})
                   </span>

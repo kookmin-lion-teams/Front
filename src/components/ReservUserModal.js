@@ -1,7 +1,6 @@
 import styles from "../CSS/ReservUserModal.module.css";
 import { useEffect, useState } from "react";
 import Modal from "react-modal";
-import Review from "./Review";
 import axios from "axios";
 import { useFindState, useActions } from "../store/Statefind";
 import Calendar from "react-calendar";
@@ -34,6 +33,7 @@ function ReservUserModal({
         CopyData = response.data.booking_info;
 
         setBookingDetail(CopyData);
+
         console.log("data123", CopyData);
       } catch (err) {
         console.log("RevervUserModal에서 에러발생", err.message);

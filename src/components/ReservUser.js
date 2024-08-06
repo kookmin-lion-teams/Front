@@ -128,15 +128,16 @@ export default function ReservUser() {
                   </button>
                 </div>
               </div>
-
-              <ReservUserModal
-                activeModal={activeModal}
-                closeModal={closeModal}
-                selectmodal={selectmodal}
-                completeReview={completeReview}
-                completeSub={completeSub}
-                bid={rsv.BOOKID}
-              ></ReservUserModal>
+              {activeModal && (
+                <ReservUserModal
+                  activeModal={activeModal}
+                  closeModal={closeModal}
+                  selectmodal={selectmodal}
+                  completeReview={completeReview}
+                  completeSub={completeSub}
+                  bid={rsv.BOOKID}
+                ></ReservUserModal>
+              )}
             </>
           );
         })}
@@ -192,14 +193,16 @@ export default function ReservUser() {
                   {checkrsub[idx] ? "구독 신청 완료" : "구독 신청"}
                 </button>
               </div>
-              {/* <ReservUserModal
-                activeModal={activeModal}
-                closeModal={closeModal}
-                selectmodal={selectmodal}
-                completeReview={completeReview}
-                completeSub={completeSub}
-                bid={rsv.BOOKID}
-              ></ReservUserModal> */}
+              {activeModal && (
+                <ReservUserModal
+                  activeModal={activeModal}
+                  closeModal={closeModal}
+                  selectmodal={selectmodal}
+                  completeReview={completeReview}
+                  completeSub={completeSub}
+                  bid={rsv.BOOKID}
+                ></ReservUserModal>
+              )}
             </div>
           );
         })}

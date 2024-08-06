@@ -6,6 +6,7 @@ import { useEffect, useState } from "react";
 import NavTab from "./NavTab";
 import LLMButton from "./LLMButton";
 import axios from "axios";
+
 export default function Nav_() {
   const navigate = useNavigate();
   const location = useLocation();
@@ -45,7 +46,16 @@ export default function Nav_() {
           onClick={() => {
             navigate("/");
           }}
-        ></div>
+        >
+          <img
+            src={`${process.env.PUBLIC_URL}/Logo_PTDuo.png`}
+            alt="Logo"
+            style={{ width: "60%", zIndex: "10", cursor: "pointer" }}
+            onClick={() => {
+              navigate("/");
+            }}
+          />
+        </div>
         <div className={styles.searchBox}>{/* <SearchBar /> */}</div>
         <div className={styles.LLMButton}>
           <LLMButton />

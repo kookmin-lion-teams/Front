@@ -20,7 +20,7 @@ const OptimizedKakaoMap = () => {
     console.log("name: ", name);
     setGymState(name);
   }, [name]);
-  const {kakao}=window;
+  const { kakao } = window;
   // 첫 렌더링시 유저 주소로 헬스장 불러오기
   useEffect(() => {
     const searchGym = async () => {

@@ -15,7 +15,7 @@ function ReservUserModal({
   completeSub,
   bid,
   pid,
-  price
+  Price
 }) {
   let [cnt, setCnt] = useState(0);
 
@@ -26,6 +26,7 @@ function ReservUserModal({
 
 
   const [date, setDate] = useState();
+  const [InputCnt, setInputCnt] = useState();
 
   const [selectedYear, setSelectedYear] = useState(null);
   const [selectedMonth, setSelectedMonth] = useState(null);
@@ -41,24 +42,18 @@ function ReservUserModal({
   const Tel = sessionStorage.getItem('pNumber')
 
 
+let book_id = bid;
   useEffect(() => {
     const fetchData = async () => {
-      const book_id = bid;
-      const fcount = cnt;
-      const fdate = date
-
       try {
-        const [response, applyresponse] = await Promise.all([
-          axios.get("/back/api/booking_detail", { params: { book_id }, }),
-          axios.post("/back/api/reservation/register", { pid, fcount, fdate }),
-        ]);
+        const response = await axios.get("/back/api/booking_detail", { params: { book_id } })
         let CopyData = [...BookingDetail];
         CopyData = response.data.booking_info;
         setBookingDetail(CopyData);
 
 
       } catch (err) {
-        console.log("RevervUserModal에서 에러발생", err.message);
+        console.log("RevervUserModal1에서 에러발생", err.message);
       }
     };
 
@@ -66,6 +61,26 @@ function ReservUserModal({
 
   }, [findState]);
 
+
+
+  useEffect(() => {
+    const ReservationfetchData = async () => {
+
+      const fcount = InputCnt;
+      const fdate = date
+
+      console.log(pid, fcount, fdate, Price)
+      try {
+        const response = await axios.post("/back/api/reservation/register", { pid, fcount, fdate });
+
+      } catch (err) {
+        console.log("RevervUserModal2에서 에러발생", err.message);
+      }
+    };
+
+    ReservationfetchData();
+
+  }, [findState])
 
 
 
@@ -87,9 +102,10 @@ function ReservUserModal({
   };
 
 
-  const [InputCnt, setInputCnt] = useState();
 
 
+
+  console.log(BookingDetail, "ddd ")
 
   return (
     <Modal
@@ -223,7 +239,7 @@ function ReservUserModal({
                             <span style={{ marginRight: "3rem" }}>{InputCnt}회</span>
                             <span>회당 가격</span>
                             <span className={styles.line}>|</span>
-                            <span>{price}원</span>
+                            <span>{Price}원</span>
 
                             <div></div>
 
@@ -234,12 +250,12 @@ function ReservUserModal({
                             </span>
                             <span>종료일</span>
                             <span className={styles.line}>|</span>
-                            <span>{selectedYear}.{selectedMonth+1}.{selectedDay}</span>
+                            <span>{selectedYear}.{selectedMonth + 1}.{selectedDay}</span>
                           </div>
 
                           <div className={styles.infoprice}>
                             <div>총 결제 금액</div>
-                            <div>{InputCnt * price}원</div>
+                            <div>{InputCnt * Price}원</div>
                           </div>
                         </div>
                       ),
@@ -300,9 +316,9 @@ function ReservUserModal({
                     </button>
                   ) : null}
                   {cnt == 2 ? (
-                    <PaymentButton price={InputCnt * price}></PaymentButton>
+                    <PaymentButton price={InputCnt * Price}></PaymentButton>
                   ) : null}
-              
+
                 </div>
               ),
             }[selectmodal]

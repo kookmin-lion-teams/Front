@@ -6,7 +6,8 @@ import axios from "axios";
 import { useFindState, useActions } from "../store/Statefind";
 import Calendar from "react-calendar";
 import "react-calendar/dist/Calendar.css";
-import PaymentButton from './Checkout'
+import PaymentButton from "./Checkout";
+
 function ReservUserModal({
   activeModal,
   closeModal,
@@ -15,22 +16,18 @@ function ReservUserModal({
   completeSub,
   bid,
   pid,
-  Price
+  Price,
 }) {
-  let [cnt, setCnt] = useState(0);
-
+  const [cnt, setCnt] = useState(0);
   const [BookingDetail, setBookingDetail] = useState([]);
-
   const findState = useFindState();
   const { changeState } = useActions();
-
-
   const [date, setDate] = useState();
-  const [InputCnt, setInputCnt] = useState();
 
   const [selectedYear, setSelectedYear] = useState(null);
   const [selectedMonth, setSelectedMonth] = useState(null);
   const [selectedDay, setSelectedDay] = useState(null);
+  const [InputCnt, setInputCnt] = useState();
 
   const handleDateChange = (date) => {
     setSelectedYear(date.getFullYear());
@@ -38,51 +35,46 @@ function ReservUserModal({
     setSelectedDay(date.getDate());
   };
 
-  const Name = sessionStorage.getItem('name')
-  const Tel = sessionStorage.getItem('pNumber')
+  const Name = sessionStorage.getItem("name");
+  const Tel = sessionStorage.getItem("pNumber");
 
-
-let book_id = bid;
+  let book_id = bid;
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await axios.get("/back/api/booking_detail", { params: { book_id } })
+        const response = await axios.get("/back/api/booking_detail", {
+          params: { book_id },
+        });
         let CopyData = [...BookingDetail];
         CopyData = response.data.booking_info;
         setBookingDetail(CopyData);
-
-
       } catch (err) {
         console.log("RevervUserModal1에서 에러발생", err.message);
       }
     };
 
     fetchData();
-
   }, [findState]);
-
-
 
   useEffect(() => {
     const ReservationfetchData = async () => {
-
       const fcount = InputCnt;
-      const fdate = date
+      const fdate = date;
 
-      console.log(pid, fcount, fdate, Price)
+      console.log(pid, fcount, fdate, Price);
       try {
-        const response = await axios.post("/back/api/reservation/register", { pid, fcount, fdate });
-
+        const response = await axios.post("/back/api/reservation/register", {
+          pid,
+          fcount,
+          fdate,
+        });
       } catch (err) {
         console.log("RevervUserModal2에서 에러발생", err.message);
       }
     };
 
     ReservationfetchData();
-
-  }, [findState])
-
-
+  }, [findState]);
 
   const tileDisabled = ({ date, view }) => {
     const today = new Date();
@@ -92,20 +84,20 @@ let book_id = bid;
 
   const calendarMinDate = new Date();
 
-  //예약 취소 버튼
   const handleQuitReservationButton = async (booking_id) => {
-    const response = await axios.post("back/api/partner/booking_cancel", {
-      booking_id,
-    });
-
-    closeModal();
+    try {
+      const response = await axios.post("back/api/partner/booking_cancel", {
+        booking_id,
+      });
+      console.log("예약취소: ", response.data);
+      closeModal();
+      //여기에 모달을닫는코드작성
+    } catch (err) {
+      console.log("예약 취소 에러", err.message);
+    }
   };
 
-
-
-
-
-  console.log(BookingDetail, "ddd ")
+  console.log(BookingDetail, "ddd ");
 
   return (
     <Modal
@@ -126,11 +118,10 @@ let book_id = bid;
         </div>
         <hr></hr>
 
-        {/* main */}
         <div className={styles.main}>
           {
             {
-              '상세보기': (
+              상세보기: (
                 <div className={styles.MainContainer}>
                   <div className={styles.Content} style={{ marginTop: "0rem" }}>
                     <p>파트너 정보</p>
@@ -191,17 +182,22 @@ let book_id = bid;
                 </div>
               ),
 
-              '구독신청': (
+              구독신청: (
                 <div className={styles.MainContainer}>
                   {
                     {
                       0: (
                         <div className={styles.ApplyContent}>
                           <div>한달동안 진행할 PT 횟수를 입력해주세요</div>
-                          <input placeholder="회" value={InputCnt} onChange={(e) => { setInputCnt(e.target.value) }}></input>
+                          <input
+                            placeholder="회"
+                            value={InputCnt}
+                            onChange={(e) => {
+                              setInputCnt(e.target.value);
+                            }}
+                          ></input>
                           <p>* 최대 30일까지만 입력 가능합니다.</p>
                         </div>
-
                       ),
 
                       1: (
@@ -236,13 +232,14 @@ let book_id = bid;
                             <p>PT 정보</p>
                             <span>횟수</span>
                             <span className={styles.line}>|</span>
-                            <span style={{ marginRight: "3rem" }}>{InputCnt}회</span>
+                            <span style={{ marginRight: "3rem" }}>
+                              {InputCnt}회
+                            </span>
                             <span>회당 가격</span>
                             <span className={styles.line}>|</span>
                             <span>{Price}원</span>
 
                             <div></div>
-
                             <span>시작일</span>
                             <span className={styles.line}>|</span>
                             <span style={{ marginRight: "3rem" }}>
@@ -250,7 +247,9 @@ let book_id = bid;
                             </span>
                             <span>종료일</span>
                             <span className={styles.line}>|</span>
-                            <span>{selectedYear}.{selectedMonth + 1}.{selectedDay}</span>
+                            <span>
+                              {selectedYear}.{selectedMonth + 1}.{selectedDay}
+                            </span>
                           </div>
 
                           <div className={styles.infoprice}>
@@ -259,7 +258,6 @@ let book_id = bid;
                           </div>
                         </div>
                       ),
-
                     }[cnt]
                   }
                 </div>
@@ -267,7 +265,6 @@ let book_id = bid;
             }[selectmodal]
           }
 
-          {/* footer button */}
           {
             {
               상세보기: (
@@ -318,7 +315,6 @@ let book_id = bid;
                   {cnt == 2 ? (
                     <PaymentButton price={InputCnt * Price}></PaymentButton>
                   ) : null}
-
                 </div>
               ),
             }[selectmodal]

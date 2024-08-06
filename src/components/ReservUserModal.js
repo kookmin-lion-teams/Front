@@ -1,7 +1,6 @@
 import styles from "../CSS/ReservUserModal.module.css";
 import { useEffect, useState } from "react";
 import Modal from "react-modal";
-import Review from "./Review";
 import axios from "axios";
 import { useFindState, useActions } from "../store/Statefind";
 import Calendar from "react-calendar";

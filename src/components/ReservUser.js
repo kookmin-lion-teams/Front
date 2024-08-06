@@ -80,6 +80,7 @@ export default function ReservUser() {
   useEffect(() => {
     fetchData();
   }, [activeModal]);
+  
   let ReservedList = [];
   let ReservingList = [];
   UserReservList.map((lst, idx) => {
@@ -89,7 +90,8 @@ export default function ReservUser() {
   let bid;
   const [Reviewparam, setReviewparam] = useState([]);
 
-
+  const [PID,setPID] = useState()
+  const [PRICE,setPRICE] = useState()
 
   //  values = (pid, uid, rate, content, 0, today)
   return (
@@ -98,7 +100,6 @@ export default function ReservUser() {
         <TabLine content="진행중인 예약" />
 
         {ReservingList.map((rsv, idx) => {
-
           
           return (
             <>
@@ -122,6 +123,8 @@ export default function ReservUser() {
                   <span>예약확정</span>
                   <button
                     onClick={() => {
+                      setPID(rsv.PID)
+                      setPRICE(rsv.PRICE)
                       openModal(true);
                       setRcv2((prev) => rsv);
                       setSelectmodal("상세보기");
@@ -151,7 +154,6 @@ export default function ReservUser() {
 
         {ReservedList.map((rsv, idx) => {
 
-console.log(rsv, 'rdd');
           return (
             <div div className={styles.Reserved}>
               <div className={styles.ReservedInfo}>
@@ -174,6 +176,8 @@ console.log(rsv, 'rdd');
               <div className={styles.ReservedBtn}>
                 <button
                   onClick={() => {
+                    setPID(rsv.PID) 
+                    setPRICE(rsv.PRICE)
                     setReviewparam(rsv);
                     openReviewModal();
                   }}
@@ -190,7 +194,7 @@ console.log(rsv, 'rdd');
                   onClick={() => {
 
                     setSelectmodal("구독신청");
-
+                    setPRICE(rsv.EPRICE)  
                     openModal(true);
                   }}
                   style={
@@ -239,6 +243,8 @@ console.log(rsv, 'rdd');
             completeReview={completeReview}
             completeSub={completeSub}
             bid={rcv2.BOOKID}
+            pid={PID}
+            Price={PRICE}
           ></ReservUserModal>
         )}
       </TabFrame>

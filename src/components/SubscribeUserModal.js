@@ -28,6 +28,7 @@ export default function SubscribeUserModal({
   const [InfoList, setInfoList] = useState([]);
 
   const findState = useFindState();
+  
   useEffect(() => {
     const fetchData = async () => {
       const rid = info.RID;

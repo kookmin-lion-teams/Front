@@ -83,25 +83,28 @@ const DetailModal = ({ isOpen, onRequestClose, pid ,eprice}) => {
 
   //required_fields = ['pid', 'year', 'month', 'day', 'time', 'purpose', 'experience', 'preferred_time']
 
+
+console.log(pid,selectedCareer,selectedMonth,selectedDay,selectedTime,selectedGoal,selectedTimeslot)
+
   const fetchData = async () => {
     const year = selectedYear;
     const month = selectedMonth;
     const day = selectedDay;
     const time = selectedTime;
     const purpose = selectedgoal;
-    const experience = selectedTimeslot;
-
+    const experience = selectedCareer;
+    const preferred_time =selectedTimeslot;
     try {
       
       const response = await axios.post("/back/api/booking/register", {
         pid,
         year,
         month,
-        day,
+        day,  
         time,
         purpose,
-        experience
-
+        experience,
+        preferred_time
       }
       
     );

@@ -1,17 +1,16 @@
-import { React, useEffect, useState } from "react";
+import React, { useState, Fragment } from "react";
 import styles from "../CSS/Review.module.css";
 import Modal from "react-modal";
 import axios from "axios";
-import { useFindState } from "../store/Statefind";
 export default function Review({ openModal, closeModal, Reviewparam }) {
   //  values = (pid, uid, rate, content, 0, today)
-  useEffect(() => {
-    console.log("@@", Reviewparam);
-  }, [Reviewparam]);
-  let [content, setcontent] = useState("");
-  const findState = useFindState();
 
-  let rate = 2;
+  let [content, setcontent] = useState("");
+
+  const [rate, setRate] = useState(0.0);
+  const handleRating = (value) => {
+    setRate(value);
+  };
 
   const submitReview = async () => {
     const pid = Reviewparam.PID;
@@ -22,14 +21,12 @@ export default function Review({ openModal, closeModal, Reviewparam }) {
         content,
       });
       console.log(response.data);
+      closeModal();
     } catch (err) {
       console.log(err.message);
     }
   };
-  const [rating, setRating] = useState(0.0);
-  const handleRating = (value) => {
-    setRating(value);
-  };
+
   return (
     <Modal
       isOpen={openModal}
@@ -54,17 +51,17 @@ export default function Review({ openModal, closeModal, Reviewparam }) {
                   <span>파트너</span>
                   <span>{Reviewparam.PARTNER_NAME} 트레이너</span>
                 </div>
-                <div>
+                <div style={{ display: "flex", alignItems: "center" }}>
                   <span>평점</span>
-                  {/* <div className={styles.starRating}>
+                  <div className={styles.starRating}>
                     {[5, 4, 3, 2, 1].map((star) => (
-                      <React.Fragment key={star}>
+                      <Fragment key={star}>
                         <input
                           type="radio"
                           id={`${star}-stars`}
                           name="rating"
                           value={star}
-                          checked={rating === star}
+                          checked={rate === star}
                           onChange={() => handleRating(star)}
                           className={styles.starInput}
                         />
@@ -74,10 +71,10 @@ export default function Review({ openModal, closeModal, Reviewparam }) {
                         >
                           &#9733;
                         </label>
-                      </React.Fragment>
+                      </Fragment>
                     ))}
-                  </div> */}
-                  <span style={{ marginLeft: "10px" }}> {rating}점 </span>{" "}
+                  </div>
+                  <span style={{ marginLeft: "10px" }}> {rate}점 </span>{" "}
                 </div>
               </div>
 

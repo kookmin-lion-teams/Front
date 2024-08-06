@@ -15,7 +15,7 @@ export default function ReservUser() {
   const [selectmodal, setSelectmodal] = useState("");
   const [checkreview, setCheckReview] = useState([0, 0, 0]);
   const [checkrsub, setChecksub] = useState([0, 0, 0]);
-
+  const [rcv2, setRcv2] = useState();
   //
   const completeReview = (idx) => {
     let cp = [...checkreview];
@@ -121,6 +121,7 @@ export default function ReservUser() {
                   <button
                     onClick={() => {
                       openModal(true);
+                      setRcv2((prev) => rsv);
                       setSelectmodal("상세보기");
                     }}
                   >
@@ -128,15 +129,16 @@ export default function ReservUser() {
                   </button>
                 </div>
               </div>
-
-              <ReservUserModal
-                activeModal={activeModal}
-                closeModal={closeModal}
-                selectmodal={selectmodal}
-                completeReview={completeReview}
-                completeSub={completeSub}
-                bid={rsv.BOOKID}
-              ></ReservUserModal>
+              {/* {activeModal && (
+                <ReservUserModal
+                  activeModal={activeModal}
+                  closeModal={closeModal}
+                  selectmodal={selectmodal}
+                  completeReview={completeReview}
+                  completeSub={completeSub}
+                  bid={rsv.BOOKID}
+                ></ReservUserModal>
+              )} */}
             </>
           );
         })}
@@ -181,6 +183,7 @@ export default function ReservUser() {
                 <button
                   onClick={() => {
                     setSelectmodal("구독신청");
+
                     openModal(true);
                   }}
                   style={
@@ -192,14 +195,16 @@ export default function ReservUser() {
                   {checkrsub[idx] ? "구독 신청 완료" : "구독 신청"}
                 </button>
               </div>
-              {/* <ReservUserModal
-                activeModal={activeModal}
-                closeModal={closeModal}
-                selectmodal={selectmodal}
-                completeReview={completeReview}
-                completeSub={completeSub}
-                bid={rsv.BOOKID}
-              ></ReservUserModal> */}
+              {/* {activeModal && (
+                <ReservUserModal
+                  activeModal={activeModal}
+                  closeModal={closeModal}
+                  selectmodal={selectmodal}
+                  completeReview={completeReview}
+                  completeSub={completeSub}
+                  bid={rsv.BOOKID}
+                ></ReservUserModal>
+              )} */}
             </div>
           );
         })}
@@ -212,6 +217,16 @@ export default function ReservUser() {
             closeModal={closeReviewModal}
             Reviewparam={Reviewparam}
           ></Review>
+        )}
+        {activeModal && (
+          <ReservUserModal
+            activeModal={activeModal}
+            closeModal={closeModal}
+            selectmodal={selectmodal}
+            completeReview={completeReview}
+            completeSub={completeSub}
+            bid={rcv2.BOOKID}
+          ></ReservUserModal>
         )}
       </TabFrame>
     </>

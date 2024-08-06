@@ -7,7 +7,7 @@ import "react-calendar/dist/Calendar.css";
 import { useFindState } from "../store/Statefind";
 import axios from "axios";
 
-const DetailModal = ({ isOpen, onRequestClose, pid }) => {
+const DetailModal = ({ isOpen, onRequestClose, pid ,eprice}) => {
   const [selectedGoal, setSelectedGoal] = useState("");
 
   const handleSelection = (e) => {
@@ -111,7 +111,10 @@ const DetailModal = ({ isOpen, onRequestClose, pid }) => {
     fetchData();
   }, [findState]);
 
-  console.log();
+
+  const name = sessionStorage.getItem('name');
+  const tel = sessionStorage.getItem('pNumber')
+
   return (
     <Modal
       isOpen={isOpen}
@@ -275,10 +278,10 @@ const DetailModal = ({ isOpen, onRequestClose, pid }) => {
                     <div>
                       <span>이름</span>
                       <span>|</span>
-                      <span>{}</span>
+                      <span>{name}</span>
                       <span>휴대폰 번호</span>
                       <span>|</span>
-                      <span>010-1234-5678</span>
+                      <span>{tel}</span>
                     </div>
                   </div>
 
@@ -298,7 +301,7 @@ const DetailModal = ({ isOpen, onRequestClose, pid }) => {
 
                   <div className={styles.payment}>
                     <div>결제금액</div>
-                    <div>20000원</div>
+                    <div>{eprice}원</div>
                   </div>
                 </div>
               ),
@@ -328,7 +331,7 @@ const DetailModal = ({ isOpen, onRequestClose, pid }) => {
               다음
             </button>
           ) : null}
-          {level == 5 ? <PaymentButton price={"20000"}></PaymentButton> : null}
+          {level == 5 ? <PaymentButton price={eprice}></PaymentButton> : null}
         </div>
       </div>
     </Modal>

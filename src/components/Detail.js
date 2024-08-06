@@ -7,8 +7,23 @@ import DetailModal from "../components/DetailModal";
 import axios from "axios";
 import { useFindState } from "../store/Statefind";
 import DetailMap from "./DetailMap";
+import ReservUser from "./ReservUser";
+import ReservUserModal from "./ReservUserModal";
 
 function Detail() {
+  // 모달 상태를 관리하는 state
+  const [activeModal, setActiveModal] = useState(null);
+
+
+  // 모달을 열기 위한 함수
+  const OpenModal = (modalType) => {
+    setActiveModal(modalType);
+  };
+
+  // 모달을 닫기 위한 함수
+  const CloseModal = () => {
+    setActiveModal(false);
+  };
   const [one, setone] = useState();
 
   const findState = useFindState();
@@ -128,15 +143,33 @@ function Detail() {
                     <span className={styles.Pricefont}>원</span>
                   </div>
                 </div>
-                <button onClick={openModal}>1회 체험 예약하기</button>
+                <div style={{ display: 'flex', alignContent: "space-around", gap: '4rem', alignItems: 'center' }}>
 
+                  {/* 구독 신청 */}
+                  <button onClick={OpenModal} style={{ width: '10rem' }}>구독 신청하기</button>
+                  <button onClick={openModal} style={{ width: '10rem' }}>1회 체험 예약하기</button>
+                </div>
                 {/* DetailModal */}
                 <DetailModal
                   isOpen={modalIsOpen}
                   onRequestClose={closeModal}
-                  pid={ptner.PID}
+                  pid={partner_id}
                   eprice={partner.EPRICE}
                 />
+
+                {/* SUBSCRIBMODAL */}
+                {activeModal && (
+                  <ReservUserModal
+                    activeModal={activeModal}
+                    closeModal={CloseModal}
+                    selectmodal={'구독신청'}
+                    completeReview={[]}
+                    completeSub={[]}
+                    bid={0}
+                    pid={location.state.ptner.PID}
+                    Price={partner.EPRICE}
+                  ></ReservUserModal>
+                )}
               </div>
             </div>
           </div>
@@ -172,7 +205,7 @@ function Detail() {
                   주말 : {partner.weekend_start_time} ~{" "}
                   {partner.weekend_end_time}
                 </li>
-                
+
 
               </ul>
             </div>

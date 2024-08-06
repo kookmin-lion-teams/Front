@@ -10,7 +10,11 @@ export default function SubscribeUserModal({
   closeModal,
   setopenModal,
   info,
+
 }) {
+
+
+  console.log(info, 'info');
   const [openReview, setOpenReview] = useState(null);
   //review modal open
   const openReviewModal = () => {

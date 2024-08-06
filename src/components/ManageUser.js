@@ -49,14 +49,18 @@ const ManageUser = () => {
   const closeModal2 = () => {
     setActiveModal(false);
   };
+
+  console.log(partner_id,'dsfsdf')
+
+  const pid = partner_id;
   const fetchData = async () => {
     const endpoint =
       manage === "구독"
-        ? "back/api/partner/r_list"
-        : "back/api/partner/booking_list";
+        ? "/back/api/partner/r_list"
+        : "/back/api/partner/booking_list";
     try {
       const response = await axios.get(endpoint, {
-        params: { partner_id },
+        params: { pid },
       });
       if (manage === "구독") {
         const data = response.data.subscriptions;
@@ -68,7 +72,7 @@ const ManageUser = () => {
         console.log("예약 리스트: ", data);
       }
     } catch (err) {
-      console.log(err);
+      console.log(err,'123123122');
     }
   };
   useEffect(() => {
@@ -110,7 +114,7 @@ const ManageUser = () => {
       });
       console.log("횟수 추가: ", response.data);
     } catch (e) {
-      console.log(e);
+      console.log(e,'123123');
     }
   };
   return (

@@ -22,7 +22,12 @@ function ReservUserModal({
   const [BookingDetail, setBookingDetail] = useState([]);
   const findState = useFindState();
   const { changeState } = useActions();
-  const [date, setDate] = useState();
+
+
+
+  const [DATE, setDATE] = useState();
+  const [InputCnt, setInputCnt] = useState();
+
 
   const [selectedYear, setSelectedYear] = useState(null);
   const [selectedMonth, setSelectedMonth] = useState(null);
@@ -37,6 +42,7 @@ function ReservUserModal({
 
   const Name = sessionStorage.getItem("name");
   const Tel = sessionStorage.getItem("pNumber");
+
 
   let book_id = bid;
   useEffect(() => {
@@ -62,6 +68,7 @@ function ReservUserModal({
       const fdate = date;
 
       console.log(pid, fcount, fdate, Price);
+
       try {
         const response = await axios.post("/back/api/reservation/register", {
           pid,
@@ -73,8 +80,17 @@ function ReservUserModal({
       }
     };
 
-    ReservationfetchData();
-  }, [findState]);
+
+
+
+  const [hasFetched, setHasFetched] = useState(false);
+  useEffect(() => {
+    if (!hasFetched) { // 이미 데이터를 받아왔다면 fetchData를 호출하지 않음
+      fetchData();
+    }
+  }, [hasFetched]);
+
+
 
   const tileDisabled = ({ date, view }) => {
     const today = new Date();
@@ -97,7 +113,6 @@ function ReservUserModal({
     }
   };
 
-  console.log(BookingDetail, "ddd ");
 
   return (
     <Modal
@@ -313,7 +328,7 @@ function ReservUserModal({
                     </button>
                   ) : null}
                   {cnt == 2 ? (
-                    <PaymentButton price={InputCnt * Price}></PaymentButton>
+                    <PaymentButton price={InputCnt * Price} fetchData={fetchData}></PaymentButton>
                   ) : null}
                 </div>
               ),

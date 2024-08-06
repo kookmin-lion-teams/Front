@@ -53,9 +53,8 @@ export default function ReservUser() {
   };
 
   const [UserReservList, setUserReservList] = useState([]);
-  const [bookingid, setBookingid] = useState();
 
-  let bookId;
+  const [hasFetched, setHasFetched] = useState(false);
 
   //유저의 예약 리스트 데이터 받아오기
   const findState = useFindState();
@@ -66,6 +65,7 @@ export default function ReservUser() {
       const response = await axios.get("/back/api/user/booking_list", {
         params: { user_id },
       });
+      setHasFetched(true);
       let CopyData = [...UserReservList];
       CopyData = response.data;
       setUserReservList(CopyData.bookings);
@@ -75,23 +75,26 @@ export default function ReservUser() {
   };
 
   useEffect(() => {
-    fetchData();
-  }, [findState]);
+    if (!hasFetched) { // 이미 데이터를 받아왔다면 fetchData를 호출하지 않음
+      fetchData();
+    }
+  }, [hasFetched]);
+
   useEffect(() => {
     fetchData();
   }, [activeModal]);
-  
+
   let ReservedList = [];
   let ReservingList = [];
   UserReservList.map((lst, idx) => {
     lst.APPLY ? ReservedList.push(lst) : ReservingList.push(lst);
   });
 
-  let bid;
   const [Reviewparam, setReviewparam] = useState([]);
 
-  const [PID,setPID] = useState()
-  const [PRICE,setPRICE] = useState()
+  const [PID, setPID] = useState()
+  const [PRICE, setPRICE] = useState(0)
+  const [bookid, setbookid] = useState();
 
   //  values = (pid, uid, rate, content, 0, today)
   return (
@@ -100,7 +103,8 @@ export default function ReservUser() {
         <TabLine content="진행중인 예약" />
 
         {ReservingList.map((rsv, idx) => {
-          
+
+    
           return (
             <>
               <div className={styles.Reserving}>
@@ -124,6 +128,7 @@ export default function ReservUser() {
                   <button
                     onClick={() => {
                       setPID(rsv.PID)
+                      setbookid(rsv.BOOKID)
                       setPRICE(rsv.PRICE)
                       openModal(true);
                       setRcv2((prev) => rsv);
@@ -135,7 +140,7 @@ export default function ReservUser() {
                 </div>
               </div>
 
-     {/* {activeModal && (
+              {/* {activeModal && (
                 <ReservUserModal
                   activeModal={activeModal}
                   closeModal={closeModal}
@@ -153,7 +158,7 @@ export default function ReservUser() {
         <TabLine content="예약 내역" />
 
         {ReservedList.map((rsv, idx) => {
-
+          
           return (
             <div div className={styles.Reserved}>
               <div className={styles.ReservedInfo}>
@@ -176,7 +181,8 @@ export default function ReservUser() {
               <div className={styles.ReservedBtn}>
                 <button
                   onClick={() => {
-                    setPID(rsv.PID) 
+                    setPID(rsv.PID)
+                    setbookid(rsv.BOOKID)
                     setPRICE(rsv.PRICE)
                     setReviewparam(rsv);
                     openReviewModal();
@@ -192,9 +198,10 @@ export default function ReservUser() {
 
                 <button
                   onClick={() => {
-
+                    setbookid(rsv.BOOKID)
                     setSelectmodal("구독신청");
-                    setPRICE(rsv.EPRICE)  
+                    setPID(rsv.PID)
+                    setPRICE(rsv.PRICE)
                     openModal(true);
                   }}
                   style={
@@ -242,7 +249,7 @@ export default function ReservUser() {
             selectmodal={selectmodal}
             completeReview={completeReview}
             completeSub={completeSub}
-            bid={rcv2.BOOKID}
+            bid={bookid}
             pid={PID}
             Price={PRICE}
           ></ReservUserModal>

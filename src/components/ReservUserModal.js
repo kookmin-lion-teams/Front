@@ -25,7 +25,7 @@ function ReservUserModal({
   const { changeState } = useActions();
 
 
-  const [date, setDate] = useState();
+  const [DATE, setDATE] = useState();
   const [InputCnt, setInputCnt] = useState();
 
   const [selectedYear, setSelectedYear] = useState(null);
@@ -43,34 +43,32 @@ function ReservUserModal({
 
 
 
-  useEffect(() => {
+
+  const BookingfetchData = async () => {
+    try {
+      const book_id = bid;
+      const response = await axios.get("/back/api/booking_detail", { params: { book_id } })
+      let CopyData = [...BookingDetail];
+      CopyData = response.data.booking_info;
+      setBookingDetail(CopyData);
+
+
+    } catch (err) {
+      console.log("RevervUserModal1에서 에러발생", err.message);
+    }
+  };
+
+
+
+
+    
+
     const fetchData = async () => {
-      try {
-        const book_id = bid;
-        const response = await axios.get("/back/api/booking_detail", { params: { book_id } })
-        let CopyData = [...BookingDetail];
-        CopyData = response.data.booking_info;
-        setBookingDetail(CopyData);
-
-
-      } catch (err) {
-        console.log("RevervUserModal1에서 에러발생", err.message);
-      }
-    };
-
-    fetchData();
-
-  }, [findState]);
-
-console.log(Price)
-
-  useEffect(() => {
-    const ReservationfetchData = async () => {
 
       const fcount = InputCnt;
-      const fdate = date
+      const fdate = `${selectedYear}-${String(selectedMonth).padStart(2, '0')}-${String(selectedDay).padStart(2, '0')}`;
 
-      console.log(pid, fcount, fdate, Price)
+      console.log(pid, fcount, fdate, 'pdj')
       try {
         const response = await axios.post("/back/api/reservation/register", { pid, fcount, fdate });
 
@@ -79,9 +77,15 @@ console.log(Price)
       }
     };
 
-    ReservationfetchData();
 
-  }, [findState])
+
+  const [hasFetched, setHasFetched] = useState(false);
+  useEffect(() => {
+    if (!hasFetched) { // 이미 데이터를 받아왔다면 fetchData를 호출하지 않음
+      fetchData();
+    }
+  }, [hasFetched]);
+
 
 
 
@@ -102,11 +106,11 @@ console.log(Price)
     closeModal();
   };
 
+  
 
 
 
 
-  console.log(BookingDetail, "ddd ")
 
   return (
     <Modal
@@ -317,7 +321,7 @@ console.log(Price)
                     </button>
                   ) : null}
                   {cnt == 2 ? (
-                    <PaymentButton price={InputCnt * Price}></PaymentButton>
+                    <PaymentButton price={InputCnt * Price} fetchData={fetchData}></PaymentButton>
                   ) : null}
 
                 </div>
